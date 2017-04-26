@@ -3,7 +3,7 @@ var express = require('express');
 var expect = require('chai').expect;
 var app = require('../request-handler.js');
 
-var db = require('../app/config');
+var db = require('../db/dbConfig');
 var User = require('../app/models/user');
 var Link = require('../app/models/link');
 
@@ -13,20 +13,33 @@ var Link = require('../app/models/link');
 
 xdescribe('', function() {
 
-  beforeEach(function(done) {
-    // Log out currently signed in user
-    request(app)
-      .get('/')
-      .end(function(err, res) {
+  // beforeEach(function(done) {
+  //   // Log out currently signed in user
+  //   request(app)
+  //     .get('/')
+  //     .end(function(err, res) {
 
-        // Delete objects from db so they can be created later for the test
-        // Link.remove({url: 'http://www.roflzoo.com/'}).exec();
-        // User.remove({username: 'Savannah'}).exec();
-        // User.remove({username: 'Phillip'}).exec();
+  //       // Delete objects from db so they can be created later for the test
+  //       // Link.remove({url: 'http://www.roflzoo.com/'}).exec();
+  //       // User.remove({username: 'Savannah'}).exec();
+  //       // User.remove({username: 'Phillip'}).exec();
 
-        done();
-      });
-  });
+  //       done();
+  //     });
+  // });
+
+  describe('Fetch from the API', function(){
+    it('Should return a list of German Shepherds if breed is specified', function(done) {
+      request(app)
+        .get('/')
+        .send({
+          
+        })
+
+    })
+
+
+  })
 
   describe('Link creation: ', function() {
 
