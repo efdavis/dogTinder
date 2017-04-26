@@ -1,9 +1,9 @@
 {
-  "name": "",
-  "version": "",
+  "name": "dogtinder",
+  "version": "1.0",
   "description": "",
-  "author": "",
-  "license": "",
+  "author": "Idolized Intimidators",
+  "license": "GNU GPL",
   "engines": {
     "node": ">=6.4.0"
   },
