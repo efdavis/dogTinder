@@ -1,6 +1,5 @@
-const express = require('express');
-const app = express();
+var app = require('./request-handler.js');
 
 app.listen(3000, function(){
-  console.log("Listening on port 3000")
+  console.log("Serving up fresh HTML on port 3000");
 })
