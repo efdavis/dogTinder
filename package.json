@@ -1,15 +1,22 @@
 {
-  "name": "",
-  "version": "",
+  "name": "dogtinder",
+  "version": "1.0",
   "description": "",
-  "author": "",
-  "license": "",
+  "author": "Idolized Intimidators",
+  "license": "GNU GPL",
   "engines": {
     "node": ">=6.4.0"
   },
   "scripts": {
+    "start": "nodemon basic-server.js",
+    "build": "webpack -w"
   },
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "pg": "^6.1.5",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
