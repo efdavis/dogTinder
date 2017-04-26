@@ -1,5 +1,5 @@
 const path = require('path');
-const dist_dir = path.join(__dirname, '/Public/dist');
+const dist_dir = path.join(__dirname, '/public/dist');
 const src_dir = path.join(__dirname, '/src/index.js');
 
 module.exports = {
