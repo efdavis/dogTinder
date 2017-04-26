@@ -8,7 +8,7 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "start": "nodemon basic-server.js",
+    "start": "nodemon basic-server.js ",
     "build": "webpack",
     "build:watch": "webpack --watch"
   },
