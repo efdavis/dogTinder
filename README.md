@@ -1,13 +1,12 @@
-# Project Name
+# dogTinder
 
 > Pithy project description
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+  - Scott Morschella
+  - Yujin Chung
+  - Joshua Stagner
 
 ## Table of Contents
 
