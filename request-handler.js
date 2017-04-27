@@ -3,6 +3,8 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var petFinderFetch = require('./utils/petfinderHelper')
 var request = require('request');
+var passport = require('passport')
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 var app = express();
 
@@ -12,6 +14,10 @@ app.use(bodyParser.json());
 app.get('/', function(request, response){
   response.sendfile(path.resolve(__dirname, "./public/index.html"));
 });
+
+// signup/login
+
+//
 
 app.get('/dog-tinder-api', function(req, res){
   // connect to API and get matching dogs
