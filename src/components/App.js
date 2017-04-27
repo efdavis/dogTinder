@@ -13,8 +13,8 @@ export default class App extends React.Component {
 
   handleNextClick() {
   //when next is clicked show next dog in list
-  this.setState({
-
+   this.setState({
+      
    });
   }
 
