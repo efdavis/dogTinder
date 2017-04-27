@@ -595,7 +595,7 @@ const dummyData = [
       ]
 
 
-
+export default dummyData;
 
 ReactDOM.render(
     <App dogs={dummyData}/ >, document.getElementById('main')
