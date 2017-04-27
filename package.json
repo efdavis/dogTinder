@@ -20,7 +20,8 @@
     "querystring": "^0.2.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "sequelize": "^3.30.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",
