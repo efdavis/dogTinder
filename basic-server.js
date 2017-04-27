@@ -1,6 +1,6 @@
 require('dotenv').config()
 var app = require('./request-handler.js');
 
-app.listen(3000, function(){
+app.listen(process.env.PORT, function(){
   console.log("Serving up fresh HTML on port 3000");
 })
