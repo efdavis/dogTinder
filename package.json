@@ -5,7 +5,7 @@
   "author": "Idolized Intimidators",
   "license": "GPL-3.0",
   "engines": {
-    "node": ">=7.x"
+    "node": ">=7.8"
   },
   "scripts": {
     "start": "nodemon basic-server.js ",
