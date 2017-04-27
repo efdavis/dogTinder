@@ -5,32 +5,39 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      index: 0,
       featuredDog: this.props.dogs[0],
       allDogs: this.props.dogs,
       nextClicked: false
     }
-    this.handleNextClick = this.handleNextClick.bind(this);
+    this.nextDog = this.nextDog.bind(this);
   }
 
-  handleNextClick() {
-  //when next is clicked show next dog in list
-   this.setState({
-      nextClicked: !this.state.nextClicked
-      featuredDog: this.props.dog[this.props.dogs.indexOf(this.state.featuredDog)++]
-   });
+  nextDog() {
+    let next = this.state.index+1; 
+    console.log('THIS IS NEXT', next);
+    this.setState({
+      featuredDog: this.state.allDogs[next],
+      index: next
+    });
   }
+
+  // handleNextClick() {
+  //  this.setState({
+  //     nextClicked: !this.state.nextClicked,
+  //     index: this.state.index++
+  //  });
+  // }
 
   render() {
+    console.log(this.state.featuredDog)
     return (
       <div>
         <h1>Dog Tinder</h1>
+        
         <div className="featured-dog">
-          <DisplayDog  dog={this.state.featuredDog}/>
-          {/*<DisplayDog dog={this.state.featuredDog} />*/}
-        </div>
-        <button classname="Next">Next</button>
-        <div className="all-dogs">
-          {console.log('test')}
+          <DisplayDog  dog={this.state.featuredDog} nextDog={this.nextDog} />
+          { console.log(this.state.featuredDog) }
         </div>
       </div>
     );
