@@ -15,12 +15,13 @@ app.use(bodyParser.json());
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
+    console.log(profile.id, profile.id.length);
+    // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return cb();
+    // });
   }
 ));
 
@@ -28,11 +29,22 @@ app.get('/', function(request, response){
   response.sendfile(path.resolve(__dirname, "./public/index.html"));
 });
 
-// signup/login
-app.get('/login',
-  passport.authenticate('facebook'));
 
+// signup/login
+app.post('/login',
+  passport.authenticate('facebook'));
 //
+app.get('/login', function(req, res){
+  res.send('<form method="post" action="/login"><input type="submit" name="facebook"></form>')
+})
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log(req);
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 app.get('/dog-tinder-api', function(req, res){
   // connect to API and get matching dogs
