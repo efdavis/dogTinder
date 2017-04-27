@@ -4,8 +4,10 @@ var expect = require('chai').expect;
 var app = require('../request-handler.js');
 
 var db = require('../db/dbConfig');
-var User = require('../app/models/user');
-var Link = require('../app/models/link');
+
+var request = require('supertest')('http://example.com/');
+
+
 
 /////////////////////////////////////////////////////
 // NOTE: these tests are designed for mongo!
@@ -33,7 +35,7 @@ xdescribe('', function() {
       request(app)
         .get('/')
         .send({
-          
+
         })
 
     })
