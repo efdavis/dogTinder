@@ -1,9 +1,9 @@
 {
   "name": "dogtinder",
-  "version": "1.0",
+  "version": "",
   "description": "",
   "author": "Idolized Intimidators",
-  "license": "GNU GPL",
+  "license": "GPL-3.0",
   "engines": {
     "node": ">=6.4.0"
   },
@@ -16,8 +16,10 @@
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "pg": "^6.1.5",
+    "querystring": "^0.2.0",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "request": "^2.81.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
