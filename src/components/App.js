@@ -6,7 +6,8 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       featuredDog: this.props.dogs[0],
-      allDogs: this.props.dogs
+      allDogs: this.props.dogs,
+      nextClicked: false
     }
     this.handleNextClick = this.handleNextClick.bind(this);
   }
@@ -14,7 +15,8 @@ export default class App extends React.Component {
   handleNextClick() {
   //when next is clicked show next dog in list
    this.setState({
-      
+      nextClicked: !this.state.nextClicked
+      featuredDog: this.props.dog[this.props.dogs.indexOf(this.state.featuredDog)++]
    });
   }
 
