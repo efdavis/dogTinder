@@ -16,7 +16,8 @@
     "express": "^4.15.2",
     "pg": "^6.1.5",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "sequelize": "^3.30.4"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
