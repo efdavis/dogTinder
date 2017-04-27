@@ -7,7 +7,25 @@ var querystring = {
   animal: 'dog'
 }
 
-var getDogs = function(params, callback){
+var removeSmallPics = function(resultArray){
+
+  var animals = resultArray.petfinder.pets.pet;
+  var modifyPhotos = function(photoArray){
+    var newPhotos = [];
+    for(var i = 0; i < photoArray.length; i++){
+      if (photoArray[i]['@size'] === 'x'){
+        newPhotos.push(photoArray[i].$t);
+      }
+    }
+    return newPhotos;
+  }
+  animals.forEach(function(animal){
+    animal.media.photos.photo = modifyPhotos(animal.media.photos.photo);
+  })
+  return resultArray;
+}
+
+var fetchAnimals = function(params, callback){
 
   for(var key in params){
     querystring[key] = params[key]
@@ -19,8 +37,9 @@ var getDogs = function(params, callback){
     url: 'http://api.petfinder.com/pet.find',
     qs: querystring
   }, function(error, response, body){
+    body = removeSmallPics(body);
     callback(body);
   })
 }
 
-module.exports = getDogs;
+module.exports = fetchAnimals;
