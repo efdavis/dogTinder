@@ -5,13 +5,13 @@
   "author": "Idolized Intimidators",
   "license": "GPL-3.0",
   "engines": {
-    "node": ">=6.4.0"
+    "node": ">=7.x"
   },
   "scripts": {
     "start": "nodemon basic-server.js ",
     "build": "webpack",
     "build:watch": "webpack --watch",
-    "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress"
+    "heroku-postbuild": "webpack"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
