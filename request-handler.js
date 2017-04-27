@@ -13,11 +13,11 @@ app.get('/', function(request, response){
   response.sendfile(path.resolve(__dirname, "./public/index.html"));
 });
 
-app.get('/api', function(req, res){
+app.get('/dog-tinder-api', function(req, res){
   // connect to API and get matching dogs
   // connect to DB and get matching dogs
-  petFinderFetch(req.query, function(dogs){
-    res.send(dogs);
+  petFinderFetch(req.query, function(animals){
+    res.send(animals);
   })
 
 
