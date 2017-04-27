@@ -11,11 +11,26 @@ var app = express();
 app.use(express.static('./public'));
 app.use(bodyParser.json());
 
+// sets up Facebook Auth/Login through Passport module
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "http://localhost:3000/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
 app.get('/', function(request, response){
   response.sendfile(path.resolve(__dirname, "./public/index.html"));
 });
 
 // signup/login
+app.get('/login',
+  passport.authenticate('facebook'));
 
 //
 
