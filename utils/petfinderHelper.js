@@ -8,7 +8,7 @@ var querystring = {
 }
 
 var removeSmallPics = function(resultArray){
-
+  resultArray = JSON.parse(resultArray);
   var animals = resultArray.petfinder.pets.pet;
   var modifyPhotos = function(photoArray){
     var newPhotos = [];
