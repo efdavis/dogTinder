@@ -1,13 +1,13 @@
-var request = require('request');
+const request = require('request');
 var qs = require('querystring');
 
-var querystring = {
+const querystring = {
   key: process.env.PET_API_KEY,
   format: 'json',
   animal: 'dog'
 }
 
-var removeSmallPics = function(resultArray){
+function removeSmallPics(resultArray) {
   resultArray = JSON.parse(resultArray);
   var animals = resultArray.petfinder.pets.pet;
   var modifyPhotos = function(photoArray){
@@ -25,7 +25,7 @@ var removeSmallPics = function(resultArray){
   return resultArray;
 }
 
-var fetchAnimals = function(params, callback){
+function fetchAnimals(params, callback){
 
   for(var key in params){
     querystring[key] = params[key]
