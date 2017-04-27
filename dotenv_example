@@ -1,0 +1,4 @@
+PET_API_KEY=fillmein
+PORT=3000
+FACEBOOK_APP_ID=fillmein
+FACEBOOK_APP_SECRET=fillmein
