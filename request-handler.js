@@ -11,19 +11,31 @@ var app = express();
 app.use(express.static('./public'));
 app.use(bodyParser.json());
 
+// set up passport for FB Auth on Express
+app.use(passport.initialize());
+app.use(passport.session());
+
 // sets up Facebook Auth/Login through Passport module
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
   },
-  function(accessToken, refreshToken, profile, cb) {
-    console.log(profile.id, profile.id.length);
+  function(accessToken, refreshToken, profile, done) {
+    // console.log(profile.id, profile.id.length);
     // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      return cb();
+      done(null, profile);
     // });
   }
 ));
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 app.get('/', function(request, response){
   response.sendfile(path.resolve(__dirname, "./public/index.html"));
@@ -31,9 +43,9 @@ app.get('/', function(request, response){
 
 
 // signup/login
-app.post('/login',
-  passport.authenticate('facebook'));
-//
+app.get('/auth/facebook',
+  passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login'}));
+
 app.get('/login', function(req, res){
   res.sendFile(path.resolve(__dirname, './public/login.html'));
 })
@@ -41,7 +53,7 @@ app.get('/login', function(req, res){
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log(req);
+    console.log('Inside FB callback',req);
     // Successful authentication, redirect home.
     res.redirect('/');
   });
