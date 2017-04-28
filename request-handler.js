@@ -29,7 +29,6 @@ app.get('/login', function(req, res){
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log('Inside FB callback',req);
     // Successful authentication, redirect home.
     res.send(req.user);
     // console.log(req.user);
