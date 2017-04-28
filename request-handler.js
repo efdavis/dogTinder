@@ -30,7 +30,7 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.send(req.user);
+    res.redirect('/');
     // console.log(req.user);
     // find or add
   });
