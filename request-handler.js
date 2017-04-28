@@ -35,7 +35,7 @@ app.post('/login',
   passport.authenticate('facebook'));
 //
 app.get('/login', function(req, res){
-  res.send('<form method="post" action="/login"><input type="submit" name="facebook"></form>')
+  res.sendFile(path.resolve(__dirname, './public/login.html'));
 })
 
 app.get('/auth/facebook/callback',
