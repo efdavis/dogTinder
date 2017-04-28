@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('dogtender', null, null, {host: 'localhost', dialect: 'postgres', underscored: true});
+const sequelize = new Sequelize('dogtinder', null, null, {host: 'localhost', dialect: 'postgres', underscored: true});
 
 const User = sequelize.define('user', {
   id: {
@@ -11,7 +11,8 @@ const User = sequelize.define('user', {
   },
   email: Sequelize.STRING,
   password: Sequelize.STRING,
-  message: Sequelize.STRING
+  facebook: Sequelize.STRING
+
 });
 
 const AnimalList = sequelize.define('animalList', {
@@ -28,12 +29,13 @@ const AnimalList = sequelize.define('animalList', {
 });
 
 const Animal = sequelize.define('animal', {
-  counter: {
+  id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
   },
+  petFinderid: {type: Sequelize.STRING, unique: true},
   dogTinderDB: Sequelize.BOOLEAN,
   name: Sequelize.STRING,
   species: Sequelize.STRING,
@@ -67,13 +69,24 @@ const Breed = sequelize.define('breed', {
 });
 
 AnimalList.belongsTo(User);
-Animal.belongsTo(Shelter);
-Animal.hasMany(Breed, {as: 'Breeds'});
 
+AnimalList.belongsToMany(Animal, {through: 'AnimalList_Animal'});
+Animal.belongsToMany(AnimalList, {through: 'AnimalList_Animal'});
+
+Animal.belongsTo(Shelter);
+
+Animal.belongsToMany(Breed, {through: 'Animal_Breeds'});
+Breed.belongsToMany(Animal, {through: 'Animal_Breeds'});
 
 sequelize.sync();
 
-module.exports = sequelize;
+
+exports.sequelize = sequelize;
+exports.User = User;
+exports.AnimalList = AnimalList;
+exports.Animal = Animal;
+exports.Shelter = Shelter;
+exports.Breed = Breed;
 
 // Shelter.create({
 //   address: '123 Main St.',
@@ -84,10 +97,38 @@ module.exports = sequelize;
 
 // Animal.create({
 //   dogTinderDB: true,
-//   name: 'tester dog',
-//   species: 'dog',
-//   age: 'young',
-//   sex: 'm',
+//   name: 'Cooper',
+//   species: 'Dog',
+//   age: 'Young',
+//   sex: 'M',
 //   size: 'L',
 //   description: 'This test dog is one of a kind'
+// }).then((animal) => {
+//            Breed.create({
+//              breed: 'Australian Cattle Dog (Blue Heeler)'
+//            })
+//         })
+//    .then()
+
+
+// Breed.create({
+//   breed: 'Shepherd'
 // })
+
+// Animal.findOne({name: 'tester dog'}).then((dog) => {
+//   Breed.findOne({breed: 'Pug'})
+//          .then((breed) => {
+//           //  dog.addBreed(breed);
+//            console.log('breed: ', breed);
+//          })
+// });
+
+// Animal.findOne({name: 'tester dog'})
+//       .then((dog) => dog.getBreeds()).then((breeds) => console.log(breeds[0].dataValues));
+
+// Animal_Breeds.findAll({}).then((breeds) => console.log(breeds));
+
+// Bre
+
+
+
