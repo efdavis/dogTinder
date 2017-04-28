@@ -5,46 +5,9 @@
 <meta charset="UTF-8">
 </head>
 <body>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '297458047350173',
-      xfbml      : true,
-      version    : 'v2.9'
-    });
-    FB.AppEvents.logPageView();
-    
-    FB.getLoginStatus(function(response) {
-      if (response.status === 'connected') {
-        console.log('Logged in.');
-      }
-      else {
-        FB.login();
-      }
-    });
-  };
+  <a href="/auth/facebook">Login via FB Auth</a>
 
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
-
-<!--
-  Below we include the Login Button social plugin. This button uses
-  the JavaScript SDK to present a graphical Login button that triggers
-  the FB.login() function when clicked.
--->
-
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
-<div id="status">
-</div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
 
 </body>
 </html>
