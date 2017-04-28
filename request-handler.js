@@ -3,8 +3,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var petFinderFetch = require('./utils/petfinderHelper')
 var request = require('request');
-var passport = require('passport')
-var FacebookStrategy = require('passport-facebook').Strategy;
+var passport = require('./utils/fbPassportHelper')
 
 var app = express();
 
@@ -15,32 +14,9 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// sets up Facebook Auth/Login through Passport module
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    // console.log(profile.id, profile.id.length);
-    // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      done(null, profile);
-    // });
-  }
-));
-
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
-
 app.get('/', function(request, response){
   response.sendfile(path.resolve(__dirname, "./public/index.html"));
 });
-
 
 // signup/login
 app.get('/auth/facebook',
@@ -55,7 +31,9 @@ app.get('/auth/facebook/callback',
   function(req, res) {
     console.log('Inside FB callback',req);
     // Successful authentication, redirect home.
-    res.redirect('/');
+    res.send(req.user);
+    // console.log(req.user);
+    // find or add
   });
 
 app.get('/dog-tinder-api', function(req, res){
@@ -64,8 +42,6 @@ app.get('/dog-tinder-api', function(req, res){
   petFinderFetch(req.query, function(animals){
     res.send(animals);
   })
-
-
 })
 
 module.exports = app;
