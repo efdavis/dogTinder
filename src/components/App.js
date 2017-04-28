@@ -9,8 +9,6 @@ export default class App extends React.Component {
     this.state = {
       index: 0,
       selectAnimal: '',
-      //featuredDog: this.props.dogs[0],
-      // allDogs: this.props.dogs,
       featuredDog: '',
       allDogs: '',
       nextClicked: false
@@ -22,11 +20,9 @@ export default class App extends React.Component {
     let that = this;
     axios.get('/dog-tinder-api?location=07470')
       .then(function(response) {
-        console.log('AXIOS GET REQUEST RESPONSE DATA', response.data);
         return response.data;
       })
       .then(function(data) {
-        console.log('THIS IS FEATURED DOG', data.petfinder.pets.pet[0])
         that.setState({
           featuredDog: data.petfinder.pets.pet[0],
           allDogs: data.petfinder.pets.pet
@@ -44,16 +40,6 @@ export default class App extends React.Component {
       index: next
     });
   }
-
-  // selectAnimal(animal) {
-  //   axios({
-  //     method: 'get',
-  //     url: '',
-  //     data: {
-  //       animal: animal
-  //     }
-  //   });
-  // }
 
   render() {
     return (
