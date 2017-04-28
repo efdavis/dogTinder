@@ -5,7 +5,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
+    callbackURL: process.env.ROOT_URL + "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // console.log(profile.id, profile.id.length);
