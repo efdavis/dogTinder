@@ -1,7 +1,7 @@
 import React from 'react';
-import DisplayDog from './DisplayDog';
 import axios from 'axios';
-
+import DisplayDog from './DisplayDog';
+import NavBar from './NavBar';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,9 +11,9 @@ export default class App extends React.Component {
       selectAnimal: '',
       featuredDog: '',
       allDogs: '',
-      nextClicked: false
     }
     this.nextDog = this.nextDog.bind(this);
+    this.handleSearchQuery = this.handleSearchQuery.bind(this);
   }
   
   componentWillMount() {
@@ -30,8 +30,24 @@ export default class App extends React.Component {
       })
       .catch(function (error) {
         console.error(error);
-      })
+      });
   }
+
+  // componentWillMount() {
+  //   axios.get('/dog-tinder-api?location=07470') 
+  //     .then(response => {
+  //       return response.data;
+  //     })
+  //     .then(data => {
+  //       this.setState({
+  //         featuredDog: data.petfinder.pets.pet[0],
+  //         allDogs: data.petfinder.pets.pet
+  //       })
+  //     })
+  //     .catch(error => {
+  //       console.error(error)
+  //     });
+  // }
 
   nextDog() {
     let next = this.state.index+1; 
@@ -40,33 +56,30 @@ export default class App extends React.Component {
       index: next
     });
   }
+  
+  //sends submitted zipcode to server to zipcode endpoint
+  handleSearchQuery(query) {
+    axios.get('/dog-tinder-api?', {
+      params: query
+    })
+    .then(response => {
+      this.setState({
+        //set all dogs equal to animals retrieved from specified zipcode 
+        allDogs: response.data
+      }) 
+    }) 
+    .catch(error => {
+      console.log(error);
+    });
+  }
 
   render() {
+    console.log(this.state)
     return (
       <div>
-        <h1>Dog Tinder</h1>
-        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog}/> : <div></div>}
-        {/*<form action='/dog-tinder-api/' method="GET" onSubmit={ (e) => 
-          e.preventDefault();
-          let animal = document.getElementById('dropdown').value }>
-        </form>
-        <label>
-        <select id="dropdown" value={this.state.value}>
-          <option value="barnyard">barnyard</option>
-          <option value="bird">bird</option>
-          <option value="cat">cat</option>
-          <option value="dog">dog</option>
-          <option value="horse">horse</option>
-          <option value="pig">pig</option>
-          <option value="reptile">reptile</option>
-          <option value="smallfurry">smallfurry</option>
-        </select>
-        </label>*/}
-
-        {/*<div className="featured-dog">
-          <DisplayDog  dog={this.state.featuredDog} nextDog={this.nextDog} />
-        </div>*/}
-
+        <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
+        
+          {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} submitQuery={this.handleSearchQuery}/> : <div></div>}
       </div>
     );
   }
