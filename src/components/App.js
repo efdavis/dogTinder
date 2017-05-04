@@ -8,7 +8,6 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       index: 0,
-      selectAnimal: '',
       featuredDog: '',
       allDogs: '',
     }
@@ -51,9 +50,14 @@ export default class App extends React.Component {
   }
   
   //sends submitted zipcode to server to zipcode endpoint
-  handleSearchQuery(query) {
-    axios.get('/dog-tinder-api?', {
-      params: query
+  handleSearchQuery(zipcode, breed, age, sex) {
+    axios.get('/dog-tinder-api?', { //correct endpoint needed
+      params: {
+        zipcode: zipcode,
+        breed: breed,
+        age: age,
+        sex: sex
+      }
     })
     .then(response => {
       this.setState({
@@ -67,12 +71,12 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log('THIS IS THE FEATURED DOG FROM APP COMPONENT:', this.state.featuredDog)
+    console.log('APP COMPONENT THIS.STATE:', this.state)
     return (
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
         <NavBar submitQuery={this.handleSearchQuery}/>
-        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} previousDog={this.previousDog} index={this.state.index}/> : <div></div>}
+        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} previousDog={this.previousDog} /> : <div></div>}
       </div>
     );
   }

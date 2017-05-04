@@ -6,14 +6,19 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //title: 'test',
       zipcode: 0,
       breed: '',
       age: '',
       sex: ''
     };
   }
+
+  handleSelect() {
+    this.props.submitQuery(filter)
+  }
+
   render() {
+    console.log('NAVBAR THIS.STATE:', this.state);
     return(
       <div className="container">
         {/*<div className="row navigation-bar">
@@ -30,28 +35,30 @@ class NavBar extends React.Component {
             </div>*/}
 
             <Navbar>
+              
               <Navbar.Form pullLeft>
                 <FormGroup>
-                  <FormControl type="number" placeholder="Zipcode" />
+                  <FormControl type="number" placeholder="Zipcode" value={this.state.zipcode} onChange={(e) => this.setState({zipcode: e.target.value})}/>
                 </FormGroup>
+                <Button type="submit" onClick={() => this.props.submitQuery(this.state)}>Submit</Button>
               </Navbar.Form>
             
-            
-            <DropdownButton  title={'Age'} id={`dropdown-basic-${1}`}>
-              <MenuItem eventKey="1" onClick={()=>{console.log('hi')}} >Young</MenuItem>
-              <MenuItem eventKey="2">Adult</MenuItem>
-              <MenuItem eventKey="3" active>Senior</MenuItem>
-            </DropdownButton>
+              <DropdownButton  title={'Age'} id={`dropdown-basic-${1}`} onSelect={() => this.props.submitQuery(this.state)}>
+                <MenuItem eventKey="1" value={this.state.age} onChange={(e) => this.setState({age: e.target.value})} >Young</MenuItem>
+                <MenuItem eventKey="2" value={this.state.age} onChange={(e) => this.setState({age: e.target.value})}>Adult</MenuItem>
+                <MenuItem eventKey="3" value={this.state.age} onChange={(e) => this.setState({age: e.target.value})}>Senior</MenuItem>
+              </DropdownButton>
 
-            <DropdownButton  title={'Sex'} id={`dropdown-basic-${1}`}>
-              <MenuItem eventKey="1" onClick={()=>{console.log('hi')}} >Female</MenuItem>
-              <MenuItem eventKey="2">Male</MenuItem>
-            </DropdownButton>
-            
-            <DropdownButton  title={'Breed'} id={`dropdown-basic-${1}`}>
-              <MenuItem eventKey="1" onClick={()=>{console.log('hi')}} >Female</MenuItem>
-            </DropdownButton>
-            
+              <DropdownButton  title={'Sex'} id={`dropdown-basic-${1}`} onSelect={() => this.props.submitQuery(this.state)}>
+                <MenuItem eventKey="1" value={this.state.sex} onChange={(e) => this.setState({sex: e.target.value})}>Female</MenuItem>
+                <MenuItem eventKey="2" value={this.state.sex} onChange={(e) => this.setState({sex: e.target.value})}>Male</MenuItem>
+              </DropdownButton>
+              
+              <DropdownButton  title={'Breed'} id={`dropdown-basic-${1}`} onSelect={() => this.props.submitQuery(this.state)}>
+                <MenuItem eventKey="1" >Female</MenuItem>
+              </DropdownButton>
+              
+
           </Navbar>
 
           {/*</nav>*/}
