@@ -13,47 +13,40 @@ export default class App extends React.Component {
       allDogs: '',
     }
     this.nextDog = this.nextDog.bind(this);
+    this.previousDog = this.previousDog.bind(this);
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
   }
   
+
   componentWillMount() {
-    let that = this;
-    axios.get('/dog-tinder-api?location=07470')
-      .then(function(response) {
+    axios.get('/dog-tinder-api?location=07470') 
+      .then(response => {
         return response.data;
       })
-      .then(function(data) {
-        that.setState({
+      .then(data => {
+        this.setState({
           featuredDog: data.petfinder.pets.pet[0],
           allDogs: data.petfinder.pets.pet
         })
       })
-      .catch(function (error) {
-        console.error(error);
+      .catch(error => {
+        console.error(error)
       });
   }
 
-  // componentWillMount() {
-  //   axios.get('/dog-tinder-api?location=07470') 
-  //     .then(response => {
-  //       return response.data;
-  //     })
-  //     .then(data => {
-  //       this.setState({
-  //         featuredDog: data.petfinder.pets.pet[0],
-  //         allDogs: data.petfinder.pets.pet
-  //       })
-  //     })
-  //     .catch(error => {
-  //       console.error(error)
-  //     });
-  // }
-
   nextDog() {
-    let next = this.state.index+1; 
+    let next = this.state.index + 1; 
     this.setState({
       featuredDog: this.state.allDogs[next],
       index: next
+    });
+  }
+
+  previousDog() {
+    let previous = this.state.index - 1;
+    this.setState({
+      featuredDog: this.state.allDogs[previous],
+      index: previous
     });
   }
   
@@ -74,12 +67,12 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log(this.state)
+    console.log('THIS IS THE FEATURED DOG FROM APP COMPONENT:', this.state.featuredDog)
     return (
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
         <NavBar submitQuery={this.handleSearchQuery}/>
-        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} /> : <div></div>}
+        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} previousDog={this.previousDog} index={this.state.index}/> : <div></div>}
       </div>
     );
   }
