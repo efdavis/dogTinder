@@ -78,8 +78,8 @@ export default class App extends React.Component {
     return (
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
-        
-          {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} submitQuery={this.handleSearchQuery}/> : <div></div>}
+        <NavBar submitQuery={this.handleSearchQuery}/>
+        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} /> : <div></div>}
       </div>
     );
   }
