@@ -11,7 +11,7 @@ const User = sequelize.define('user', {
   },
   email: Sequelize.STRING,
   password: Sequelize.STRING,
-  facebook: Sequelize.STRING
+  facebookID: Sequelize.STRING
 
 });
 
@@ -87,48 +87,6 @@ exports.AnimalList = AnimalList;
 exports.Animal = Animal;
 exports.Shelter = Shelter;
 exports.Breed = Breed;
-
-// Shelter.create({
-//   address: '123 Main St.',
-//   phone: '123-456-7890',
-//   name: 'Test Shelter',
-//   zip: '12345'
-// })
-
-// Animal.create({
-//   dogTinderDB: true,
-//   name: 'Cooper',
-//   species: 'Dog',
-//   age: 'Young',
-//   sex: 'M',
-//   size: 'L',
-//   description: 'This test dog is one of a kind'
-// }).then((animal) => {
-//            Breed.create({
-//              breed: 'Australian Cattle Dog (Blue Heeler)'
-//            })
-//         })
-//    .then()
-
-
-// Breed.create({
-//   breed: 'Shepherd'
-// })
-
-// Animal.findOne({name: 'tester dog'}).then((dog) => {
-//   Breed.findOne({breed: 'Pug'})
-//          .then((breed) => {
-//           //  dog.addBreed(breed);
-//            console.log('breed: ', breed);
-//          })
-// });
-
-// Animal.findOne({name: 'tester dog'})
-//       .then((dog) => dog.getBreeds()).then((breeds) => console.log(breeds[0].dataValues));
-
-// Animal_Breeds.findAll({}).then((breeds) => console.log(breeds));
-
-// Bre
 
 
 
