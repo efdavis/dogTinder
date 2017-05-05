@@ -8,9 +8,13 @@ passport.use(new FacebookStrategy({
     callbackURL: process.env.ROOT_URL + "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    // console.log(profile.id, profile.id.length);
+    console.log('Logging Profile info from fbPassPortHelper', profile);
+    // find or create a user in the database
+    // set the session using the accessToken
+    
+
     // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      done(null, profile);
+    done(null, profile);
     // });
   }
 ));
