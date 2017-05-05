@@ -5,12 +5,16 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
+    callbackURL: process.env.ROOT_URL + "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    // console.log(profile.id, profile.id.length);
+    console.log('Logging Profile info from fbPassPortHelper', profile);
+    // find or create a user in the database
+    // set the session using the accessToken
+    
+
     // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      done(null, profile);
+    done(null, profile);
     // });
   }
 ));

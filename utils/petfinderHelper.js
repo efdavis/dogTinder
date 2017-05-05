@@ -30,7 +30,7 @@ function fetchAnimals(params, callback){
   for(var key in params){
     querystring[key] = params[key]
   }
-  console.log("Query String: ", querystring);
+  // console.log("Query String: ", querystring);
 
   request({
     method: 'get',
