@@ -17,9 +17,8 @@ class Kennel extends React.Component {
     <div><h1 className="page-header">My Kennel</h1>
         
         <ul className="media-list col-md-6">{listOfDogs.map(function(dog){
-          console.log(dog.media.photos.photo[0]);
           return <li className="media dog-box" key={dog.id.$t}>
-                      <h3 className="media-heading">
+                    <h3 className="media-heading">
                         {dog.name.$t}
                       </h3>
                     <div className="media-left">
