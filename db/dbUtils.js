@@ -24,7 +24,9 @@ const saveAnimals = (animalObjArr, callback) => {
     const animal = animalObjArr.pop()
 
     db.Animal.findOrCreate({where: animal})
-             .then(saveAnimals(animalObjArr, callback));
+             .then(() => {
+               saveAnimals(animalObjArr, callback)
+             })
   }
 };
 
@@ -53,8 +55,11 @@ const createAnimalList = (userLookup, callback) => {
                  db.User.findOne({where: userLookup})
                         .then((user) => {
                           list.setUser(user);
-                          callback(list.dataValues, user.dataValues);
                         })
+                        .then(() =>{
+                          callback();
+                        })
+                        
                }) 
 };
 
@@ -65,6 +70,25 @@ const addAnimalsToList = (UserId, animalIdArr, callback) => {
                })
                .then(callback())
 };
+
+const findUserList = (UserId, callback) => {
+  db.AnimalList.findOne({where: {userId: UserId}})
+               .then((list) => {
+                 callback(list);
+               })
+};
+
+const updateList = (list, animalIdArr, callback) => {
+  if (animalIdArr.length > 0) {
+    let animal = animalIdArr.pop();
+    list.addAnimal(animal)
+        .then(() => {
+          updateList(list, animalIdArr, callback)
+        })
+  } else {
+    callback();
+  } 
+}
 
 const getUserAnimals = (listId, callback) => {
   let queryString = `SELECT animals."petFinderid"
@@ -117,21 +141,14 @@ const findAnimalIds = (animalObjArr, callback) => {
   recurseAnimals(animalObjArr, callback);
 };
 
-
 const saveUserList = (userLookupArr, animalObjArr, callback) => {
   let userId;
-  let listId;
   addOrFindUser(...userLookupArr, (userInfo) => {
     userId = userInfo.id;
-    createAnimalList({id: userInfo.id}, (list, user) => {
-      listId = list.id;
+    createAnimalList({id: userInfo.id}, () => {
       saveAnimals(animalObjArr, () => {
-        findAnimalIds(animalObjArr, (idArr) => {
-          // error here!
-          console.log('userID defined here ==================>', userId);
-          console.log('listID defined here ==================>', listId);
-          addAnimalsToList(userId, idArr, () => {
-            console.log('user list saved.')
+        findAnimalIds(animalObjArr, (result) => {
+          addAnimalsToList(userId, result, () => {
             callback();
           });
         })
@@ -140,7 +157,16 @@ const saveUserList = (userLookupArr, animalObjArr, callback) => {
   })
 };
 
-saveUserList(
-  ['newUser@yahoo.com', 'IloveDogs', 'FACEBOOK12345'], 
-  [{petFinderid: 'fake123'}, {petFinderid: 'fake456'}, {petFinderid: 'fake789'}, {petFinderid: 'fake666'}],
-  () => {console.log(userId, listId)});
+const updateUserList = (userLookup, animalObjArr, callback) => {
+};
+
+// findUserList(12, (result) => {console.log(result)});
+
+// getUserAnimals(25, (animals, metadata) => {console.log(animals)})
+
+// findUserList(12, (result) => {
+//   let list = result;
+//   updateList(list, [4,5,6], () => {console.log('done!')})
+// })
+
+
