@@ -2,6 +2,22 @@
   margin-bottom: 30px;
 }
 
+body {
+  background-color: #6F6F6F;
+}
+
+.container {
+  background-color: #FCFCFC;
+}
+
+#featuredDog {
+  height: 300px;
+}
+
+#dog img {
+  height: 300px;
+}
+
 label {
   display: inline;
 }
