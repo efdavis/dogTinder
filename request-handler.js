@@ -15,7 +15,7 @@ app.use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: true, r
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', function(request, response){
+app.get('/', (request, response) => {
   if(request.session.user) {
     console.log(request.session.user.displayName + ' is logged in with FB ID: ' + request.session.user.id)
   }
@@ -26,13 +26,13 @@ app.get('/', function(request, response){
 app.get('/auth/facebook',
   passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login'}));
 
-app.get('/login', function(req, res){
+app.get('/login', (req, res) => {
   res.sendFile(path.resolve(__dirname, './public/login.html'));
-})
+});
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
+  (req, res) => {
     // Successful authentication, redirect home.
     req.session.user = req.user
     // find or add user
@@ -43,7 +43,7 @@ app.get('/auth/facebook/callback',
     
   });
 
-app.get('/dog-tinder-api', function(req, res){
+app.get('/dog-tinder-api', (req, res) => {
   // connect to API and get matching dogs
   // connect to DB and get matching dogs
   petFinderFetch(req.query, function(animals){
