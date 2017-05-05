@@ -28,6 +28,25 @@ const saveAnimals = (animalObjArr, callback) => {
   }
 };
 
+const addBreedsToAnimal = (animalLookup, breeds, callback) => {
+  db.Animal.findOne({where: animalLookup})
+           .then( (animal) => {animal.setBreeds(breeds)} )
+           .then( () => {callback()} )
+};
+
+const getAnimalBreeds = (animalId, callback) => {
+  let queryString = `SELECT breeds.breed
+    FROM breeds
+    INNER JOIN "Animal_Breeds"
+    ON "breedId" = breeds.id
+    WHERE "Animal_Breeds"."animalId" = ${animalId};`;
+
+  db.sequelize.query(queryString).spread((results, metadata) => {
+    
+    callback(results, metadata);
+  });
+};
+
 const createAnimalList = (userLookup, callback) => {  
   db.AnimalList.create()
                .then((list) => {
@@ -45,7 +64,7 @@ const addAnimalsToList = (UserId, animalObjArr, callback) => {
                  list.setAnimals(animalObjArr);
                })
                .then(callback())
-}
+};
 
 const getUserAnimals = (listId, callback) => {
   let queryString = `SELECT animals."petFinderid"
@@ -58,7 +77,27 @@ const getUserAnimals = (listId, callback) => {
     
     callback(results, metadata);
   });
-}
+};
+
+const findBreedIds = (breedObjArr, callback) => {
+  let ids = [];
+
+  const recurseAnimals = (breedObjArr, callback) => {
+    if (breedObjArr.length > 0) {
+      let currentBreed = breedObjArr.pop();
+      console.log('current breed: ', currentBreed);
+      db.Breed.findOne({where: currentBreed})
+               .then((breed) => {
+                 ids.push(breed.dataValues.id);
+                 recurseAnimals(breedObjArr, callback);
+               })
+    } else {
+      callback(ids);
+    }
+  }
+
+  recurseAnimals(breedObjArr, callback);
+};
 
 const findAnimalIds = (animalObjArr, callback) => {
   let ids = [];
@@ -78,6 +117,6 @@ const findAnimalIds = (animalObjArr, callback) => {
   }
 
   recurseAnimals(animalObjArr, callback);
-}
+};
 
 
