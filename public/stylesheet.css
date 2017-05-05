@@ -5,3 +5,7 @@
 label {
   display: inline;
 }
+
+.img-fluid {
+  margin: auto;
+}
