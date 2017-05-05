@@ -1,72 +1,91 @@
 import React from 'react';
-import DisplayDog from './DisplayDog';
 import axios from 'axios';
-
+import DisplayDog from './DisplayDog';
+import NavBar from './NavBar';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       index: 0,
-      selectAnimal: '',
       featuredDog: '',
       allDogs: '',
-      nextClicked: false
     }
     this.nextDog = this.nextDog.bind(this);
+    this.previousDog = this.previousDog.bind(this);
+    this.saveDoggy = this.saveDoggy.bind(this);
+    this.handleSearchQuery = this.handleSearchQuery.bind(this);
   }
   
+
   componentWillMount() {
-    let that = this;
-    axios.get('/dog-tinder-api?location=07470')
-      .then(function(response) {
+    axios.get('/dog-tinder-api?location=07470') 
+      .then(response => {
         return response.data;
       })
-      .then(function(data) {
-        that.setState({
+      .then(data => {
+        this.setState({
           featuredDog: data.petfinder.pets.pet[0],
           allDogs: data.petfinder.pets.pet
         })
       })
-      .catch(function (error) {
-        console.error(error);
-      })
+      .catch(error => {
+        console.error(error)
+      });
   }
-
+  
   nextDog() {
-    let next = this.state.index+1; 
+    let next = this.state.index + 1; 
     this.setState({
       featuredDog: this.state.allDogs[next],
       index: next
     });
   }
 
+  previousDog() {
+    let previous = this.state.index - 1;
+    this.setState({
+      featuredDog: this.state.allDogs[previous],
+      index: previous
+    });
+  }
+
+  saveDoggy(dog) {
+    axios({
+      method: 'post',
+      url: '/dog-tinder-api', //confirm correct endpoint for saving dog to list
+      data: dog
+    });
+  }
+  
+  //sends submitted zipcode to server to zipcode endpoint
+  handleSearchQuery(zipcode, breed, age, sex) {
+    axios.get('/dog-tinder-api?', { //correct endpoint needed
+      params: {
+        zipcode: zipcode,
+        breed: breed,
+        age: age,
+        sex: sex
+      }
+    })
+    .then(response => {
+      this.setState({
+        //set all dogs equal to animals retrieved from specified zipcode 
+        allDogs: response.data
+      }) 
+    }) 
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   render() {
+    console.log('APP COMPONENT THIS.STATE:', this.state)
     return (
       <div>
-        <h1>Dog Tinder</h1>
-        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog}/> : <div></div>}
-        {/*<form action='/dog-tinder-api/' method="GET" onSubmit={ (e) => 
-          e.preventDefault();
-          let animal = document.getElementById('dropdown').value }>
-        </form>
-        <label>
-        <select id="dropdown" value={this.state.value}>
-          <option value="barnyard">barnyard</option>
-          <option value="bird">bird</option>
-          <option value="cat">cat</option>
-          <option value="dog">dog</option>
-          <option value="horse">horse</option>
-          <option value="pig">pig</option>
-          <option value="reptile">reptile</option>
-          <option value="smallfurry">smallfurry</option>
-        </select>
-        </label>*/}
-
-        {/*<div className="featured-dog">
-          <DisplayDog  dog={this.state.featuredDog} nextDog={this.nextDog} />
-        </div>*/}
-
+        <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
+        <NavBar submitQuery={this.handleSearchQuery}/>
+        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
       </div>
     );
   }
