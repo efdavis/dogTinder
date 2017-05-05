@@ -1,7 +1,7 @@
 import React from 'react';
-import DisplayDog from './DisplayDog.jsx';
+import DisplayDog from './DisplayDog.js';
 import axios from 'axios';
-import Kennel from './Kennel.jsx';
+import Kennel from './Kennel.js';
 import NavBar from './NavBar';
 
 export default class App extends React.Component {
