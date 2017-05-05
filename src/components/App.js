@@ -32,7 +32,7 @@ export default class App extends React.Component {
         console.error(error)
       });
   }
-
+  
   nextDog() {
     let next = this.state.index + 1; 
     this.setState({

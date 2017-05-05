@@ -49,6 +49,10 @@ export default class DisplayDog extends React.Component {
           <span className="sr-only">Previous</span>
           </span>
         </a>
+
+        <button type="button" className="btn btn-default btn-lg">
+          <span className="glyphicon glyphicon-heart" aria-hidden="true"></span> Save
+        </button>
       </div>
       </div>
 

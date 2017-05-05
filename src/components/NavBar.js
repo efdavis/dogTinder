@@ -11,11 +11,16 @@ class NavBar extends React.Component {
       age: '',
       sex: ''
     };
+    this.handleSelect = this.handleSelect.bind(this);
   }
+  //on dropdown menu select, set of state property must be set to input value
+    //the new state must be passed up to parent component 
 
-  handleSelect() {
-    this.props.submitQuery(filter)
+  handleSelect(value, e) {
+    this.setState({value: e.target.value});
+    this.props.submitQuery(this.state);
   }
+  
 
   render() {
     console.log('NAVBAR THIS.STATE:', this.state);
@@ -44,20 +49,24 @@ class NavBar extends React.Component {
               </Navbar.Form>
             
               <DropdownButton  title={'Age'} id={`dropdown-basic-${1}`} onSelect={() => this.props.submitQuery(this.state)}>
-                <MenuItem eventKey="1" value={this.state.age} onChange={(e) => this.setState({age: e.target.value})} >Young</MenuItem>
-                <MenuItem eventKey="2" value={this.state.age} onChange={(e) => this.setState({age: e.target.value})}>Adult</MenuItem>
-                <MenuItem eventKey="3" value={this.state.age} onChange={(e) => this.setState({age: e.target.value})}>Senior</MenuItem>
+                <MenuItem eventKey="1" value={this.state.age} onSelect={(e) => this.setState({age: e.target.value})}>Young</MenuItem>
+                <MenuItem eventKey="2" value={this.state.age} onSelect={(e) => this.setState({age: e.target.value})}>Adult</MenuItem>
+                <MenuItem eventKey="3" value={this.state.age} onSelect={(e) => this.setState({age: e.target.value})}>Senior</MenuItem>
               </DropdownButton>
 
               <DropdownButton  title={'Sex'} id={`dropdown-basic-${1}`} onSelect={() => this.props.submitQuery(this.state)}>
-                <MenuItem eventKey="1" value={this.state.sex} onChange={(e) => this.setState({sex: e.target.value})}>Female</MenuItem>
-                <MenuItem eventKey="2" value={this.state.sex} onChange={(e) => this.setState({sex: e.target.value})}>Male</MenuItem>
+                <MenuItem eventKey="1" value={this.state.sex} onSelect={(e) => this.setState({sex: e.target.value})}>Female</MenuItem>
+                <MenuItem eventKey="2" value={this.state.sex} onSelect={(e) => this.setState({sex: e.target.value})}>Male</MenuItem>
               </DropdownButton>
               
               <DropdownButton  title={'Breed'} id={`dropdown-basic-${1}`} onSelect={() => this.props.submitQuery(this.state)}>
                 <MenuItem eventKey="1" >Female</MenuItem>
               </DropdownButton>
               
+             
+              <div className="dropdown clearfix"> <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Dropdown <span className="caret"></span> </button> <ul className="dropdown-menu" aria-labelledby="dropdownMenu1"> <li><a href="#">Action</a></li> <li><a href="#">Another action</a></li> <li><a href="#">Something else here</a></li> </ul> </div>
+
+
 
           </Navbar>
 
