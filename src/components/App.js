@@ -13,6 +13,7 @@ export default class App extends React.Component {
     }
     this.nextDog = this.nextDog.bind(this);
     this.previousDog = this.previousDog.bind(this);
+    this.saveDoggy = this.saveDoggy.bind(this);
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
   }
   
@@ -48,6 +49,14 @@ export default class App extends React.Component {
       index: previous
     });
   }
+
+  saveDoggy(dog) {
+    axios({
+      method: 'post',
+      url: '/dog-tinder-api', //confirm correct endpoint for saving dog to list
+      data: dog
+    });
+  }
   
   //sends submitted zipcode to server to zipcode endpoint
   handleSearchQuery(zipcode, breed, age, sex) {
@@ -76,7 +85,7 @@ export default class App extends React.Component {
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
         <NavBar submitQuery={this.handleSearchQuery}/>
-        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} previousDog={this.previousDog} /> : <div></div>}
+        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
       </div>
     );
   }
