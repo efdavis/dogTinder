@@ -34,7 +34,7 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   (req, res) => {
     // Successful authentication, redirect home.
-    req.session.user = req.user
+    req.session.user = req.user;
     // find or add user
     // user id is req.user.id
     // user's name is req.user.displayName
@@ -44,16 +44,33 @@ app.get('/auth/facebook/callback',
   });
 
 app.post('/dog-tinder-api/list', (req,res) => {
-  // this route gets an array of dogs
+  // this route gets an array of dogs from the user's dog-list
+  // 
+  console.log(req.user);
+  /* THIS IS WHAT THE USER OBJECT LOOKS LIKE
+  { id: '10158574996565052',
+  displayName: 'Scott Moschella',
+  name: {},
+  provider: 'facebook',
+  _raw: '{"name":"Scott Moschella","id":"10158574996565052"}',
+  _json: { name: 'Scott Moschella', id: '10158574996565052' } }
+*/
+  // user will come in as req.user
+  console.log(req.body)
+//  [ 12345, 12346, 12347, 12348 ]
+  // find user in DB, save the animals from req.body into
+  // the user's list
+
   res.send(201);
 })
 
 app.get('/dog-tinder-api', (req, res) => {
   // connect to API and get matching dogs
-  // connect to DB and get matching dogs
   petFinderFetch(req.query, function(animals){
+    // get animals from DB here and append them to these 'animals'
     res.send(animals);
   })
+
 })
 
 module.exports = app;
