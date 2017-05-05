@@ -14,7 +14,7 @@ export default class DisplayDog extends React.Component {
         <div id="featuredDog"className="carousel slide" >
           <div className="carousel-inner" >
             <div className="item active" id="dog">
-              <img className="img-fluid" width={600} height={300} alt="Responsive image" src={this.props.dog.media.photos.photo[0]}/>
+              <img className="img-fluid" height="250px" alt="Responsive image" src={this.props.dog.media.photos.photo[0]}/>
               <div className="carousel-caption">
                 {this.props.dog.name.$t}
               </div>
@@ -27,7 +27,7 @@ export default class DisplayDog extends React.Component {
             <span className="sr-only">Next</span>
           </a>
           <a className="carousel-control right" role="button" href="#" onClick={() => this.props.previousDog()}>
-            <span className="glyphicon glyphicon-chevon-right">
+            <span className="glyphicon glyphicon-chevron-right">
             <span className="sr-only">Previous</span>
             </span>
           </a>

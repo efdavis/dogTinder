@@ -1,6 +1,6 @@
 import React from 'react';
-import DisplayDog from './DisplayDog.js';
 import axios from 'axios';
+import DisplayDog from './DisplayDog';
 import Kennel from './Kennel.js';
 import NavBar from './NavBar';
 
@@ -51,17 +51,22 @@ export default class App extends React.Component {
     });
   }
 
-  saveDoggy(dog) {
+  saveDoggy(dog) { //WILL BE SAVING A LIST, save dog should save dog to list
     axios({
       method: 'post',
       url: '/dog-tinder-api', //confirm correct endpoint for saving dog to list
       data: dog
     });
   }
+
+  saveList(list) {  //send json array of dog ids (when user hits save push dog id into list)
+
+  }
   
   //sends submitted zipcode to server to zipcode endpoint
-  handleSearchQuery(zipcode, breed, age, sex) {
-    axios.get('/dog-tinder-api?', { //correct endpoint needed
+  handleSearchQuery(zipcode, breed, age, sex) { 
+    //add logic to remove null parameters
+    axios.get('/dog-tinder-api', { //correct endpoint needed
       params: {
         zipcode: zipcode,
         breed: breed,
