@@ -43,6 +43,11 @@ app.get('/auth/facebook/callback',
     
   });
 
+app.post('/dog-tinder-api/list', (req,res) => {
+  // this route gets an array of dogs
+  res.send(201);
+})
+
 app.get('/dog-tinder-api', (req, res) => {
   // connect to API and get matching dogs
   // connect to DB and get matching dogs
