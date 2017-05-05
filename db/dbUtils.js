@@ -1,20 +1,20 @@
 const db = require('./dbConnection.js');
 
-const addUser = (email, password, facebookID, callback) => {
+const addOrFindUser = (email, password, facebookID, callback) => {
   db.User.findOrCreate({where: {
     email: email,
     password: password,
     facebookID: facebookID
-  }}).then((result) => callback(result));
+  }}).then((result) => callback(result[0].dataValues));
 };
 
-const addShelter = (address, phone, name, zip) => {
+const addShelter = (address, phone, name, zip, callback) => {
   db.Shelter.create({
     address: address,
     phone: phone,
     name: name,
     zip: zip
-  })
+  }).then((result) => { callback() })
 };
 
 const saveAnimals = (animalObjArr, callback) => {
@@ -53,15 +53,15 @@ const createAnimalList = (userLookup, callback) => {
                  db.User.findOne({where: userLookup})
                         .then((user) => {
                           list.setUser(user);
-                          callback(user, list);
+                          callback(list.dataValues, user.dataValues);
                         })
                }) 
 };
 
-const addAnimalsToList = (UserId, animalObjArr, callback) => {
+const addAnimalsToList = (UserId, animalIdArr, callback) => {
   db.AnimalList.findOne({where: {userId : UserId}})
                .then((list) => {
-                 list.setAnimals(animalObjArr);
+                 list.setAnimals(animalIdArr);
                })
                .then(callback())
 };
@@ -85,7 +85,6 @@ const findBreedIds = (breedObjArr, callback) => {
   const recurseAnimals = (breedObjArr, callback) => {
     if (breedObjArr.length > 0) {
       let currentBreed = breedObjArr.pop();
-      console.log('current breed: ', currentBreed);
       db.Breed.findOne({where: currentBreed})
                .then((breed) => {
                  ids.push(breed.dataValues.id);
@@ -105,7 +104,6 @@ const findAnimalIds = (animalObjArr, callback) => {
   const recurseAnimals = (animalObjArr, callback) => {
     if (animalObjArr.length > 0) {
       let currentAnimal = animalObjArr.pop();
-      console.log('current animal: ', currentAnimal);
       db.Animal.findOne({where: currentAnimal})
                .then((animal) => {
                  ids.push(animal.dataValues.id);
@@ -120,3 +118,29 @@ const findAnimalIds = (animalObjArr, callback) => {
 };
 
 
+const saveUserList = (userLookupArr, animalObjArr, callback) => {
+  let userId;
+  let listId;
+  addOrFindUser(...userLookupArr, (userInfo) => {
+    userId = userInfo.id;
+    createAnimalList({id: userInfo.id}, (list, user) => {
+      listId = list.id;
+      saveAnimals(animalObjArr, () => {
+        findAnimalIds(animalObjArr, (idArr) => {
+          // error here!
+          console.log('userID defined here ==================>', userId);
+          console.log('listID defined here ==================>', listId);
+          addAnimalsToList(userId, idArr, () => {
+            console.log('user list saved.')
+            callback();
+          });
+        })
+      })
+    })
+  })
+};
+
+saveUserList(
+  ['newUser@yahoo.com', 'IloveDogs', 'FACEBOOK12345'], 
+  [{petFinderid: 'fake123'}, {petFinderid: 'fake456'}, {petFinderid: 'fake789'}, {petFinderid: 'fake666'}],
+  () => {console.log(userId, listId)});
