@@ -1,0 +1,10 @@
+/*.carousel .item>img {
+  position: relative;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+}
+
+.carousel-inner > .item > img {
+    min-width: 100%;
+}*/
