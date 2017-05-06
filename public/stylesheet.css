@@ -12,6 +12,8 @@ body {
 
 #featuredDog {
   height: 300px;
+  width: 500px;
+  background-color: #040404;
 }
 
 #dog img {
