@@ -8,7 +8,7 @@ class SaveDog extends React.Component {
   }
   render() {
     return (
-      <button type="button" className="btn btn-default btn-lg" style={{"color": "red"}} >
+      <button type="button" className="btn btn-default btn-lg" style={{"color": "red"}} onClick={() =>{this.props.saveDog(this.props.currentDog)}} >
         <span className="glyphicon glyphicon-heart" aria-hidden="true"></span> Save
       </button>
     );
