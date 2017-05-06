@@ -57,7 +57,7 @@ app.post('/dog-tinder-api/list', (req,res) => {
 */
   // user will come in as req.user
   console.log(req.body)
-//  [ 12345, 12346, 12347, 12348 ]
+//  [ 36649333, 36056073, 37403092, 37609758 ]
   // find user in DB, save the animals from req.body into
   // the user's list
 

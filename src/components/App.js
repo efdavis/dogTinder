@@ -11,6 +11,7 @@ export default class App extends React.Component {
       index: 0,
       featuredDog: '',
       allDogs: '',
+      animalList: []
     }
     this.nextDog = this.nextDog.bind(this);
     this.previousDog = this.previousDog.bind(this);
@@ -52,11 +53,19 @@ export default class App extends React.Component {
   }
 
   saveDoggy(dog) { //WILL BE SAVING A LIST, save dog should save dog to list
+    let tempArray = this.state.animalList.slice();
+    tempArray.push(dog);
+    let idArray = tempArray.map(function(item){return item.id.$t});
     axios({
       method: 'post',
-      url: '/dog-tinder-api', //confirm correct endpoint for saving dog to list
-      data: dog
-    });
+      url: '/dog-tinder-api/list', //confirm correct endpoint for saving dog to list
+      data: idArray
+    }).then(() => {
+      this.setState({animalList: tempArray});
+    })
+    .catch(function(){
+      console.log("There was an error saving the list to the database")
+    })
   }
 
   saveList(list) {  //send json array of dog ids (when user hits save push dog id into list)
@@ -92,6 +101,7 @@ export default class App extends React.Component {
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
         <NavBar submitQuery={this.handleSearchQuery}/>
         {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
+        <Kennel animalList={this.state.animalList}/>
       </div>
     );
   }

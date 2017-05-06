@@ -10,15 +10,18 @@ export default class DisplayDog extends React.Component {
   render() {
     console.log('THIS IS THE PROPS.dog', this.props.dog.media.photos.photo)
     return (
-      <div>
+
+
+
         <div id="featuredDog"className="carousel slide" >
           <div className="carousel-inner" >
             <div className="item active" id="dog">
-              <img className="img-fluid" height="250px" alt="Responsive image" src={this.props.dog.media.photos.photo[0]}/>
-              <div className="carousel-caption">
+              <div>
+                <img className="img-fluid" height="250px" alt="Responsive image" src={this.props.dog.media.photos.photo[0]}/>
+                <div className="carousel-caption">
                 {this.props.dog.name.$t}
               </div>
-              <SaveDog saveDog={this.props.saveDoggy}/>
+              <SaveDog currentDog={this.props.dog} saveDog={this.props.saveDoggy}/>
             </div>
           </div>
           <a className="carousel-control left" role="button" href="#" onClick={() => this.props.nextDog()}>
