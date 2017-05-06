@@ -7,7 +7,6 @@ class Kennel extends React.Component {
     super(props);
 
     this.state = {
-      dogList: listOfDogs
     };
 
   }
@@ -16,7 +15,7 @@ class Kennel extends React.Component {
     return (
     <div><h1 className="page-header">My Kennel</h1>
         
-        <ul className="media-list col-md-6">{listOfDogs.map(function(dog){
+        <ul className="media-list col-md-6">{this.props.animalList.map(function(dog){
           return <li className="media dog-box" key={dog.id.$t}>
                     <h3 className="media-heading">
                         {dog.name.$t}
@@ -40,8 +39,5 @@ class Kennel extends React.Component {
 
 }
 
-ReactDOM.render(<Kennel />, document.getElementById("kennel"));
-
-
-
+module.exports = Kennel;
 // </div>{dog.name}</div><p>{dog.description}</p></div>
