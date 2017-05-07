@@ -68,24 +68,26 @@ export default class App extends React.Component {
     })
   }
 
-  saveList(list) {  //send json array of dog ids (when user hits save push dog id into list)
+  // saveList(list) {  //send json array of dog ids (when user hits save push dog id into list)
 
-  }
+  // }
   
   //sends submitted zipcode to server to zipcode endpoint
-  handleSearchQuery(zipcode, breed, age, sex) { 
+  handleSearchQuery(zipcode = 94103, breed, age, sex) { 
+    console.log('GET REQUEST PARAMETRS:', age)
     //add logic to remove null parameters
-    axios.get('/dog-tinder-api', { //correct endpoint needed
-      params: {
-        zipcode: zipcode,
-        breed: breed,
-        age: age,
-        sex: sex
-      }
+    let data = {}; //check if server requires array or object format
+    const filterArgs = function() {
+      data.zipcode = zipcode;
+      if (breed !== '') { data.breed = breed; }
+      if (age !== '') { data.age = age; }
+      if (sex !== '') { data.sex = sex; }
+    }
+    axios.get('/dog-tinder-api', { 
+      params: data
     })
     .then(response => {
       this.setState({
-        //set all dogs equal to animals retrieved from specified zipcode 
         allDogs: response.data
       }) 
     }) 
@@ -95,11 +97,10 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log('APP COMPONENT THIS.STATE:', this.state)
     return (
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
-        <NavBar submitQuery={this.handleSearchQuery}/>
+        <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>
         {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
         <Kennel animalList={this.state.animalList}/>
       </div>
