@@ -11,33 +11,21 @@ class NavBar extends React.Component {
       age: '',
       sex: ''
     };
-    this.handleSelect = this.handleSelect.bind(this);
-  }
-  //on dropdown menu select, set of state property must be set to input value
-    //the new state must be passed up to parent component 
-
-  handleSelect(value, e) {
-    this.setState({value: e.target.value});
-    this.props.submitQuery(this.state);
+  this.handleSelect = this.handleSelect.bind(this);
   }
   
+  handleSelect() {
+    this.props.submitQuery(this.state);
+  }
 
   render() {
     console.log('NAVBAR THIS.STATE:', this.state);
+    // console.log('NAVBAR THIS.PROPS.DOGS', this.props.submitQuery)
+  
     return(
       <div className="container">
         {/*<div className="row navigation-bar">
           <nav className="navbar navbar-default" role="navigation">*/}
-
-           {/*<div className="container-fluid">
-              <form className="navbar-form navbar-left" role="search">
-                <div className="form-group">
-                  <input type="number" className="form-control" placeholder="Zipcode" 
-                  value={this.state.zipcode} onChange={(e) => { this.setState({zipcode: e.target.value}) }}/>
-                </div>
-                <button type="submit" className="btn btn-default" onClick={() => this.props.submitQuery(this.state)}>Submit</button>
-              </form>
-            </div>*/}
 
             <Navbar>
               
@@ -48,20 +36,39 @@ class NavBar extends React.Component {
                 <Button type="submit" onClick={() => this.props.submitQuery(this.state)}>Submit</Button>
               </Navbar.Form>
 
-              <div className="container">
+              {/*<div className="container">*/}
 
-                <select>
-                  <option value="test">Female</option>
-                  <option value="test2">Male</option>
-                </select>
+              <form id="selectGender">
+                <label>
+                  <select value={this.state.sex} onChange={(e) => {this.setState({sex: e.target.value}); this.handleSelect()}}>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                  </select>
+                </label>
+              </form>
+ 
+              <form id="selectAge">
+                <label>
+                  <select value={this.state.age} onChange={(e) => {this.setState({age: e.target.value}); this.handleSelect()}} >
+                    <option>Young</option>
+                    <option>Adult</option>
+                    <option>Senior</option>
+                  </select>
+                </label>
+              
+              </form>
 
-                <select>
-                  <option value="test">Young</option>
-                  <option value="test2">Adult</option>
-                  <option value="test2">Senior</option>
-                </select>
+               <form id="selectBreed">
+                <label>
+                  <select value={this.state.breed} onChange={(e) => this.setState({breed: e.target.value})}>
+                    
+                  </select>
+                </label>
+              </form>
 
-              </div>
+                
+
+              {/*</div>*/}
             
               {/*<DropdownButton  title={'Age'} id={`dropdown-basic-${1}`}>
                 <MenuItem eventKey="1" value={this.state.age} onSelect={(e) => this.setState({age: e.target.value})}>Young</MenuItem>
