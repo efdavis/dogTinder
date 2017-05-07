@@ -68,8 +68,8 @@ export default class App extends React.Component {
     })
   }
 
-
-  handleSearchQuery(zipcode = 94103, breed, age, sex) { 
+  //sends submitted zipcode to server to zipcode endpoint
+   handleSearchQuery(zipcode = 94103, breed, age, sex) { 
     console.log('GET REQUEST PARAMETRS:')
     let data = {}; 
     const filterArgs = function() {
