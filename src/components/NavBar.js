@@ -27,6 +27,13 @@ class NavBar extends React.Component {
 
   }
 
+  filterBreedList() {
+    let breeds = [];
+    this.props.dogs.forEach(function(val, i, arr) {
+      
+    });
+  }
+
   render() {
     console.log('NAVBAR THIS.STATE:', this.state);
     console.log('THIS IS THIS.PROPS.DOGS', this.props.dogs)
