@@ -12,7 +12,6 @@ export default class DisplayDog extends React.Component {
   render() {
     const data = ['Alexandre', 'Thomas', 'Lucien']
 
-    console.log('THIS IS THE PROPS.dog', this.props.dog.media.photos.photo)
     return (
 /*
       <Cards style={{backgroundColor:'blue'}} onEnd={()=>console.log('end')} className='master-root'>

@@ -5,6 +5,7 @@ var petFinderFetch = require('./utils/petfinderHelper');
 var request = require('request');
 var passport = require('./utils/fbPassportHelper');
 var session = require('express-session');
+var dbUtils = require('./db/dbUtils')
 
 var app = express();
 
@@ -18,6 +19,9 @@ app.use(passport.session());
 app.get('/', (request, response) => {
   if(request.session.user) {
     console.log(request.session.user.displayName + ' is logged in with FB ID: ' + request.session.user.id)
+    dbUtils.fetchUserAnimals({facebookID: request.session.user.id}, (results) => {
+      console.log('userAnimals: ', results);
+    })
   }
   response.sendFile(path.resolve(__dirname, "./public/_index.html"));
 });
@@ -45,8 +49,31 @@ app.get('/auth/facebook/callback',
 
 app.post('/dog-tinder-api/list', (req,res) => {
   // this route gets an array of dogs from the user's dog-list
-  // 
-  console.log(req.user);
+
+  // make animalObjArr
+  let animalObjArr = req.body.map((id) => {
+    if (!isNaN(parseInt(id[0]))) {
+      return {petFinderid: id}
+    } else {
+      // this is a dogTinder dog
+        // functionality not built out
+    }
+  });
+
+  let facebookID = req.user.id;
+
+  dbUtils.doesUserHaveList(facebookID, (bool) => {
+    if (bool) {
+      dbUtils.updateUserList({facebookID: facebookID}, animalObjArr, () => {
+        res.send(201);
+      })
+    } else {
+      dbUtils.saveUserList([null, null, facebookID], animalObjArr, () => {
+        res.send(201);
+      })
+    }
+  })
+  // console.log('req.user: ', req.user);
   /* THIS IS WHAT THE USER OBJECT LOOKS LIKE
   { id: '10158574996565052',
   displayName: 'Scott Moschella',
@@ -56,13 +83,11 @@ app.post('/dog-tinder-api/list', (req,res) => {
   _json: { name: 'Scott Moschella', id: '10158574996565052' } }
 */
   // user will come in as req.user
-  console.log(req.body)
+  // console.log(req.body)
 //  [ 36649333, 36056073, 37403092, 37609758 ]
   // find user in DB, save the animals from req.body into
   // the user's list
-
-  res.send(201);
-})
+});
 
 app.get('/dog-tinder-api', (req, res) => {
   // connect to API and get matching dogs

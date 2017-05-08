@@ -167,3 +167,20 @@ exports.removeDuplicatesFromAnimalList = (listId, updateAnimalIdArr, callback) =
   })
 };
 
+exports.checkForUserList = (facebookID, callback) => {
+  let queryString = `
+    SELECT "animalLists".id 
+    FROM "animalLists"
+    INNER JOIN users
+    ON users.id = "animalLists"."userId"
+    WHERE users."facebookID" = '${facebookID}';
+  `
+
+  db.sequelize.query(queryString).spread((results, metadata) => {
+    callback(results, metadata);
+  })
+}
+
+
+
+
