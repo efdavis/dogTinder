@@ -48,6 +48,7 @@ exports.fetchAnimals = (params, callback) => {
   })
 }
 
+<<<<<<< HEAD
 exports.fetchUsersAnimals = (animalIdArr, callback) => {
   let userAnimals = [];
 
@@ -77,3 +78,20 @@ exports.fetchUsersAnimals = (animalIdArr, callback) => {
 };
 
 // fetchUsersAnimals(37609758, (body) => {console.log('FETCH ANIMALS: ', body)});
+=======
+let fetchUsersAnimals = (animalId, callback) => {
+  querystring.id = animalId;
+
+  request({
+    method: 'get',
+    url: 'http://api.petfinder.com/pet.get',
+    qs: querystring
+  }, function(err, response, body) {
+    callback(body);
+  })  
+};
+
+fetchUsersAnimals(37609758, (body) => {console.log('FETCH ANIMALS: ', body)});
+
+module.exports = fetchAnimals;
+>>>>>>> start work on fetching dogs from database & petFinder
