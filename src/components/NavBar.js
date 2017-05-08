@@ -24,20 +24,23 @@ class NavBar extends React.Component {
     // console.log('NAVBAR THIS.PROPS.DOGS', this.props.submitQuery)
   
     return (
-      <div className="container">
-        <Navbar>
-          <Navbar.Form pullLeft>
-            <FormGroup>
-              <FormControl type="number" placeholder="Zipcode" value={this.state.zipcode} onChange={(e) => this.setState({zipcode: e.target.value})}/>
-            </FormGroup>
-            <Button type="submit" onClick={() => this.props.submitQuery(this.state)}>Submit</Button>
-          </Navbar.Form>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems:'center', justifyContent: 'flex-start'}}>
+          
+          <div>
+            <Navbar.Form pullLeft>
+              <FormGroup>
+                <FormControl type="number" placeholder="Zipcode" value={this.state.zipcode} onChange={(e) => this.setState({zipcode: e.target.value})}/>
+              </FormGroup>
+              <Button type="submit" onClick={() => this.handleSelect()}>Search</Button>
+            </Navbar.Form>
+          </div>
+              
 
-              {/*<div className="container">*/}
+          <div className="formBox" style={{display: 'flex', flexDirection: 'row'}}>
 
-            <form id="selectGender">
-              <label>
-                <select value={this.state.sex} onChange={(e) => {this.setState({sex: e.target.value}); this.handleSelect()}}>
+            <form id="selectGender" >
+              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
+                <select value={this.state.sex} onChange={(e) => {this.setState({sex: e.target.value}); this.handleSelect()}} style={{ backgroundColor: 'white'}}>
                   <option selected="gender">Gender</option>
                   <option value="female">Female</option>
                   <option value="male">Male</option>
@@ -46,8 +49,8 @@ class NavBar extends React.Component {
             </form>
 
             <form id="selectAge">
-              <label>
-                <select value={this.state.age} onChange={(e) => {this.setState({age: e.target.value}); this.handleSelect()}}>
+              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
+                <select value={this.state.age} onChange={(e) => {this.setState({age: e.target.value}); this.handleSelect()}} style={{ backgroundColor: 'white'}}>
                   <option selected="gender">Age</option>
                   <option value="young">Young</option>
                   <option value="adult">Adult</option>
@@ -57,15 +60,16 @@ class NavBar extends React.Component {
             </form>
 
               <form id="selectBreed">
-              <label>
-                <select value={this.state.breed} onChange={(e) => {this.setState({age: e.target.value}); this.handleSelect()}}>
+              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
+                <select value={this.state.breed} onChange={(e) => {this.setState({age: e.target.value}); this.handleSelect()}} style={{ backgroundColor: 'white'}}>
                   <option selected="gender">Breed</option>
                   {this.props.dogs.map(dog =>  <option value="breed">{dog.breeds.breed.$t}</option> )}
                 </select>
               </label>
             </form>
-          </Navbar>
-      </div> 
+            </div>
+          </div>
+      
     );
   }
 }
