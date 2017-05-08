@@ -52,13 +52,13 @@ export default class App extends React.Component {
     });
   }
 
-  saveDoggy(dog) { //WILL BE SAVING A LIST, save dog should save dog to list
+  saveDoggy(dog) { 
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
     let idArray = tempArray.map(function(item){return item.id.$t});
     axios({
       method: 'post',
-      url: '/dog-tinder-api/list', //confirm correct endpoint for saving dog to list
+      url: '/dog-tinder-api/list', 
       data: idArray
     }).then(() => {
       this.setState({animalList: tempArray});
@@ -68,9 +68,6 @@ export default class App extends React.Component {
     })
   }
 
-  // saveList(list) {  //send json array of dog ids (when user hits save push dog id into list)
-
-  // }
 
   handleSearchQuery(zipcode = 94103, breed, age, sex) { 
     console.log('GET REQUEST PARAMETRS:')
@@ -99,7 +96,7 @@ export default class App extends React.Component {
     return (
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
-        {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
+        {this.state.allDogs !== '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
         {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
         <Kennel animalList={this.state.animalList}/>
       </div>
