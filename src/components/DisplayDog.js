@@ -1,5 +1,6 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
+import Cards, { Card } from 'react-swipe-card';
 import SaveDog from './SaveDog';
 
 export default class DisplayDog extends React.Component {
@@ -7,9 +8,22 @@ export default class DisplayDog extends React.Component {
     super(props);
   }
 
+
   render() {
+    const data = ['Alexandre', 'Thomas', 'Lucien']
+
     console.log('THIS IS THE PROPS.dog', this.props.dog.media.photos.photo)
     return (
+/*
+      <Cards style={{backgroundColor:'blue'}} onEnd={()=>console.log('end')} className='master-root'>
+        {data.map(item => 
+          <Card style={{backgroundColor:'blue'}}
+            onSwipeLeft={()=>console.log('swiped left')} 
+            onSwipeRight={()=>console.log('swiped left')}>
+            <h2>{data}</h2>
+          </Card>
+        )}
+      </Cards>*/
 
 
 
