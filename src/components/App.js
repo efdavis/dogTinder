@@ -18,27 +18,46 @@ class App extends React.Component {
     this.saveDoggy = this.saveDoggy.bind(this);
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
   }
+
+  componentWillMount() {
+    axios.get('/dog-tinder-api?location=98105')
+      .then(response => {
+        console.log(response.data)
+        return response.data;
+        
+      })
+      .then(data => {
+        this.setState({
+          featuredDog: data.petfinder.pets.pet[0],
+          allDogs: data.petfinder.pets.pet
+        })
+      })
+      .catch(error => {
+        console.error('Error on componentWillMount', error)
+      });
+  }
+  
   
 
-  componentWillMount(zipcode=94103) {
-    axios.get('/dog-tinder-api', {
-      params: {
-        location: zipcode
-      }
-    }) 
-    .then(response => {
-      return response.data;
-    })
-    .then(data => {
-      this.setState({
-        featuredDog: data.petfinder.pets.pet[0],
-        allDogs: data.petfinder.pets.pet
-      })
-    })
-    .catch(error => {
-      console.error(error)
-    });
-  }
+  // componentWillMount(zipcode=94103) {
+  //   axios.get('/dog-tinder-api', {
+  //     params: {
+  //       location: zipcode
+  //     }
+  //   }) 
+  //   .then(response => {
+  //     return response.data;
+  //   })
+  //   .then(data => {
+  //     this.setState({
+  //       featuredDog: data.petfinder.pets.pet[0],
+  //       allDogs: data.petfinder.pets.pet
+  //     })
+  //   })
+  //   .catch(error => {
+  //     console.error('Error on componentWillMount', error)
+  //   });
+  // }
   
   nextDog() {
     let next = this.state.index + 1; 
@@ -56,9 +75,6 @@ class App extends React.Component {
     });
   }
 
-  getBreeds() {
- 
-  }
 
   saveDoggy(dog) { 
     let tempArray = this.state.animalList.slice();
@@ -77,15 +93,16 @@ class App extends React.Component {
   }
 
 
-  handleSearchQuery(zipcode = 94103, breed, age, sex) { 
-    console.log('GET REQUEST PARAMETRS:')
+  handleSearchQuery(zipcode = 98105, breed, age, sex) { 
+    console.log('GET REQUEST PARAMETRS:', zipcode, breed, age, sex)
     let data = {}; 
     const filterArgs = function() {
-      data.zipcode = zipcode;
+      data.location = zipcode;
       if (breed !== '') { data.breed = breed; }
       if (age !== '') { data.age = age; }
       if (sex !== '') { data.sex = sex; }
     }
+    console.log('data object from handleSearchQuery:', data)
     axios.get('/dog-tinder-api', { 
       params: data
     })

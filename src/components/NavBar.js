@@ -15,11 +15,11 @@ class NavBar extends React.Component {
   }
  
 
-  handleSelect(e) {
+  handleSelect() {
     console.log('handle select invoked')
     this.props.submitQuery(this.state);
     // this.setState({zipcode: ''})
-    e.preventDefault();
+    // e.preventDefault();
   }
 
   validate(zipcode){
