@@ -4,7 +4,7 @@ import DisplayDog from './DisplayDog';
 import Kennel from './Kennel.js';
 import NavBar from './NavBar';
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,20 +20,24 @@ export default class App extends React.Component {
   }
   
 
-  componentWillMount() {
-    axios.get('/dog-tinder-api?location=07470') 
-      .then(response => {
-        return response.data;
+  componentWillMount(zipcode=94103) {
+    axios.get('/dog-tinder-api', {
+      params: {
+        location: zipcode
+      }
+    }) 
+    .then(response => {
+      return response.data;
+    })
+    .then(data => {
+      this.setState({
+        featuredDog: data.petfinder.pets.pet[0],
+        allDogs: data.petfinder.pets.pet
       })
-      .then(data => {
-        this.setState({
-          featuredDog: data.petfinder.pets.pet[0],
-          allDogs: data.petfinder.pets.pet
-        })
-      })
-      .catch(error => {
-        console.error(error)
-      });
+    })
+    .catch(error => {
+      console.error(error)
+    });
   }
   
   nextDog() {
@@ -50,6 +54,10 @@ export default class App extends React.Component {
       featuredDog: this.state.allDogs[previous],
       index: previous
     });
+  }
+
+  getBreeds() {
+ 
   }
 
   saveDoggy(dog) { 
@@ -106,3 +114,4 @@ export default class App extends React.Component {
 
 
 
+export default App;
