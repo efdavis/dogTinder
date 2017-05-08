@@ -8,3 +8,4 @@ DB_HOST=localhost
 DB_USERNAME=Josh
 DB_PASSWORD=blank
 DB_DATABASENAME=dogTinder
+

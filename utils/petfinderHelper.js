@@ -69,6 +69,7 @@ exports.fetchAnimals = (params, callback) => {
   })
 }
 
+<<<<<<< HEAD
 
 exports.getList = (list, callback) => {
 
@@ -99,6 +100,9 @@ exports.getList = (list, callback) => {
 }
 
 
+=======
+<<<<<<< HEAD
+>>>>>>> start work on fetching dogs from database & petFinder
 exports.fetchUsersAnimals = (animalIdArr, callback) => {
   let userAnimals = [];
 
@@ -126,7 +130,6 @@ exports.fetchUsersAnimals = (animalIdArr, callback) => {
 
   recurseIds(animalIdArr, callback);
 };
-
 
 let fetchUsersAnimals = (animalId, callback) => {
   querystring.id = animalId;
