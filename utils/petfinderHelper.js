@@ -46,4 +46,18 @@ function fetchAnimals(params, callback){
   })
 }
 
+let fetchUsersAnimals = (animalId, callback) => {
+  querystring.id = animalId;
+
+  request({
+    method: 'get',
+    url: 'http://api.petfinder.com/pet.get',
+    qs: querystring
+  }, function(err, response, body) {
+    callback(body);
+  })  
+};
+
+fetchUsersAnimals(37609758, (body) => {console.log('FETCH ANIMALS: ', body)});
+
 module.exports = fetchAnimals;

@@ -68,4 +68,4 @@ exports.doesUserHaveList = (FacebookID, callback) => {
 // uncomment to add testers to database
   // saveUserList(['IluvDogs@gmail', '777888', 'XXXXXXXX'], [{petFinderid: 'rover'}, {petFinderid: 'rex'}, {petFinderid: 'sammy'}], () => {console.log('saved!')});
   // updateUserList({email: 'IluvDogs@gmail'}, [{petFinderid: 'rover'}, {petFinderid: 'FIDO'}, {petFinderid: 'sammy'}], () => {console.log('saved!')});
-  // fetchUserAnimals({email: 'IluvDogs@gmail'}, (results) => {console.log(results[0])});
+  // exports.fetchUserAnimals({facebookID: '10158591862165654'}, (results) => {console.log(results)});

@@ -19,6 +19,9 @@ app.use(passport.session());
 app.get('/', (request, response) => {
   if(request.session.user) {
     console.log(request.session.user.displayName + ' is logged in with FB ID: ' + request.session.user.id)
+    dbUtils.fetchUserAnimals({facebookID: request.session.user.id}, (results) => {
+      console.log('userAnimals: ', results);
+    })
   }
   response.sendFile(path.resolve(__dirname, "./public/_index.html"));
 });
@@ -46,21 +49,6 @@ app.get('/auth/facebook/callback',
 
 app.post('/dog-tinder-api/list', (req,res) => {
   // this route gets an array of dogs from the user's dog-list
-  // 
-  console.log(req.user);
-  /* THIS IS WHAT THE USER OBJECT LOOKS LIKE
-  { id: '10158574996565052',
-  displayName: 'Scott Moschella',
-  name: {},
-  provider: 'facebook',
-  _raw: '{"name":"Scott Moschella","id":"10158574996565052"}',
-  _json: { name: 'Scott Moschella', id: '10158574996565052' } }
-*/
-  // user will come in as req.user
-  console.log(req.body)
-//  [ 36649333, 36056073, 37403092, 37609758 ]
-  // find user in DB, save the animals from req.body into
-  // the user's list
 
   // make animalObjArr
   let animalObjArr = req.body.map((id) => {
@@ -68,11 +56,11 @@ app.post('/dog-tinder-api/list', (req,res) => {
       return {petFinderid: id}
     } else {
       // this is a dogTinder dog
+        // functionality not built out
     }
   });
 
-  // still having trouble with facebook login
-  let facebookID = 'testersFacebookID1234';
+  let facebookID = req.user.id;
 
   dbUtils.doesUserHaveList(facebookID, (bool) => {
     if (bool) {
@@ -85,7 +73,21 @@ app.post('/dog-tinder-api/list', (req,res) => {
       })
     }
   })
-})
+  // console.log('req.user: ', req.user);
+  /* THIS IS WHAT THE USER OBJECT LOOKS LIKE
+  { id: '10158574996565052',
+  displayName: 'Scott Moschella',
+  name: {},
+  provider: 'facebook',
+  _raw: '{"name":"Scott Moschella","id":"10158574996565052"}',
+  _json: { name: 'Scott Moschella', id: '10158574996565052' } }
+*/
+  // user will come in as req.user
+  // console.log(req.body)
+//  [ 36649333, 36056073, 37403092, 37609758 ]
+  // find user in DB, save the animals from req.body into
+  // the user's list
+});
 
 app.get('/dog-tinder-api', (req, res) => {
   // connect to API and get matching dogs
