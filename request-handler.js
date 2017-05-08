@@ -5,6 +5,7 @@ var petFinderFetch = require('./utils/petfinderHelper');
 var request = require('request');
 var passport = require('./utils/fbPassportHelper');
 var session = require('express-session');
+var dbUtils = require('./db/dbUtils')
 
 var app = express();
 
@@ -61,7 +62,29 @@ app.post('/dog-tinder-api/list', (req,res) => {
   // find user in DB, save the animals from req.body into
   // the user's list
 
-  res.send(201);
+  // make animalObjArr
+  let animalObjArr = req.body.map((id) => {
+    if (!isNaN(parseInt(id[0]))) {
+      return {petFinderid: id}
+    } else {
+      // this is a dogTinder dog
+    }
+  });
+
+  // still having trouble with facebook login
+  let facebookID = 'testersFacebookID1234';
+
+  dbUtils.doesUserHaveList(facebookID, (bool) => {
+    if (bool) {
+      dbUtils.updateUserList({facebookID: facebookID}, animalObjArr, () => {
+        res.send(201);
+      })
+    } else {
+      dbUtils.saveUserList([null, null, facebookID], animalObjArr, () => {
+        res.send(201);
+      })
+    }
+  })
 })
 
 app.get('/dog-tinder-api', (req, res) => {

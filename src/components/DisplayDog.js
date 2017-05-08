@@ -8,7 +8,7 @@ export default class DisplayDog extends React.Component {
   }
 
   render() {
-    console.log('THIS IS THE PROPS.dog', this.props.dog.media.photos.photo)
+    console.log('THIS IS THE PROPS.dog', this.props.dog)
     return (
 
 

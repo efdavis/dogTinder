@@ -4,7 +4,7 @@ const db = require('./dbConnection.js');
 // Save user and new list to database
   // userLookupArr takes [email, password, facebookID]. Email and password can be null.
   // animalObjArr takes array of animal objects. EXAMPLE: [{petFinderid: 'xxxxxx'}, {petFinderid: 'xxxxxxxx'}, {petFinderid: 'xxxxxxx'}]
-const saveUserList = (userLookupArr, animalObjArr, callback) => {
+exports.saveUserList = (userLookupArr, animalObjArr, callback) => {
   let userId;
   helper.addOrFindUser(...userLookupArr, (userInfo) => {
     userId = userInfo.id;
@@ -24,7 +24,7 @@ const saveUserList = (userLookupArr, animalObjArr, callback) => {
 // Update existing user list
   // userLookup takes and object. Example {facebookID: 'xxxxxxxxxxxxxxxx'}
   // animalObjArr is the same as for saveUserList
-const updateUserList = (userLookup, animalObjArr, callback) => {
+exports.updateUserList = (userLookup, animalObjArr, callback) => {
   let animalIdArr;
   let animalObjArrCopy = animalObjArr.slice()
   helper.saveAnimals(animalObjArrCopy, () => {
@@ -45,13 +45,23 @@ const updateUserList = (userLookup, animalObjArr, callback) => {
 
 // Returns array of petFinderids
   // userLookup is an object EXAMPLE: {facebookID: 'xxxxxxxxxxxxxxxx'}
-const fetchUserAnimals = (userLookup, callback) => {
+exports.fetchUserAnimals = (userLookup, callback) => {
   helper.getUserId(userLookup, (id) => {
     helper.findUserList(id, (list) => {
       helper.getUserAnimals(list.dataValues.id, (results) => {
         callback(results);
       })
     })
+  })
+}
+
+exports.doesUserHaveList = (FacebookID, callback) => {
+  helper.checkForUserList(FacebookID, (results, metadata) => {
+    if (results.length > 0) {
+      callback(true);
+    } else {
+      callback(false);
+    }
   })
 }
 
