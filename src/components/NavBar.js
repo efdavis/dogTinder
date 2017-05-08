@@ -92,6 +92,7 @@ class NavBar extends React.Component {
             <Button type="submit" onClick={() => this.handleSelect()}>Search</Button>
             </div>            
           </div>
+      
     );
   }
 }
