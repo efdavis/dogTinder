@@ -52,13 +52,13 @@ export default class App extends React.Component {
     });
   }
 
-  saveDoggy(dog) { //WILL BE SAVING A LIST, save dog should save dog to list
+  saveDoggy(dog) { 
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
     let idArray = tempArray.map(function(item){return item.id.$t});
     axios({
       method: 'post',
-      url: '/dog-tinder-api/list', //confirm correct endpoint for saving dog to list
+      url: '/dog-tinder-api/list', 
       data: idArray
     }).then(() => {
       this.setState({animalList: tempArray});
@@ -68,24 +68,21 @@ export default class App extends React.Component {
     })
   }
 
-  saveList(list) {  //send json array of dog ids (when user hits save push dog id into list)
 
-  }
-  
-  //sends submitted zipcode to server to zipcode endpoint
-  handleSearchQuery(zipcode, breed, age, sex) { 
-    //add logic to remove null parameters
-    axios.get('/dog-tinder-api', { //correct endpoint needed
-      params: {
-        zipcode: zipcode,
-        breed: breed,
-        age: age,
-        sex: sex
-      }
+  handleSearchQuery(zipcode = 94103, breed, age, sex) { 
+    console.log('GET REQUEST PARAMETRS:')
+    let data = {}; 
+    const filterArgs = function() {
+      data.zipcode = zipcode;
+      if (breed !== '') { data.breed = breed; }
+      if (age !== '') { data.age = age; }
+      if (sex !== '') { data.sex = sex; }
+    }
+    axios.get('/dog-tinder-api', { 
+      params: data
     })
     .then(response => {
       this.setState({
-        //set all dogs equal to animals retrieved from specified zipcode 
         allDogs: response.data
       }) 
     }) 
@@ -95,12 +92,12 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log('APP COMPONENT THIS.STATE:', this.state)
+    console.log(this.state.allDogs)
     return (
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
-        <NavBar submitQuery={this.handleSearchQuery}/>
-        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
+        {this.state.allDogs !== '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
+        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
         <Kennel animalList={this.state.animalList}/>
       </div>
     );
