@@ -8,8 +8,8 @@ class SaveDog extends React.Component {
   }
   render() {
     return (
-      <button type="button" className="btn btn-default btn-lg" style={{"color": "red"}} onClick={() =>{this.props.saveDog(this.props.currentDog)}} >
-        <span className="glyphicon glyphicon-heart" aria-hidden="true"></span> Save
+      <button type="button" className="btn btn-default btn-lg" style={{"color": "red", marginBottom: '-30px', opacity: 0.5}} onClick={() =>{this.props.saveDog(this.props.currentDog)}} >
+        <span className="glyphicon glyphicon-heart" aria-hidden="true"></span> Add to kennel
       </button>
     );
   }
