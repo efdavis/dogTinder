@@ -18,21 +18,36 @@ class NavBar extends React.Component {
     this.props.submitQuery(this.state);
   }
 
+  validate(){
+    if(this.state.zipcode.length===6 && Number.isInteger(parseInt(this.state.zipcode))) {
+      console.log('hey its a zipcode!')
+    }else{
+      console.log('hey its not a zipcode!')
+    }
+
+  }
+
   render() {
     console.log('NAVBAR THIS.STATE:', this.state);
     console.log('THIS IS THIS.PROPS.DOGS', this.props.dogs)
-    // console.log('NAVBAR THIS.PROPS.DOGS', this.props.submitQuery)
   
     return (
       <div style={{display: 'flex', flexDirection: 'row', alignItems:'center', justifyContent: 'flex-start'}}>
           
-          <div>
+          {/*<div>
             <Navbar.Form pullLeft>
               <FormGroup>
                 <FormControl type="number" placeholder="Zipcode" value={this.state.zipcode} onChange={(e) => this.setState({zipcode: e.target.value})}/>
-              </FormGroup>
-              <Button type="submit" onClick={() => this.handleSelect()}>Search</Button>
+              </FormGroup>              
             </Navbar.Form>
+          </div>*/}
+
+          <div className="zipcode" type="" >
+            <form onSubmit={() => {this.validate(this.state.zipcode);  this.handleSelect(); }}>
+              <label>
+                <input value={this.state.zipcode} onChange={(e) => {this.setState({zipcode: e.target.value});}} />                
+              </label>
+            </form>
           </div>
               
 
@@ -59,7 +74,7 @@ class NavBar extends React.Component {
               </label>
             </form>
 
-              <form id="selectBreed">
+            <form id="selectBreed">
               <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
                 <select value={this.state.breed} onChange={(e) => {this.setState({age: e.target.value}); this.handleSelect()}} style={{ backgroundColor: 'white'}}>
                   <option selected="gender">Breed</option>
@@ -67,7 +82,8 @@ class NavBar extends React.Component {
                 </select>
               </label>
             </form>
-            </div>
+            <Button type="submit" onClick={() => this.handleSelect()}>Search</Button>
+            </div>            
           </div>
       
     );
