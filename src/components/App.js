@@ -73,7 +73,7 @@ export default class App extends React.Component {
   // }
 
   handleSearchQuery(zipcode = 94103, breed, age, sex) { 
-    console.log('GET REQUEST PARAMETRS:', age)
+    console.log('GET REQUEST PARAMETRS:')
     let data = {}; 
     const filterArgs = function() {
       data.zipcode = zipcode;
@@ -99,7 +99,7 @@ export default class App extends React.Component {
     return (
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
-       { this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
+        {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
         {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
         <Kennel animalList={this.state.animalList}/>
       </div>
