@@ -8,7 +8,7 @@ const querystring = {
 }
 
 function removeSmallPicsFromOneDog(dog) {
-  // resultArray = JSON.parse(resultArray);
+  resultArray = JSON.parse(resultArray);
   dog = JSON.parse(dog).petfinder.pet
 
   var modifyPhotos = function(photoArray){
@@ -30,7 +30,7 @@ function removeSmallPicsFromOneDog(dog) {
 }
 
 function removeSmallPics(resultArray) {
-  // resultArray = JSON.parse(resultArray);
+  resultArray = JSON.parse(resultArray);
   var animals = resultArray.petfinder.pets.pet;
   var filteredAnimals = [];
   var modifyPhotos = function(photoArray){
@@ -48,7 +48,9 @@ function removeSmallPics(resultArray) {
       filteredAnimals.push(animal);
     }
   })
+
   return filteredAnimals;
+
 }
 
 exports.fetchAnimals = (params, callback) => {
@@ -56,14 +58,12 @@ exports.fetchAnimals = (params, callback) => {
   for(var key in params){
     querystring[key] = params[key]
   }
-  // console.log("Query String: ", querystring);
 
   request({
     method: 'get',
     url: 'http://api.petfinder.com/pet.find',
     qs: querystring
   }, function(error, response, body){
-    body = JSON.parse(body);
     body = removeSmallPics(body);
     callback(body);
   })
@@ -97,43 +97,36 @@ exports.getList = (list, callback) => {
 
 }
 
-exports.fetchUsersAnimals = (animalIdArr, callback) => {
-  let userAnimals = [];
+// exports.fetchUsersAnimals = (animalIdArr, callback) => {
+//   let userAnimals = [];
 
-  const recurseIds = (animalIdArr, callback) => {
-    let animalId = animalIdArr.pop()
+//   const recurseIds = (animalIdArr, callback) => {
+//     let animalId = animalIdArr.pop()
 
-    if (animalId) {
-    querystring.id = animalId.petFinderid;
-    console.log('animalID: ', animalId);
-      request({
-        method: 'get',
-        url: 'http://api.petfinder.com/pet.get',
-        qs: querystring
-      }, function(err, response, body) {
-        body = JSON.parse(body);
-        userAnimals.push(body);
-        recurseIds(animalIdArr, callback);
-      })  
-    } else {
-      console.log(userAnimals);
-      userAnimals = removeSmallPics(userAnimals);
-      callback(userAnimals);
-    } 
-  }
+//     if (animalId) {
+//     querystring.id = animalId.petFinderid;
+//       request({
+//         method: 'get',
+//         url: 'http://api.petfinder.com/pet.get',
+//         qs: querystring
+//       }, function(err, response, body) {
+//         body = JSON.parse(body);
+//          console.log('==========>', body.petfinder.pet.media.photos.photo.length);
+//         let photoArray = body.petfinder.pet.media.photos.photo
+//         photoArray = modifySingleAnimalPhotos(photoArray);
+        
+//   console.log('==========>', body.petfinder.pet.media.photos.photo.length);
+//         userAnimals.push(body);
+//         recurseIds(animalIdArr, callback);
+//       })  
+//     } else {
+//       // console.log(userAnimals);
+//       callback(userAnimals);
+//     } 
+//   }
 
-  recurseIds(animalIdArr, callback);
-};
+//   recurseIds(animalIdArr, callback);
+// };
 
-let fetchUsersAnimals = (animalId, callback) => {
-  querystring.id = animalId;
 
-  request({
-    method: 'get',
-    url: 'http://api.petfinder.com/pet.get',
-    qs: querystring
-  }, function(err, response, body) {
-    callback(body);
-  })  
-};
 

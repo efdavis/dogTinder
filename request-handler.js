@@ -34,11 +34,15 @@ app.get('/auth/facebook',
 
 app.get('/login', (req, res) => {
   res.sendFile(path.resolve(__dirname, './public/login.html'));
+  
 });
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   (req, res) => {
+    const cookies = new Cookies(req.headers.cookie);
+    var userAnimalList = cookies.get('animalList');
+  //ADD ANIMALS FROM LIST TO DATABASE
     // Successful authentication, redirect home.
     req.session.user = req.user;
     // find or add user
@@ -51,65 +55,57 @@ app.get('/auth/facebook/callback',
 
 app.get('/dog-tinder-api/list', (req, res) => {
 
+
   // res.send(201);
   const cookies = new Cookies(req.headers.cookie);
   var userAnimalList = cookies.get('animalList');
-  // let facebookID = req.session.user.id;
-
-  // dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
-  //   console.log('user dogs: ', results);
-  //   petFinderFetch.fetchUsersAnimals(results, (dogs) => {
-  //     console.log(dogs)
-  //   })
-  // })
+ 
 
   petFinderFetch.getList(userAnimalList, function(results) {
     console.log("FINAL FETCH FOR ALL LIST:", results);
     res.send(results);
   });
 
+  // let facebookID = req.session.user.id;
+//   dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
+//     // console.log('user dogs: ', results);
+//     petFinderFetch.fetchUsersAnimals(results, (dogs) => {
+//       console.log(dogs)
+//     })
+//   })
+
 });
 
 app.post('/dog-tinder-api/list', (req, res) => {
   // this route gets an array of dogs from the user's dog-list
+  // check to see if logged in
+  if (req.user) {
+    // make animalObjArr
+    let animalObjArr = req.body.map((id) => {
+      if (!isNaN(parseInt(id[0]))) {
+        return {petFinderid: id}
+      } else {
+        // this is a dogTinder dog
+          // functionality not built out
+      }
+    });
 
-  // make animalObjArr
-  let animalObjArr = req.body.map((id) => {
-    if (!isNaN(parseInt(id[0]))) {
-      return {petFinderid: id}
-    } else {
-      // this is a dogTinder dog
-        // functionality not built out
-    }
-  });
-  res.send(201);
-  // let facebookID = req.user.id;
+    let facebookID = req.user.id;
 
-  // dbUtils.doesUserHaveList(facebookID, (bool) => {
-  //   if (bool) {
-  //     dbUtils.updateUserList({facebookID: facebookID}, animalObjArr, () => {
-  //       res.send(201);
-  //     })
-  //   } else {
-  //     dbUtils.saveUserList([null, null, facebookID], animalObjArr, () => {
-  //       res.send(201);
-  //     })
-  //   }
-  // })
-  // console.log('req.user: ', req.user);
-  /* THIS IS WHAT THE USER OBJECT LOOKS LIKE
-  { id: '10158574996565052',
-  displayName: 'Scott Moschella',
-  name: {},
-  provider: 'facebook',
-  _raw: '{"name":"Scott Moschella","id":"10158574996565052"}',
-  _json: { name: 'Scott Moschella', id: '10158574996565052' } }
-*/
-  // user will come in as req.user
-  // console.log(req.body)
-//  [ 36649333, 36056073, 37403092, 37609758 ]
-  // find user in DB, save the animals from req.body into
-  // the user's list
+    dbUtils.doesUserHaveList(facebookID, (bool) => {
+      if (bool) {
+        dbUtils.updateUserList({facebookID: facebookID}, animalObjArr, () => {
+          res.send(201);
+        })
+      } else {
+        dbUtils.saveUserList([null, null, facebookID], animalObjArr, () => {
+          res.send(201);
+        })
+      }
+    })
+  } else {
+    res.send(201)
+  }
 });
 
 app.get('/dog-tinder-api', (req, res) => {
