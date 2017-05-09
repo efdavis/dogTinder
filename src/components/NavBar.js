@@ -61,8 +61,8 @@ class NavBar extends React.Component {
               <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
                 <select value={this.state.sex} onChange={(e) => {this.setState({sex: e.target.value}); this.handleSelect()}} style={{ backgroundColor: 'white'}}>
                   <option defaultValue="gender">Gender</option>
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
+                  <option value="F">Female</option>
+                  <option value="M">Male</option>
                 </select>
               </label>
             </form>
@@ -71,9 +71,10 @@ class NavBar extends React.Component {
               <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
                 <select value={this.state.age} onChange={(e) => {this.setState({age: e.target.value}); this.handleSelect()}} style={{ backgroundColor: 'white'}}>
                   <option defaultValue="age">Age</option>
-                  <option value="young">Young</option>
-                  <option value="adult">Adult</option>
-                  <option value="senior">Senior</option>
+                  <option value="Baby">Baby</option>
+                  <option value="Young">Young</option>
+                  <option value="Adult">Adult</option>
+                  <option value="Senior">Senior</option>
                 </select>
               </label>
             </form>
