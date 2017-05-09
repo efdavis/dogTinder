@@ -92,7 +92,7 @@ class App extends React.Component {
 
     let data = {}; 
    
-      data.location = zipcode;
+      data.location = theState.zipcode;
       if (theState.breed !== '') { data.breed = theState.breed; }
       if (theState.age !== '') { data.age = theState.age; }
       if (theState.sex !== '') { data.sex = theState.sex; }
