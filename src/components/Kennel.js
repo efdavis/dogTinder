@@ -32,33 +32,23 @@ class Kennel extends React.Component {
     return (
 
     <div>
-    <h1 className="page-header">My Kennel</h1>
-    <div style={{display: 'flex'}}>
+      <h1 className="page-header">My Kennel</h1>
         <ul className="media-list col-md-6">{this.props.animalList.map((dog) => {
-          return <li className="media dog-box" key={dog.id.$t} style={{display: 'flex', justifyContent: 'flex-start'}}>
+          return <li className="media dog-box" key={dog.id.$t} style={{display: 'flex'}}>
                     <div className="media-left">
                       <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="50px" height="50px" />
                     </div>
-                    <div className="media-body">
-                      <p>{dog.description.$t}</p>
-                      {Array.isArray(dog.breeds.breed) ? dog.breeds.breed.map(function(breed) {
-                        return <div><span className="label label-primary">Breed: {breed.$t}</span></div>
-                      }) : <div><span className="label label-primary">Breed: {dog.breeds.breed.$t}</span></div> }
-                      <div><span className="label label-primary">Age: {dog.age.$t}</span></div>
-                      <div><span className="label label-primary">Sex: {dog.sex.$t}</span></div>
-                    </div>
-                    <h5 className="dogName" onClick={() => {this.clickDogName(); this.showProfile(dog)}}> {dog.name.$t} / {Array.isArray(dog.breeds.breed)? <span>Mixed Breed</span> : dog.breeds.breed.$t}  / {dog.age.$t} / {dog.sex.$t}</h5>
-                    {/*{this.state.clicked ? <div>{this.state.selectedDog.name.$t}</div> : <div></div>}*/}
-                    {/*{this.state.clicked ? <KennelDogProfile name={dog.name.$t} image={dog.media.photos.photo[0]}breed={dog.breeds.breed.$t} age={dog.age.$t} sex={dog.sex.$t} description={dog.description.$t}/> : <div></div>}*/}
+                    <h5 className="dogName" onClick={() => {this.clickDogName(); this.showProfile(dog)}}>{dog.name.$t}</h5>
                 </li>
         })}</ul>
         {this.state.clicked ? <KennelDogProfile dog={this.state.selectedDog}/> : <div></div> }    
+
     </div>
     </div>
-    );
-        
+    );  
   }
 }
+
 
 module.exports = Kennel;
 // </div>{dog.name}</div><p>{dog.description}</p></div>

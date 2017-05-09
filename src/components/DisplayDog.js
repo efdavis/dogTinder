@@ -42,6 +42,7 @@ class DisplayDog extends React.Component {
         </div>
       </div>
 
+
        <div className="dogInfo" style={{display: 'flex', position: 'float', width: '160px', flexDirection: 'row'}}>
          <ul>
            <h5><b>Meet {this.props.dog.name.$t}!</b></h5>
