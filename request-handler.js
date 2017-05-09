@@ -47,24 +47,26 @@ app.get('/auth/facebook/callback',
     
   });
 
-app.post('/dog-tinder-api/list', (req,res) => {
-  // this route gets an array of dogs from the user's dog-list
+// app.post('/dog-tinder-api/list', (req,res) => {
+//   // this route gets an array of dogs from the user's dog-list
+//   // 
+//   // make animalObjArr
+//   // le
+//   });
+  
 
-  // make animalObjArr
-  let animalObjArr = req.body.map((id) => {
-    if (!isNaN(parseInt(id[0]))) {
-      return {petFinderid: id}
-    } else {
-      // this is a dogTinder dog
-        // functionality not built out
-    }
-  });
+app.post('/dog-tinder-api/list', (req,res) => {
+  res.send(201);
+})
+
 
   let facebookID = req.user.id;
 
   dbUtils.doesUserHaveList(facebookID, (bool) => {
+    console.log('THIS IS BOOL', bool)
     if (bool) {
       dbUtils.updateUserList({facebookID: facebookID}, animalObjArr, () => {
+        console.log("we are in!!!!")
         res.send(201);
       })
     } else {
@@ -73,6 +75,7 @@ app.post('/dog-tinder-api/list', (req,res) => {
       })
     }
   })
+
   // console.log('req.user: ', req.user);
   /* THIS IS WHAT THE USER OBJECT LOOKS LIKE
   { id: '10158574996565052',
@@ -86,8 +89,8 @@ app.post('/dog-tinder-api/list', (req,res) => {
   // console.log(req.body)
 //  [ 36649333, 36056073, 37403092, 37609758 ]
   // find user in DB, save the animals from req.body into
-  // the user's list
-});
+  // the user's list 
+
 
 app.get('/dog-tinder-api', (req, res) => {
   // connect to API and get matching dogs
