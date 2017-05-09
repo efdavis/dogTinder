@@ -2,6 +2,7 @@ import React from 'react';
 import { Carousel } from 'react-bootstrap';
 import Cards, { Card } from 'react-swipe-card';
 import SaveDog from './SaveDog';
+import DogNotFound from './DogNotFound';
 
 export default class DisplayDog extends React.Component {
   constructor(props) {
@@ -10,8 +11,15 @@ export default class DisplayDog extends React.Component {
 
 
   render() {
-
+   console.log('hi')
+   if (this.props.dogNotFound) {
+     return (
+       <DogNotFound />
+     );
+   }
+    else {
     return (
+      
         <div id="featuredDog"className="carousel slide" style={{display: 'flex', justifyContent: 'center'}}>
           <div className="carousel-inner" >
             <div className="item active" id="dog">
@@ -36,6 +44,7 @@ export default class DisplayDog extends React.Component {
         </div>
       </div>
     );
+  }
   }
 }
 
