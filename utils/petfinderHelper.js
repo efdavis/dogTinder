@@ -8,7 +8,7 @@ const querystring = {
 }
 
 function removeSmallPics(resultArray) {
-  // resultArray = JSON.parse(resultArray);
+  resultArray = JSON.parse(resultArray);
   var animals = resultArray.petfinder.pets.pet;
   var filteredAnimals = [];
   var modifyPhotos = function(photoArray){
@@ -26,7 +26,9 @@ function removeSmallPics(resultArray) {
       filteredAnimals.push(animal);
     }
   })
+
   return filteredAnimals;
+
 }
 
 exports.fetchAnimals = (params, callback) => {
@@ -34,15 +36,12 @@ exports.fetchAnimals = (params, callback) => {
   for(var key in params){
     querystring[key] = params[key]
   }
-  // console.log("Query String: ", querystring);
 
   request({
     method: 'get',
     url: 'http://api.petfinder.com/pet.find',
     qs: querystring
   }, function(error, response, body){
-    body = JSON.parse(body);
-    console.log('this is what it looks like: ', body);
     body = removeSmallPics(body);
     callback(body);
   })
@@ -56,19 +55,22 @@ exports.fetchUsersAnimals = (animalIdArr, callback) => {
 
     if (animalId) {
     querystring.id = animalId.petFinderid;
-    console.log('animalID: ', animalId);
       request({
         method: 'get',
         url: 'http://api.petfinder.com/pet.get',
         qs: querystring
       }, function(err, response, body) {
         body = JSON.parse(body);
+         console.log('==========>', body.petfinder.pet.media.photos.photo.length);
+        let photoArray = body.petfinder.pet.media.photos.photo
+        photoArray = modifySingleAnimalPhotos(photoArray);
+        
+  console.log('==========>', body.petfinder.pet.media.photos.photo.length);
         userAnimals.push(body);
         recurseIds(animalIdArr, callback);
       })  
     } else {
-      console.log(userAnimals);
-      userAnimals = removeSmallPics(userAnimals);
+      // console.log(userAnimals);
       callback(userAnimals);
     } 
   }
@@ -76,4 +78,13 @@ exports.fetchUsersAnimals = (animalIdArr, callback) => {
   recurseIds(animalIdArr, callback);
 };
 
-// fetchUsersAnimals(37609758, (body) => {console.log('FETCH ANIMALS: ', body)});
+const modifySingleAnimalPhotos = function(photoArray){
+    var newPhotos = [];
+    for(var i = 0; i < photoArray.length; i++){
+      if (photoArray[i]['@size'] === 'x'){
+        newPhotos.push(photoArray[i].$t);
+      }
+    }
+    return newPhotos;
+  }
+
