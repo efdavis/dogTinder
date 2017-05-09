@@ -41,12 +41,12 @@ class DisplayDog extends React.Component {
         </div>
       </div>
 
-       <div className="dogInfo" style={{display: 'flex', position: 'float', width: '140px', flexDirection: 'row', borderStyle: 'solid'}}>
+       <div className="dogInfo" style={{display: 'flex', position: 'float', width: '140px', flexDirection: 'row'}}>
          <ul>
-           <li>{this.props.dog.name.$t}</li>
-           <li>Breed: {this.props.dog.breeds.breed.$t}</li>
-           <li>Age: {this.props.dog.age.$t}</li>
-           <li>Sex: {this.props.dog.sex.$t}</li>
+           <li><b>Name: </b>{this.props.dog.name.$t}</li>
+           <li><b>Breed: </b>{this.props.dog.breeds.breed.$t}</li>
+           <li><b>Age: </b>{this.props.dog.age.$t}</li>
+           <li><b>Sex: </b>{this.props.dog.sex.$t}</li>
          </ul>
       </div>
     </div>
