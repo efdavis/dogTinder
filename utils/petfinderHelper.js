@@ -58,6 +58,4 @@ let fetchUsersAnimals = (animalId, callback) => {
   })  
 };
 
-fetchUsersAnimals(37609758, (body) => {console.log('FETCH ANIMALS: ', body)});
-
 module.exports = fetchAnimals;
