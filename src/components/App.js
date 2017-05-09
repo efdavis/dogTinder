@@ -22,14 +22,13 @@ class App extends React.Component {
   componentWillMount() {
     axios.get('/dog-tinder-api?location=98105')
       .then(response => {
-        console.log(response.data)
+        console.log('componentwillmount response.data', response.data)
         return response.data;
-        
       })
       .then(data => {
         this.setState({
-          featuredDog: data.petfinder.pets.pet[0],
-          allDogs: data.petfinder.pets.pet
+          featuredDog: data[0],
+          allDogs: data
         })
       })
       .catch(error => {
@@ -77,6 +76,7 @@ class App extends React.Component {
 
 
   saveDoggy(dog) { 
+    console.log('SAVEDOGGY DOG', dog)
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
     let idArray = tempArray.map(function(item){return item.id.$t});
