@@ -4,14 +4,11 @@ import Cards, { Card } from 'react-swipe-card';
 import SaveDog from './SaveDog';
 import DogNotFound from './DogNotFound';
 
-export default class DisplayDog extends React.Component {
+class DisplayDog extends React.Component {
   constructor(props) {
     super(props);
   }
-
-
   render() {
-   console.log('hi')
    if (this.props.dogNotFound) {
      return (
        <DogNotFound />
@@ -19,14 +16,14 @@ export default class DisplayDog extends React.Component {
    }
     else {
     return (
-      
-        <div id="featuredDog"className="carousel slide" style={{display: 'flex', justifyContent: 'center'}}>
-          <div className="carousel-inner" >
+      <div style={{display: 'flex'}}>
+        <div id="featuredDog"className="carousel slide" style={{display: 'flex', justifyContent: 'center', overflow: 'visible'}}>
+          <div className="carousel-inner" style={{overflow: 'visible'}} >
             <div className="item active" id="dog">
               <div>
                 <img className="img-fluid" height="250px" style={{display: 'flex'}} alt="Responsive image" src={this.props.dog.media.photos.photo[0]}/>
                 <div className="carousel-caption">
-                <div>{this.props.dog.name.$t}</div>
+                {/*<div style={{position: 'relative', left: 'auto', right: 'auto', flexDirection: 'row', borderStyle: 'solid'}}>{this.props.dog.name.$t}</div>*/}
                 <SaveDog currentDog={this.props.dog} saveDog={this.props.saveDoggy} style={{zIndex: 5}}/>
               </div>  
             </div>
@@ -43,8 +40,20 @@ export default class DisplayDog extends React.Component {
           </a>
         </div>
       </div>
+
+       <div className="dogInfo" style={{display: 'flex', position: 'float', width: '140px', flexDirection: 'row', borderStyle: 'solid'}}>
+         <ul>
+           <li>{this.props.dog.name.$t}</li>
+           <li>Breed: {this.props.dog.breeds.breed.$t}</li>
+           <li>Age: {this.props.dog.age.$t}</li>
+           <li>Sex: {this.props.dog.sex.$t}</li>
+         </ul>
+      </div>
+    </div>
     );
   }
   }
 }
+
+export default DisplayDog;
 

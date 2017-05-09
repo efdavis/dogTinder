@@ -17,11 +17,11 @@ class Kennel extends React.Component {
         
         <ul className="media-list col-md-6">{this.props.animalList.map(function(dog){
           return <li className="media dog-box" key={dog.id.$t}>
-                    <h3 className="media-heading">
+                    <h6 className="media-heading">
                         {dog.name.$t}
-                      </h3>
+                      </h6>
                     <div className="media-left">
-                      <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="200px" />
+                      <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="50px" />
                     </div>
                     <div className="media-body">
                       <p>{dog.description.$t}</p>
