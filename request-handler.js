@@ -19,9 +19,6 @@ app.use(passport.session());
 app.get('/', (request, response) => {
   if(request.session.user) {
     console.log(request.session.user.displayName + ' is logged in with FB ID: ' + request.session.user.id)
-    dbUtils.fetchUserAnimals({facebookID: request.session.user.id}, (results) => {
-      console.log('userAnimals: ', results);
-    })
   }
   response.sendFile(path.resolve(__dirname, "./public/_index.html"));
 });
@@ -47,7 +44,18 @@ app.get('/auth/facebook/callback',
     
   });
 
-app.post('/dog-tinder-api/list', (req,res) => {
+app.get('/dog-tinder-api/list', (req, res) => {
+  let facebookID = req.session.user.id;
+
+  dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
+    console.log('user dogs: ', results);
+    petFinderFetch.fetchUsersAnimals(results, (dogs) => {
+      console.log(dogs)
+    })
+  })
+});
+
+app.post('/dog-tinder-api/list', (req, res) => {
   // this route gets an array of dogs from the user's dog-list
 
   // make animalObjArr
@@ -91,11 +99,12 @@ app.post('/dog-tinder-api/list', (req,res) => {
 
 app.get('/dog-tinder-api', (req, res) => {
   // connect to API and get matching dogs
-  petFinderFetch(req.query, function(animals){
+  petFinderFetch.fetchAnimals(req.query, function(animals){
     // get animals from DB here and append them to these 'animals'
     res.send(animals);
   })
 
 })
+
 
 module.exports = app;

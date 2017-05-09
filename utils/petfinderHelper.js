@@ -8,7 +8,7 @@ const querystring = {
 }
 
 function removeSmallPics(resultArray) {
-  resultArray = JSON.parse(resultArray);
+  // resultArray = JSON.parse(resultArray);
   var animals = resultArray.petfinder.pets.pet;
   var filteredAnimals = [];
   var modifyPhotos = function(photoArray){
@@ -29,7 +29,7 @@ function removeSmallPics(resultArray) {
   return filteredAnimals;
 }
 
-function fetchAnimals(params, callback){
+exports.fetchAnimals = (params, callback) => {
 
   for(var key in params){
     querystring[key] = params[key]
@@ -41,23 +41,39 @@ function fetchAnimals(params, callback){
     url: 'http://api.petfinder.com/pet.find',
     qs: querystring
   }, function(error, response, body){
+    body = JSON.parse(body);
+    console.log('this is what it looks like: ', body);
     body = removeSmallPics(body);
     callback(body);
   })
 }
 
-let fetchUsersAnimals = (animalId, callback) => {
-  querystring.id = animalId;
+exports.fetchUsersAnimals = (animalIdArr, callback) => {
+  let userAnimals = [];
 
-  request({
-    method: 'get',
-    url: 'http://api.petfinder.com/pet.get',
-    qs: querystring
-  }, function(err, response, body) {
-    callback(body);
-  })  
+  const recurseIds = (animalIdArr, callback) => {
+    let animalId = animalIdArr.pop()
+
+    if (animalId) {
+    querystring.id = animalId.petFinderid;
+    console.log('animalID: ', animalId);
+      request({
+        method: 'get',
+        url: 'http://api.petfinder.com/pet.get',
+        qs: querystring
+      }, function(err, response, body) {
+        body = JSON.parse(body);
+        userAnimals.push(body);
+        recurseIds(animalIdArr, callback);
+      })  
+    } else {
+      console.log(userAnimals);
+      userAnimals = removeSmallPics(userAnimals);
+      callback(userAnimals);
+    } 
+  }
+
+  recurseIds(animalIdArr, callback);
 };
 
-fetchUsersAnimals(37609758, (body) => {console.log('FETCH ANIMALS: ', body)});
-
-module.exports = fetchAnimals;
+// fetchUsersAnimals(37609758, (body) => {console.log('FETCH ANIMALS: ', body)});
