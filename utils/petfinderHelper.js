@@ -91,7 +91,4 @@ let fetchUsersAnimals = (animalId, callback) => {
   })  
 };
 
-fetchUsersAnimals(37609758, (body) => {console.log('FETCH ANIMALS: ', body)});
-
-module.exports = fetchAnimals;
->>>>>>> start work on fetching dogs from database & petFinder
+module.exports = fetchAnimals;>>>>>>> start work on fetching dogs from database & petFinder
