@@ -51,16 +51,17 @@ app.get('/auth/facebook/callback',
 
 app.get('/dog-tinder-api/list', (req, res) => {
 
+  // res.send(201);
   const cookies = new Cookies(req.headers.cookie);
   var userAnimalList = cookies.get('animalList');
-  let facebookID = req.session.user.id;
+  // let facebookID = req.session.user.id;
 
-  dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
-    console.log('user dogs: ', results);
-    petFinderFetch.fetchUsersAnimals(results, (dogs) => {
-      console.log(dogs)
-    })
-  })
+  // dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
+  //   console.log('user dogs: ', results);
+  //   petFinderFetch.fetchUsersAnimals(results, (dogs) => {
+  //     console.log(dogs)
+  //   })
+  // })
 
   petFinderFetch.getList(userAnimalList, function(results) {
     console.log("FINAL FETCH FOR ALL LIST:", results);
@@ -81,20 +82,20 @@ app.post('/dog-tinder-api/list', (req, res) => {
         // functionality not built out
     }
   });
+  res.send(201);
+  // let facebookID = req.user.id;
 
-  let facebookID = req.user.id;
-
-  dbUtils.doesUserHaveList(facebookID, (bool) => {
-    if (bool) {
-      dbUtils.updateUserList({facebookID: facebookID}, animalObjArr, () => {
-        res.send(201);
-      })
-    } else {
-      dbUtils.saveUserList([null, null, facebookID], animalObjArr, () => {
-        res.send(201);
-      })
-    }
-  })
+  // dbUtils.doesUserHaveList(facebookID, (bool) => {
+  //   if (bool) {
+  //     dbUtils.updateUserList({facebookID: facebookID}, animalObjArr, () => {
+  //       res.send(201);
+  //     })
+  //   } else {
+  //     dbUtils.saveUserList([null, null, facebookID], animalObjArr, () => {
+  //       res.send(201);
+  //     })
+  //   }
+  // })
   // console.log('req.user: ', req.user);
   /* THIS IS WHAT THE USER OBJECT LOOKS LIKE
   { id: '10158574996565052',
