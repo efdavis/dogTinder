@@ -26,6 +26,7 @@ class App extends React.Component {
     this.saveDoggy = this.saveDoggy.bind(this);
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
     this.getShelter = this.getShelter.bind(this);
+    this.formatDogName = this.formatDogName.bind(this);
   }
 
   componentWillMount() {
@@ -130,9 +131,13 @@ class App extends React.Component {
     .catch(error => {
       console.log(error);
     })
+  }
 
+  formatDogName() {
+    
   }
   
+
   
   render() {
     return (
