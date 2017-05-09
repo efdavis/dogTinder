@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
-
-const sequelize = new Sequelize(process.env.DB_DATABASENAME , process.env.DB_USERNAME, process.env.DB_PASSWORD, {host: process.env.DB_HOST, dialect: "postgres", underscored: true});
+const sequelize = new Sequelize(process.env.DB_DATABASENAME , process.env.DB_USERNAME, process.env.DB_PASSWORD, {host: process.env.DB_HOST, dialect: 'postgres', underscored: true});
 
 const User = sequelize.define('user', {
   id: {
@@ -12,7 +11,6 @@ const User = sequelize.define('user', {
   email: Sequelize.STRING,
   password: Sequelize.STRING,
   facebookID: Sequelize.STRING
-
 });
 
 const AnimalList = sequelize.define('animalList', {

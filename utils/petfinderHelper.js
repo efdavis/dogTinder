@@ -7,6 +7,28 @@ const querystring = {
   animal: 'dog'
 }
 
+function removeSmallPicsFromOneDog(dog) {
+  resultArray = JSON.parse(resultArray);
+  dog = JSON.parse(dog).petfinder.pet
+
+  var modifyPhotos = function(photoArray){
+    var newPhotos = [];
+    for(var i = 0; i < photoArray.length; i++){
+      if (photoArray[i]['@size'] === 'x'){
+        newPhotos.push(photoArray[i].$t);
+      }
+    }
+    return newPhotos;
+  }
+  console.log(dog.name.$t)
+  if(dog.media.photos) {
+    dog.media.photos.photo = modifyPhotos(dog.media.photos.photo);
+    return dog;
+  } else {
+    return null;
+  }
+}
+
 function removeSmallPics(resultArray) {
   resultArray = JSON.parse(resultArray);
   var animals = resultArray.petfinder.pets.pet;
@@ -26,15 +48,16 @@ function removeSmallPics(resultArray) {
       filteredAnimals.push(animal);
     }
   })
+
   return filteredAnimals;
+
 }
 
-function fetchAnimals(params, callback){
+exports.fetchAnimals = (params, callback) => {
 
   for(var key in params){
     querystring[key] = params[key]
   }
-  // console.log("Query String: ", querystring);
 
   request({
     method: 'get',
@@ -46,18 +69,64 @@ function fetchAnimals(params, callback){
   })
 }
 
-let fetchUsersAnimals = (animalId, callback) => {
-  querystring.id = animalId;
+exports.getList = (list, callback) => {
 
-  request({
-    method: 'get',
-    url: 'http://api.petfinder.com/pet.get',
-    qs: querystring
-  }, function(err, response, body) {
-    callback(body);
-  })  
-};
+  function getRecursive(listSoFar, results) {
+    if(listSoFar.length === 0) {
+      callback(results);
+      return;
+    }
+    querystring.id = listSoFar[0];
+    listSoFar.shift();
+    request({
+      method: 'get',
+      url: 'http://api.petfinder.com/pet.get',
+      qs: querystring
+    }, function(error, response, body){
+      if(error) {
+        console.log(error);
+      } else {
+        results.push(removeSmallPicsFromOneDog(body));
+        return getRecursive(listSoFar, results);
+      }
+    })
 
-fetchUsersAnimals(37609758, (body) => {console.log('FETCH ANIMALS: ', body)});
+  }
+  var emptyArr = [];
+  getRecursive(list, emptyArr);
 
-module.exports = fetchAnimals;
+}
+
+// exports.fetchUsersAnimals = (animalIdArr, callback) => {
+//   let userAnimals = [];
+
+//   const recurseIds = (animalIdArr, callback) => {
+//     let animalId = animalIdArr.pop()
+
+//     if (animalId) {
+//     querystring.id = animalId.petFinderid;
+//       request({
+//         method: 'get',
+//         url: 'http://api.petfinder.com/pet.get',
+//         qs: querystring
+//       }, function(err, response, body) {
+//         body = JSON.parse(body);
+//          console.log('==========>', body.petfinder.pet.media.photos.photo.length);
+//         let photoArray = body.petfinder.pet.media.photos.photo
+//         photoArray = modifySingleAnimalPhotos(photoArray);
+        
+//   console.log('==========>', body.petfinder.pet.media.photos.photo.length);
+//         userAnimals.push(body);
+//         recurseIds(animalIdArr, callback);
+//       })  
+//     } else {
+//       // console.log(userAnimals);
+//       callback(userAnimals);
+//     } 
+//   }
+
+//   recurseIds(animalIdArr, callback);
+// };
+
+
+

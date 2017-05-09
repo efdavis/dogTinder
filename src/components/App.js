@@ -3,6 +3,11 @@ import axios from 'axios';
 import DisplayDog from './DisplayDog';
 import Kennel from './Kennel.js';
 import NavBar from './NavBar';
+import Cookies from 'universal-cookie';
+import uniqBy from 'lodash.uniqby';
+import uniq from 'lodash.uniq';
+
+const cookies = new Cookies();
 
 class App extends React.Component {
   constructor(props) {
@@ -20,7 +25,14 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    axios.get('/dog-tinder-api?location=98105')
+    // if user has an animalList in their cookies
+    if(cookies.get('animalList')) {
+      axios.get('/dog-tinder-api/list')
+      .then(response => {
+        this.setState({animalList: response.data});
+      })
+    }
+    axios.get('/dog-tinder-api?location=07470') 
       .then(response => {
         console.log('componentwillmount response.data', response.data)
         return response.data;
@@ -35,28 +47,6 @@ class App extends React.Component {
         console.error('Error on componentWillMount', error)
       });
   }
-  
-  
-
-  // componentWillMount(zipcode=94103) {
-  //   axios.get('/dog-tinder-api', {
-  //     params: {
-  //       location: zipcode
-  //     }
-  //   }) 
-  //   .then(response => {
-  //     return response.data;
-  //   })
-  //   .then(data => {
-  //     this.setState({
-  //       featuredDog: data.petfinder.pets.pet[0],
-  //       allDogs: data.petfinder.pets.pet
-  //     })
-  //   })
-  //   .catch(error => {
-  //     console.error('Error on componentWillMount', error)
-  //   });
-  // }
   
   nextDog() {
     let next = this.state.index + 1; 
@@ -79,49 +69,54 @@ class App extends React.Component {
     console.log('SAVEDOGGY DOG', dog)
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
-    let idArray = tempArray.map(function(item){return item.id.$t});
+    tempArray = uniqBy(tempArray, 'id.$t');
+    let idArray = uniq(tempArray.map(function(item){return parseInt(item.id.$t)}));
+
     axios({
       method: 'post',
       url: '/dog-tinder-api/list', 
       data: idArray
     }).then(() => {
       this.setState({animalList: tempArray});
+      cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
     })
-    .catch(function(){
+    .catch(() => {
+      // this.setState({animalList: uniq(tempArray)});
+      // cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
       console.log("There was an error saving the list to the database")
     })
   }
 
-
-  handleSearchQuery(zipcode = 98105, breed, age, sex) { 
-    console.log('GET REQUEST PARAMETRS:', zipcode, breed, age, sex)
+handleSearchQuery(theState) { 
     let data = {}; 
-    const filterArgs = function() {
+   
       data.location = zipcode;
-      if (breed !== '') { data.breed = breed; }
-      if (age !== '') { data.age = age; }
-      if (sex !== '') { data.sex = sex; }
-    }
-    console.log('data object from handleSearchQuery:', data)
+      if (theState.breed !== '') { data.breed = theState.breed; }
+      if (theState.age !== '') { data.age = theState.age; }
+      if (theState.sex !== '') { data.sex = theState.sex; }
+ 
     axios.get('/dog-tinder-api', { 
       params: data
     })
     .then(response => {
+      let data = response.data
       this.setState({
-        allDogs: response.data
+        featuredDog: data[0],
+        allDogs: data
       }) 
     }) 
     .catch(error => {
       console.log(error);
     });
   }
-
+  
+  
   render() {
     console.log(this.state.allDogs)
     return (
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
-        {this.state.allDogs !== '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
+       { this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
         {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
         <Kennel animalList={this.state.animalList}/>
       </div>
