@@ -9,7 +9,7 @@ import uniq from 'lodash.uniq';
 
 const cookies = new Cookies();
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +23,6 @@ export default class App extends React.Component {
     this.saveDoggy = this.saveDoggy.bind(this);
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
   }
-  
 
   componentWillMount() {
     // if user has an animalList in their cookies
@@ -35,6 +34,7 @@ export default class App extends React.Component {
     }
     axios.get('/dog-tinder-api?location=07470') 
       .then(response => {
+        console.log('componentwillmount response.data', response.data)
         return response.data;
       })
       .then(data => {
@@ -44,7 +44,7 @@ export default class App extends React.Component {
         })
       })
       .catch(error => {
-        console.error(error)
+        console.error('Error on componentWillMount', error)
       });
   }
   
@@ -64,7 +64,9 @@ export default class App extends React.Component {
     });
   }
 
+
   saveDoggy(dog) { 
+    console.log('SAVEDOGGY DOG', dog)
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
     tempArray = uniqBy(tempArray, 'id.$t');
@@ -85,28 +87,30 @@ export default class App extends React.Component {
     })
   }
 
-  handleSearchQuery(zipcode = 94103, breed, age, sex) { 
-    console.log('GET REQUEST PARAMETRS:')
+handleSearchQuery(theState) { 
     let data = {}; 
-    const filterArgs = function() {
-      data.zipcode = zipcode;
-      if (breed !== '') { data.breed = breed; }
-      if (age !== '') { data.age = age; }
-      if (sex !== '') { data.sex = sex; }
-    }
+   
+      data.location = zipcode;
+      if (theState.breed !== '') { data.breed = theState.breed; }
+      if (theState.age !== '') { data.age = theState.age; }
+      if (theState.sex !== '') { data.sex = theState.sex; }
+ 
     axios.get('/dog-tinder-api', { 
       params: data
     })
     .then(response => {
+      let data = response.data
       this.setState({
-        allDogs: response.data
+        featuredDog: data[0],
+        allDogs: data
       }) 
     }) 
     .catch(error => {
       console.log(error);
     });
   }
-
+  
+  
   render() {
     console.log(this.state.allDogs)
     return (
@@ -122,3 +126,4 @@ export default class App extends React.Component {
 
 
 
+export default App;

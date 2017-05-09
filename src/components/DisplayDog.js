@@ -10,22 +10,8 @@ export default class DisplayDog extends React.Component {
 
 
   render() {
-    const data = ['Alexandre', 'Thomas', 'Lucien']
 
     return (
-/*
-      <Cards style={{backgroundColor:'blue'}} onEnd={()=>console.log('end')} className='master-root'>
-        {data.map(item => 
-          <Card style={{backgroundColor:'blue'}}
-            onSwipeLeft={()=>console.log('swiped left')} 
-            onSwipeRight={()=>console.log('swiped left')}>
-            <h2>{data}</h2>
-          </Card>
-        )}
-      </Cards>*/
-
-
-
         <div id="featuredDog"className="carousel slide" style={{display: 'flex', justifyContent: 'center'}}>
           <div className="carousel-inner" >
             <div className="item active" id="dog">

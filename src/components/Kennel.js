@@ -22,7 +22,6 @@ class Kennel extends React.Component {
                       </h3>
                     <div className="media-left">
                       <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="200px" />
-                      
                     </div>
                     <div className="media-body">
                       <p>{dog.description.$t}</p>
