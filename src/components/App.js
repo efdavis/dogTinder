@@ -4,6 +4,8 @@ import DisplayDog from './DisplayDog';
 import Kennel from './Kennel.js';
 import NavBar from './NavBar';
 import Cookies from 'universal-cookie';
+import uniqBy from 'lodash.uniqby';
+import uniq from 'lodash.uniq';
 
 const cookies = new Cookies();
 
@@ -28,7 +30,6 @@ export default class App extends React.Component {
     if(cookies.get('animalList')) {
       axios.get('/dog-tinder-api/list')
       .then(response => {
-        console.log(response.data);
         this.setState({animalList: response.data});
       })
     }
@@ -66,7 +67,9 @@ export default class App extends React.Component {
   saveDoggy(dog) { 
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
-    let idArray = tempArray.map(function(item){return parseInt(item.id.$t)});
+    tempArray = uniqBy(tempArray, 'id.$t');
+    let idArray = uniq(tempArray.map(function(item){return parseInt(item.id.$t)}));
+
     axios({
       method: 'post',
       url: '/dog-tinder-api/list', 
@@ -76,8 +79,8 @@ export default class App extends React.Component {
       cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
     })
     .catch(() => {
-      this.setState({animalList: tempArray});
-      cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
+      // this.setState({animalList: uniq(tempArray)});
+      // cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
       console.log("There was an error saving the list to the database")
     })
   }
