@@ -97,35 +97,6 @@ exports.getList = (list, callback) => {
 
 }
 
-exports.getList = (list, callback) => {
-
-  function getRecursive(listSoFar, results) {
-    if(listSoFar.length === 0) {
-      callback(results);
-      return;
-    }
-    querystring.id = listSoFar[0];
-    listSoFar.shift();
-    request({
-      method: 'get',
-      url: 'http://api.petfinder.com/pet.get',
-      qs: querystring
-    }, function(error, response, body){
-      if(error) {
-        console.log(error);
-      } else {
-        results.push(removeSmallPicsFromOneDog(body));
-        return getRecursive(listSoFar, results);
-      }
-    })
-
-  }
-  var emptyArr = [];
-  getRecursive(list, emptyArr);
-
-}
-
-
 exports.fetchUsersAnimals = (animalIdArr, callback) => {
   let userAnimals = [];
 
