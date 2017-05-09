@@ -30,6 +30,7 @@ class Kennel extends React.Component {
 
   render(){
     return (
+
     <div>
     <h1 className="page-header">My Kennel</h1>
     <div style={{display: 'flex'}}>
@@ -37,6 +38,14 @@ class Kennel extends React.Component {
           return <li className="media dog-box" key={dog.id.$t} style={{display: 'flex', justifyContent: 'flex-start'}}>
                     <div className="media-left">
                       <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="50px" height="50px" />
+                    </div>
+                    <div className="media-body">
+                      <p>{dog.description.$t}</p>
+                      {Array.isArray(dog.breeds.breed) ? dog.breeds.breed.map(function(breed) {
+                        return <div><span className="label label-primary">Breed: {breed.$t}</span></div>
+                      }) : <div><span className="label label-primary">Breed: {dog.breeds.breed.$t}</span></div> }
+                      <div><span className="label label-primary">Age: {dog.age.$t}</span></div>
+                      <div><span className="label label-primary">Sex: {dog.sex.$t}</span></div>
                     </div>
                     <h5 className="dogName" onClick={() => {this.clickDogName(); this.showProfile(dog)}}> {dog.name.$t} / {Array.isArray(dog.breeds.breed)? <span>Mixed Breed</span> : dog.breeds.breed.$t}  / {dog.age.$t} / {dog.sex.$t}</h5>
                     {/*{this.state.clicked ? <div>{this.state.selectedDog.name.$t}</div> : <div></div>}*/}

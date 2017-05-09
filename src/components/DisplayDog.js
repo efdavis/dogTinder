@@ -8,11 +8,8 @@ class DisplayDog extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
-<<<<<<< HEAD
-=======
-   console.log('hi')
->>>>>>> Renders no search results message when no dog is found
    if (this.props.dogNotFound) {
      return (
        <DogNotFound />
@@ -20,15 +17,9 @@ class DisplayDog extends React.Component {
    }
     else {
     return (
-<<<<<<< HEAD
       <div style={{display: 'flex'}}>
         <div id="featuredDog"className="carousel slide" style={{display: 'flex', justifyContent: 'center', overflow: 'visible'}}>
           <div className="carousel-inner" style={{overflow: 'visible'}} >
-=======
-      
-        <div id="featuredDog"className="carousel slide" style={{display: 'flex', justifyContent: 'center'}}>
-          <div className="carousel-inner" >
->>>>>>> Renders no search results message when no dog is found
             <div className="item active" id="dog">
               <div>
                 <img className="img-fluid" height="250px" style={{display: 'flex'}} alt="Responsive image" src={this.props.dog.media.photos.photo[0]}/>
@@ -54,9 +45,7 @@ class DisplayDog extends React.Component {
        <div className="dogInfo" style={{display: 'flex', position: 'float', width: '160px', flexDirection: 'row'}}>
          <ul>
            <h5><b>Meet {this.props.dog.name.$t}!</b></h5>
-           {/*<li><b>Name: </b>{this.props.dog.name.$t}</li>*/}
            {Array.isArray(this.props.dog.breeds.breed) ? <li><b>Breed: </b>Mixed Breed</li> : <li><b>Breed: </b>{this.props.dog.breeds.breed.$t}</li>}
-           {/*<li><b>Breed: </b>{Array.isArray(dogs.breeds.breed ? <}this.props.dog.breeds.breed.$t}</li>*/}
            <li><b>Age: </b>{this.props.dog.age.$t}</li>
            <li><b>Sex: </b>{this.props.dog.sex.$t}</li>
          </ul>
