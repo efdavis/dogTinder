@@ -87,7 +87,9 @@ class App extends React.Component {
     })
   }
 
-handleSearchQuery(theState) { 
+
+  handleSearchQuery(theState) { 
+
     let data = {}; 
    
       data.location = zipcode;
