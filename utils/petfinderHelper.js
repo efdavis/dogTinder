@@ -48,7 +48,7 @@ exports.fetchAnimals = (params, callback) => {
   })
 }
 
-<<<<<<< HEAD
+
 exports.fetchUsersAnimals = (animalIdArr, callback) => {
   let userAnimals = [];
 
@@ -77,8 +77,7 @@ exports.fetchUsersAnimals = (animalIdArr, callback) => {
   recurseIds(animalIdArr, callback);
 };
 
-// fetchUsersAnimals(37609758, (body) => {console.log('FETCH ANIMALS: ', body)});
-=======
+
 let fetchUsersAnimals = (animalId, callback) => {
   querystring.id = animalId;
 
@@ -91,4 +90,3 @@ let fetchUsersAnimals = (animalId, callback) => {
   })  
 };
 
-module.exports = fetchAnimals;>>>>>>> start work on fetching dogs from database & petFinder
