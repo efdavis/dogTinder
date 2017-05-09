@@ -12,7 +12,6 @@ const User = sequelize.define('user', {
   email: Sequelize.STRING,
   password: Sequelize.STRING,
   facebookID: Sequelize.STRING
-
 });
 
 const AnimalList = sequelize.define('animalList', {
