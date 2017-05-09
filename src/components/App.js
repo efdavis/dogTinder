@@ -18,8 +18,12 @@ class App extends React.Component {
       featuredDog: '',
       allDogs: '',
       animalList: [],
+<<<<<<< HEAD
       dogNotFound: false,
       shelterContactInfo: ''
+=======
+      dogNotFound: false
+>>>>>>> Renders no search results message when no dog is found
     }
     this.nextDog = this.nextDog.bind(this);
     this.previousDog = this.previousDog.bind(this);
@@ -99,10 +103,15 @@ class App extends React.Component {
     if (theState.breed !== '') { data.breed = theState.breed; }
     if (theState.age !== '') { data.age = theState.age; }
     if (theState.sex !== '') { data.sex = theState.sex; }
+<<<<<<< HEAD
+=======
+
+>>>>>>> Renders no search results message when no dog is found
     axios.get('/dog-tinder-api', { 
       params: data
     })
     .then(response => {
+      console.log('handle search query response data:', response.data)
       let data = response.data
       this.setState({
         featuredDog: data[0],

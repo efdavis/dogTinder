@@ -76,6 +76,10 @@ class NavBar extends React.Component {
                 </select>
               </label>
             </form>
+<<<<<<< HEAD
+=======
+            {/*<Button type="submit" onClick={() => this.handleSelect()}>Search</Button>*/}
+>>>>>>> Renders no search results message when no dog is found
             </div>            
           </div>
       
