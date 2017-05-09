@@ -8,7 +8,6 @@ const querystring = {
 }
 
 function removeSmallPicsFromOneDog(dog) {
-  resultArray = JSON.parse(resultArray);
   dog = JSON.parse(dog).petfinder.pet
 
   var modifyPhotos = function(photoArray){
