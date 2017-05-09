@@ -10,6 +10,7 @@ const querystring = {
 function removeSmallPics(resultArray) {
   resultArray = JSON.parse(resultArray);
   var animals = resultArray.petfinder.pets.pet;
+  var filteredAnimals = [];
   var modifyPhotos = function(photoArray){
     var newPhotos = [];
     for(var i = 0; i < photoArray.length; i++){
@@ -20,10 +21,14 @@ function removeSmallPics(resultArray) {
     return newPhotos;
   }
   animals.forEach(function(animal){
-    animal.media.photos.photo = modifyPhotos(animal.media.photos.photo);
+    if(animal.media.photos) {
+      animal.media.photos.photo = modifyPhotos(animal.media.photos.photo);
+      filteredAnimals.push(animal);
+    }
   })
 
-  return resultArray;
+  return filteredAnimals;
+
 }
 
 exports.fetchAnimals = (params, callback) => {
