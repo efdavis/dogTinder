@@ -5,12 +5,14 @@ var petFinderFetch = require('./utils/petfinderHelper');
 var request = require('request');
 var passport = require('./utils/fbPassportHelper');
 var session = require('express-session');
-var dbUtils = require('./db/dbUtils')
+var dbUtils = require('./db/dbUtils');
+var Cookies = require('universal-cookie'); 
 
 var app = express();
 
 app.use(express.static('./public'));
 app.use(bodyParser.json());
+
 app.use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: true, resave: true, name: 'dogbiscuit' }));
 // set up passport for FB Auth on Express
 app.use(passport.initialize());
@@ -48,6 +50,9 @@ app.get('/auth/facebook/callback',
   });
 
 app.get('/dog-tinder-api/list', (req, res) => {
+
+  const cookies = new Cookies(req.headers.cookie);
+  var userAnimalList = cookies.get('animalList');
   let facebookID = req.session.user.id;
 
   dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
@@ -56,6 +61,12 @@ app.get('/dog-tinder-api/list', (req, res) => {
       console.log(dogs)
     })
   })
+
+  petFinderFetch.getList(userAnimalList, function(results) {
+    console.log("FINAL FETCH FOR ALL LIST:", results);
+    res.send(results);
+  });
+
 });
 
 app.post('/dog-tinder-api/list', (req, res) => {
