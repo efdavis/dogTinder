@@ -182,3 +182,14 @@ exports.checkForUserList = (facebookID, callback) => {
   })
 }
 
+exports.removeDogFromUserList = (animalListId, animalId, callback) => {
+  let queryString = `
+    DELETE FROM "AnimalList_Animal"
+    WHERE "animalListId" = ${animalListId} AND "animalId" = ${animalId};
+  `
+
+  db.sequelize.query(queryString).spread((results, metdata) => {
+    callback(results, metdata);
+  })
+}
+

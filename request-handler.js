@@ -43,33 +43,37 @@ app.get('/auth/facebook/callback',
   var userAnimalList = cookies.get('animalList');
 
   //ADD ANIMALS FROM COOKIE LIST TO DATABASE
-  let animalObjArr = userAnimalList.map((id) => {
-    if (id) {
-      return {petFinderid: id.toString()}
-    } else {
-      // this is a dogTinder dog
-        // functionality not built out
-    }
-  });
+  if (userAnimalList) {
+    let animalObjArr = userAnimalList.map((id) => {
+      if (id) {
+        return {petFinderid: id.toString()}
+      } else {
+        // this is a dogTinder dog
+          // functionality not built out
+      }
+    });
 
-  let facebookID = req.user.id;
+    let facebookID = req.user.id;
 
-  dbUtils.doesUserHaveList(facebookID, (bool) => {
-    if (bool) {
-      dbUtils.updateUserList({facebookID: facebookID}, animalObjArr, () => {
-        res.redirect('/');
-      })
-    } else {
-      dbUtils.saveUserList([null, null, facebookID], animalObjArr, () => {
-        res.redirect('/');
-      })
-    }
-  });
+    dbUtils.doesUserHaveList(facebookID, (bool) => {
+      if (bool) {
+        dbUtils.updateUserList({facebookID: facebookID}, animalObjArr, () => {
+          res.redirect('/');
+        })
+      } else {
+        dbUtils.saveUserList([null, null, facebookID], animalObjArr, () => {
+          res.redirect('/');
+        })
+      }
+    });
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get('/dog-tinder-api/list', (req, res) => {
+  console.log('hello!')
   if (req.user) {
-
     let facebookID = req.session.user.id;
 
     dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
@@ -80,15 +84,17 @@ app.get('/dog-tinder-api/list', (req, res) => {
       })
     })
   } else {
-
     const cookies = new Cookies(req.headers.cookie);
     var userAnimalList = cookies.get('animalList');
   
-
-    petFinderFetch.getList(userAnimalList, function(results) {
-      // console.log("FINAL FETCH FOR ALL LIST:", results);
-      res.send(results);
-    });
+    if (userAnimalList) {
+      petFinderFetch.getList(userAnimalList, function(results) {
+        // console.log("FINAL FETCH FOR ALL LIST:", results);
+        res.send(results);
+      });
+    } else {
+      res.send([]);
+    }
   }
 });
 
@@ -98,8 +104,8 @@ app.post('/dog-tinder-api/list', (req, res) => {
   if (req.user) {
     // make animalObjArr
     let animalObjArr = req.body.map((id) => {
-      if (!isNaN(parseInt(id[0]))) {
-        return {petFinderid: id}
+      if (id) {
+        return {petFinderid: id.toString()}
       } else {
         // this is a dogTinder dog
           // functionality not built out
@@ -130,8 +136,15 @@ app.get('/dog-tinder-api', (req, res) => {
     // get animals from DB here and append them to these 'animals'
     res.send(animals);
   })
+});
 
-})
+app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
+  // need facebookID (req.user)
+  // need dogId (body?)
 
+  dbUtils.removeAnimalFromUsersList(facebookID, petFinderId, () => {
+    console.log('removed from users list');
+  })
+});
 
 module.exports = app;

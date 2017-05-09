@@ -65,7 +65,18 @@ exports.doesUserHaveList = (FacebookID, callback) => {
   })
 }
 
-// uncomment to add testers to database
-  // saveUserList(['IluvDogs@gmail', '777888', 'XXXXXXXX'], [{petFinderid: 'rover'}, {petFinderid: 'rex'}, {petFinderid: 'sammy'}], () => {console.log('saved!')});
-  // updateUserList({email: 'IluvDogs@gmail'}, [{petFinderid: 'rover'}, {petFinderid: 'FIDO'}, {petFinderid: 'sammy'}], () => {console.log('saved!')});
-  // exports.fetchUserAnimals({facebookID: '10158591862165654'}, (results) => {console.log(results)});
+exports.removeAnimalFromUsersList = (FacebookID, petFinderId, callback) => {
+  let listId;
+  let animalId;
+
+  helper.checkForUserList(FacebookID, (result) => {
+    console.log(result[0].id)
+    listId = result[0].id;
+    helper.findAnimalIds([{petFinderid: petFinderId}], (result) => {
+      animalId = result[0];
+      helper.removeDogFromUserList(listId, animalId, () => {
+        callback();
+      })
+    })
+  })
+} 
