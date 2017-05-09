@@ -92,7 +92,7 @@ class App extends React.Component {
 
     let data = {}; 
    
-      data.location = zipcode;
+      data.location = theState.zipcode;
       if (theState.breed !== '') { data.breed = theState.breed; }
       if (theState.age !== '') { data.age = theState.age; }
       if (theState.sex !== '') { data.sex = theState.sex; }
@@ -118,7 +118,7 @@ class App extends React.Component {
     return (
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
-       { this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
+       { this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs} breeds={this.props.breeds}/>}
         {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
         <Kennel animalList={this.state.animalList}/>
       </div>
