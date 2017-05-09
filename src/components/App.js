@@ -28,6 +28,7 @@ export default class App extends React.Component {
     if(cookies.get('animalList')) {
       axios.get('/dog-tinder-api/list')
       .then(response => {
+        console.log(response.data);
         this.setState({animalList: response.data});
       })
     }
@@ -37,8 +38,8 @@ export default class App extends React.Component {
       })
       .then(data => {
         this.setState({
-          featuredDog: data.petfinder.pets.pet[0],
-          allDogs: data.petfinder.pets.pet
+          featuredDog: data[0],
+          allDogs: data
         })
       })
       .catch(error => {
@@ -65,7 +66,7 @@ export default class App extends React.Component {
   saveDoggy(dog) { 
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
-    let idArray = tempArray.map(function(item){return item.id.$t});
+    let idArray = tempArray.map(function(item){return parseInt(item.id.$t)});
     axios({
       method: 'post',
       url: '/dog-tinder-api/list', 
@@ -74,7 +75,9 @@ export default class App extends React.Component {
       this.setState({animalList: tempArray});
       cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
     })
-    .catch(function(){
+    .catch(() => {
+      this.setState({animalList: tempArray});
+      cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
       console.log("There was an error saving the list to the database")
     })
   }
