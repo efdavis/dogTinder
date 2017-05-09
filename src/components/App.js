@@ -3,6 +3,9 @@ import axios from 'axios';
 import DisplayDog from './DisplayDog';
 import Kennel from './Kennel.js';
 import NavBar from './NavBar';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,6 +24,13 @@ export default class App extends React.Component {
   
 
   componentWillMount() {
+    // if user has an animalList in their cookies
+    if(cookies.get('animalList')) {
+      axios.get('/dog-tinder-api/list')
+      .then(response => {
+        this.setState({animalList: response.data});
+      })
+    }
     axios.get('/dog-tinder-api?location=07470') 
       .then(response => {
         return response.data;
@@ -62,6 +72,7 @@ export default class App extends React.Component {
       data: idArray
     }).then(() => {
       this.setState({animalList: tempArray});
+      cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
     })
     .catch(function(){
       console.log("There was an error saving the list to the database")
