@@ -181,6 +181,3 @@ exports.checkForUserList = (facebookID, callback) => {
   })
 }
 
-
-
-
