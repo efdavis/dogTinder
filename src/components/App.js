@@ -6,6 +6,8 @@ import NavBar from './NavBar';
 import Cookies from 'universal-cookie';
 import uniqBy from 'lodash.uniqby';
 import uniq from 'lodash.uniq';
+import AddAnimalForm from './AddAnimalForm.js';
+import FacebookLogin from './FacebookLogin.js';
 
 const cookies = new Cookies();
 
@@ -115,9 +117,16 @@ class App extends React.Component {
   
   render() {
     console.log(this.state.allDogs)
+    var loginPrompt;
+    if(cookies.get('loggedIn') === "true") {
+      loginPrompt = <div>Welcome Back <a href="/logout">Logout?</a></div>
+    } else {
+      loginPrompt = <FacebookLogin />
+    }
+
     return (
       <div>
-        <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
+        <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>{loginPrompt}
        { this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
         {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
         <Kennel animalList={this.state.animalList}/>

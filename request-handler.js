@@ -20,6 +20,7 @@ app.use(passport.session());
 
 app.get('/', (request, response) => {
   if(request.session.user) {
+    response.cookie('loggedIn', true);
     console.log(request.session.user.displayName + ' is logged in with FB ID: ' + request.session.user.id)
   }
   response.sendFile(path.resolve(__dirname, "./public/_index.html"));
@@ -31,10 +32,10 @@ app.get('/auth/facebook',
 
 app.get('/login', (req, res) => {
   res.sendFile(path.resolve(__dirname, './public/login.html'));
-  
 });
 
 app.get('/auth/facebook/callback',
+
   passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
 
   req.session.user = req.user;
@@ -96,6 +97,7 @@ app.get('/dog-tinder-api/list', (req, res) => {
       res.send([]);
     }
   }
+
 });
 
 app.post('/dog-tinder-api/list', (req, res) => {
@@ -128,6 +130,7 @@ app.post('/dog-tinder-api/list', (req, res) => {
   } else {
     res.send(201)
   }
+
 });
 
 app.get('/dog-tinder-api', (req, res) => {
@@ -146,5 +149,15 @@ app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
     console.log('removed from users list');
   })
 });
+
+app.get('/logout', (req, res) => {
+  req.session.destroy(function (err) {
+    res.clearCookie('loggedIn');
+    res.redirect('/');
+    if(err) {
+      res.send(err);
+    }
+  });
+})
 
 module.exports = app;
