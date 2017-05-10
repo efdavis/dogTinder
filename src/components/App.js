@@ -3,6 +3,7 @@ import axios from 'axios';
 import DisplayDog from './DisplayDog';
 import Kennel from './Kennel.js';
 import NavBar from './NavBar';
+import DogNotFound from './DogNotFound';
 import Cookies from 'universal-cookie';
 import uniqBy from 'lodash.uniqby';
 import uniq from 'lodash.uniq';
@@ -18,7 +19,8 @@ class App extends React.Component {
       index: 0,
       featuredDog: '',
       allDogs: '',
-      animalList: []
+      animalList: [],
+      dogNotFound: false
     }
     this.nextDog = this.nextDog.bind(this);
     this.previousDog = this.previousDog.bind(this);
@@ -68,7 +70,6 @@ class App extends React.Component {
 
 
   saveDoggy(dog) { 
-    console.log('SAVEDOGGY DOG', dog)
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
     tempArray = uniqBy(tempArray, 'id.$t');
@@ -91,18 +92,16 @@ class App extends React.Component {
 
 
   handleSearchQuery(theState) { 
-
     let data = {}; 
-   
-      data.location = theState.zipcode;
-      if (theState.breed !== '') { data.breed = theState.breed; }
-      if (theState.age !== '') { data.age = theState.age; }
-      if (theState.sex !== '') { data.sex = theState.sex; }
- 
+    data.location = theState.zipcode;
+    if (theState.breed !== '') { data.breed = theState.breed; }
+    if (theState.age !== '') { data.age = theState.age; }
+    if (theState.sex !== '') { data.sex = theState.sex; }
     axios.get('/dog-tinder-api', { 
       params: data
     })
     .then(response => {
+      console.log('handle search query response data:', response.data)
       let data = response.data
       this.setState({
         featuredDog: data[0],
@@ -110,12 +109,13 @@ class App extends React.Component {
       }) 
     }) 
     .catch(error => {
-      console.log(error);
+      this.setState({dogNotFound: !this.state.dogNotFound })
     });
   }
   
   
   render() {
+
     console.log(this.state.allDogs)
     var loginPrompt;
     if(cookies.get('loggedIn') === "true") {
