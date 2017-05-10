@@ -28,6 +28,7 @@ label {
   margin: auto;
 }
 
+
 .doggyProfile {
   display: flex;
   flex-direction: row;
@@ -39,9 +40,29 @@ label {
   
 }
 
-
 #close-profile {
   display: flex;
   align-self: flex-start;
   background-color: transparent;
 }
+
+.dog-form {
+  width: 60%;
+}
+
+.dog-form-short {
+  width: 40%;
+}
+
+.dog-form-x-short {
+  width: 20%;
+}
+
+textarea {
+  resize: none;
+}
+
+.btn {
+  width: 200px;
+}
+
