@@ -9,8 +9,10 @@ exports.addOrFindUser = (email, password, facebookID, callback) => {
 };
 
 exports.getUserId = (userLookUp, callback) => {
-  db.User.findOne({where: userLookUp})
-         .then((result) => { callback(result.dataValues.id) })
+  db.User.findOrCreate({where: userLookUp})
+         .then((result) => { 
+           console.log(result);
+           callback(result.dataValues.id) })
 };
 
 exports.addShelter = (address, phone, name, zip, callback) => {

@@ -74,7 +74,8 @@ app.get('/auth/facebook/callback',
 
 app.get('/dog-tinder-api/list', (req, res) => {
   if (req.user) {
-    let facebookID = req.session.user.id;
+    console.log('===========>', req.user.id);
+    let facebookID = req.user.id;
 
     dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
       let dogIds = results.map(dog => dog.petFinderid);
@@ -86,7 +87,8 @@ app.get('/dog-tinder-api/list', (req, res) => {
   } else {
     const cookies = new Cookies(req.headers.cookie);
     var userAnimalList = cookies.get('animalList');
-  
+    res.clearCookie('loggedIn');
+    
     if (userAnimalList) {
       petFinderFetch.getList(userAnimalList, function(results) {
         // console.log("FINAL FETCH FOR ALL LIST:", results);
