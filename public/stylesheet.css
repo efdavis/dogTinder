@@ -43,3 +43,7 @@ label {
 textarea {
   resize: none;
 }
+
+.btn {
+  width: 200px;
+}
