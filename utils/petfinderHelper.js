@@ -62,8 +62,14 @@ exports.fetchAnimals = (params, callback) => {
     url: 'http://api.petfinder.com/pet.find',
     qs: querystring
   }, function(error, response, body){
-    body = removeSmallPics(body);
-    callback(body);
+    let petArray = JSON.parse(body).petfinder.pets;
+    // if the petArray has no pets:
+    if (Object.keys(petArray).length === 0 && petArray.constructor === Object) {
+      callback([]);
+    } else {
+      body = removeSmallPics(body);
+      callback(body);
+    }
   })
 }
 
