@@ -36,12 +36,11 @@ class App extends React.Component {
 
   componentWillMount() {
     // if user has an animalList in their cookies
-    if(cookies.get('animalList')) {
-      axios.get('/dog-tinder-api/list')
-      .then(response => {
-        this.setState({animalList: response.data});
-      })
-    }
+
+    axios.get('/dog-tinder-api/list')
+    .then(response => {
+      this.setState({animalList: response.data});
+    });
     axios.get('/dog-tinder-api?location=07470') 
       .then(response => {
         console.log('componentwillmount response.data', response.data)
@@ -132,6 +131,7 @@ class App extends React.Component {
 
   removeDogFromKennel(dog) {
     console.log('You clicked me! Here is your dog: ', dog);
+
     axios.delete('/dog-tinder-api/removeAnimal', {data: dog})
     .then(response => {
       console.log('remove dog success: ', response);
