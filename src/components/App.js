@@ -35,7 +35,6 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    // if user has an animalList in their cookies
 
     axios.get('/dog-tinder-api/list')
     .then(response => {
@@ -79,25 +78,32 @@ class App extends React.Component {
     ReactDOM.render(<AddAnimalForm />, document.getElementById("main"));
   }
 
-  saveDoggy(dog) { 
+  saveDoggy(dog) {
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
     tempArray = uniqBy(tempArray, 'id.$t');
     let idArray = uniq(tempArray.map(function(item){return parseInt(item.id.$t)}));
 
-    axios({
-      method: 'post',
-      url: '/dog-tinder-api/list', 
-      data: idArray
-    }).then(() => {
-      this.setState({animalList: tempArray});
-      cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
-    })
-    .catch(() => {
-      // this.setState({animalList: uniq(tempArray)});
-      // cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
-      console.log("There was an error saving the list to the database")
-    })
+    if(cookies.get('loggedIn') === "true") {
+      axios({
+        method: 'post',
+        url: '/dog-tinder-api/list', 
+        data: idArray
+      }).then(() => {
+        this.setState({animalList: tempArray});
+        cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
+      })
+      .catch(() => {
+        // this.setState({animalList: uniq(tempArray)});
+        // cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
+        console.log("There was an error saving the list to the database")
+      })
+    } else {
+      this.setState({animalList: tempArray}, () => {
+        cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
+      });
+    }
+
   }
 
 
@@ -130,15 +136,26 @@ class App extends React.Component {
   };
 
   removeDogFromKennel(dog) {
-    console.log('You clicked me! Here is your dog: ', dog);
+    let tempArray = this.state.animalList.slice();
 
-    axios.delete('/dog-tinder-api/removeAnimal', {data: dog})
-    .then(response => {
-      console.log('remove dog success: ', response);
-    })
-    .catch(error => {
-      console.log('remove dog error: ', error);
-    })
+    tempArray.splice(tempArray.indexOf(dog), 1);
+    this.setState({animalList: tempArray});
+    
+    let currentList = cookies.get('animalList');
+    let dogId = parseInt(dog.id.$t);
+    let indexToDelete = currentList.indexOf(dogId);
+    currentList.splice(indexToDelete,1);
+    cookies.set('animalList', currentList);
+
+    if(cookies.get('loggedIn') === "true") {
+      axios.delete('/dog-tinder-api/removeAnimal', {data: dog})
+      .then(response => {
+        console.log('remove dog success: ', response);
+      })
+      .catch(error => {
+        console.log('remove dog error: ', error);
+      })
+    }
   };
   
   //Passes in shelter id from ContactShelter component
