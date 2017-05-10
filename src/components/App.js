@@ -6,6 +6,7 @@ import NavBar from './NavBar';
 import Cookies from 'universal-cookie';
 import uniqBy from 'lodash.uniqby';
 import uniq from 'lodash.uniq';
+import AddAnimalForm from './AddAnimalForm.js'
 
 const cookies = new Cookies();
 
