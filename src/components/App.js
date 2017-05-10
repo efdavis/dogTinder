@@ -115,15 +115,20 @@ class App extends React.Component {
     .then(response => {
       console.log('handle search query response data:', response.data)
       let data = response.data
-      this.setState({
-        featuredDog: data[0],
-        allDogs: data
-      }) 
+      if(response.data.length === 0) {
+        this.setState({dogNotFound: true });
+      } else {
+        this.setState({
+          featuredDog: data[0],
+          allDogs: data,
+          dogNotFound: false
+        }) 
+      }
     }) 
     .catch(error => {
-      this.setState({dogNotFound: !this.state.dogNotFound })
+      this.setState({dogNotFound: true });
     });
-  }
+  };
 
   removeDogFromKennel(dog) {
     console.log('You clicked me! Here is your dog: ', dog);
@@ -134,7 +139,7 @@ class App extends React.Component {
     .catch(error => {
       console.log('remove dog error: ', error);
     })
-  }
+  };
   
   //Passes in shelter id from ContactShelter component
   getShelter(shelterID) {
@@ -153,7 +158,7 @@ class App extends React.Component {
     .catch(error => {
       console.log(error);
     })
-  }
+  };
 
   formatDogName() {
     
