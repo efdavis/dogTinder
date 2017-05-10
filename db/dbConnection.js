@@ -25,7 +25,7 @@ const AnimalList = sequelize.define('animalList', {
     allowNull: true
   }
 });
-
+    
 const Animal = sequelize.define('animal', {
   id: {
     type: Sequelize.INTEGER,
@@ -36,11 +36,20 @@ const Animal = sequelize.define('animal', {
   petFinderid: {type: Sequelize.STRING, unique: true},
   dogTinderDB: Sequelize.BOOLEAN,
   name: Sequelize.STRING,
-  species: Sequelize.STRING,
+  photo: Sequelize.STRING,
+  animal: Sequelize.STRING,
   age: Sequelize.STRING,
   sex: Sequelize.STRING,
   size: Sequelize.STRING,
-  description: Sequelize.TEXT
+  mix: Sequelize.STRING,
+  description: Sequelize.TEXT,
+  address1: Sequelize.STRING,
+  address2: Sequelize.STRING,
+  city: Sequelize.STRING,
+  state: Sequelize.STRING,
+  zip: Sequelize.STRING,
+  email: Sequelize.STRING,
+  phone: Sequelize.STRING
 });
 
 const Shelter = sequelize.define('shelter', {
@@ -76,7 +85,7 @@ Animal.belongsTo(Shelter);
 Animal.belongsToMany(Breed, {through: 'Animal_Breeds'});
 Breed.belongsToMany(Animal, {through: 'Animal_Breeds'});
 
-sequelize.sync();
+sequelize.sync({force: true});
 
 
 exports.sequelize = sequelize;

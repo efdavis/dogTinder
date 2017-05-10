@@ -43,7 +43,7 @@ class KennelDogProfile extends React.Component {
           
         </div>
           <div className="profile-description">{dog.description.$t}</div>
-          <div onClick={this.props.removeDog(this.props.dog)}>REMOVE DOG</div>
+          <div onClick={() => {this.props.removeDog(this.props.dog)}}>REMOVE DOG</div>
 
           <button className="btn btn-primary" onClick={() => this.showContactInfo()}>
             Contact Shelter
