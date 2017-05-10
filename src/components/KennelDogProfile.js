@@ -12,7 +12,6 @@ class KennelDogProfile extends React.Component {
 
   showContactInfo() {
     this.setState({contactClicked: !this.state.clicked})
-
   }
 
   closeProfile() {
@@ -22,7 +21,11 @@ class KennelDogProfile extends React.Component {
   render() {
     const dog = this.props.dog;
     if (this.state.clicked) {
-        return (<div></div>);
+      return (
+        <div>
+          {/*{() => this.props.clickName()}*/}
+        </div>
+      );
     }
     else {
     return (
@@ -36,10 +39,12 @@ class KennelDogProfile extends React.Component {
             {Array.isArray(dog.options.option) ? dog.options.option.map(info => <li>{info.$t}</li>) : <div></div>}
             {/*{dog.options.map(info => <li>{info.option.$t}</li>)}*/}
           </ul>
-
+        
+        <div className="changeParentState" onChange={this.props.clickName} >
           <button type="button" className="btn btn default btn-sm" id="close-profile" onClick={() => this.closeProfile()}>
             <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </button>
+        </div>
           
         </div>
           <div className="profile-description">{dog.description.$t}</div>
