@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import DisplayDog from './DisplayDog';
 import Kennel from './Kennel.js';
@@ -9,7 +10,6 @@ import uniqBy from 'lodash.uniqby';
 import uniq from 'lodash.uniq';
 import AddAnimalForm from './AddAnimalForm.js';
 import FacebookLogin from './FacebookLogin.js';
-import ReactDOM from 'react-dom';
 
 const cookies = new Cookies();
 
@@ -192,9 +192,13 @@ class App extends React.Component {
 
 
     return (
-      <div>
-        <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>{loginPrompt}
-       { this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
+      <div className="homepage">
+        <div className="title-logo">
+          <h1 className="title">Dog Tinder</h1>
+          <img className="dogPaw" src="images/dogPaw.svg"/>
+        </div>
+        {loginPrompt}
+        {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
         {this.state.featuredDog !== '' ? 
         <DisplayDog 
           dog={this.state.featuredDog} 
