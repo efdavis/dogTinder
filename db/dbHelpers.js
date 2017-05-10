@@ -11,8 +11,7 @@ exports.addOrFindUser = (email, password, facebookID, callback) => {
 exports.getUserId = (userLookUp, callback) => {
   db.User.findOrCreate({where: userLookUp})
          .then((result) => { 
-           console.log(result);
-           callback(result.dataValues.id) })
+           callback(result[0].dataValues.id) })
 };
 
 exports.addShelter = (address, phone, name, zip, callback) => {
@@ -29,8 +28,6 @@ exports.saveAnimals = (animalObjArr, callback) => {
     callback();
   } else {
     const animal = animalObjArr.pop()
-    console.log('ANIMAL: ', animal);
-
     db.Animal.findOrCreate({where: animal})
              .then(() => {
                exports.saveAnimals(animalObjArr, callback)
@@ -80,16 +77,17 @@ exports.addAnimalsToList = (UserId, animalIdArr, callback) => {
 };
 
 exports.findUserList = (UserId, callback) => {
-  db.AnimalList.findOne({where: {userId: UserId}})
-               .then((list) => {
-                 callback(list);
+  db.AnimalList.findOrCreate({where: {userId: UserId}})
+               .then((result) => {
+                 callback(result);
                })
 };
 
 exports.updateList = (list, animalIdArr, callback) => {
+  console.log('==>>>', list);
   if (animalIdArr.length > 0) {
     let animal = animalIdArr.pop();
-    list.addAnimal(animal)
+    list[0].addAnimal(animal)
         .then(() => {
           exports.updateList(list, animalIdArr, callback)
         })
@@ -151,6 +149,7 @@ exports.findAnimalIds = (animalObjArr, callback) => {
 };
 
 exports.removeDuplicatesFromAnimalList = (listId, updateAnimalIdArr, callback) => {
+
   let queryString = `
     SELECT "animalId" FROM "AnimalList_Animal"
     WHERE "animalListId" = ${listId};

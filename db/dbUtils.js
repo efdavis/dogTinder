@@ -32,7 +32,7 @@ exports.updateUserList = (userLookup, animalObjArr, callback) => {
       animalIdArr = ids;
       helper.getUserId(userLookup, (userId) => {
         helper.findUserList(userId, (list) => {
-          helper.removeDuplicatesFromAnimalList(list.id, animalIdArr, (newAnimalsToAdd) => {
+          helper.removeDuplicatesFromAnimalList(list[0].dataValues.id, animalIdArr, (newAnimalsToAdd) => {
             helper.updateList(list, newAnimalsToAdd, () => {
               callback();
             })
@@ -48,7 +48,7 @@ exports.updateUserList = (userLookup, animalObjArr, callback) => {
 exports.fetchUserAnimals = (userLookup, callback) => {
   helper.getUserId(userLookup, (id) => {
     helper.findUserList(id, (list) => {
-      helper.getUserAnimals(list.dataValues.id, (results) => {
+      helper.getUserAnimals(list[0].dataValues.id, (results) => {
         callback(results);
       })
     })
