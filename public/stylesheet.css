@@ -27,3 +27,19 @@ label {
 .img-fluid {
   margin: auto;
 }
+
+.dog-form {
+  width: 60%;
+}
+
+.dog-form-short {
+  width: 40%;
+}
+
+.dog-form-x-short {
+  width: 20%;
+}
+
+textarea {
+  resize: none;
+}
