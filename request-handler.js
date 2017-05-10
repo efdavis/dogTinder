@@ -142,11 +142,13 @@ app.get('/dog-tinder-api', (req, res) => {
 
 app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
   // need facebookID (req.user)
+  console.log('facebookID: ', req.user)
+  console.log('dog: ', req.body)
   // need dogId (body?)
 
-  dbUtils.removeAnimalFromUsersList(facebookID, petFinderId, () => {
-    console.log('removed from users list');
-  })
+  // dbUtils.removeAnimalFromUsersList(facebookID, petFinderId, () => {
+  //   console.log('removed from users list');
+  // })
 });
 
 app.get('/logout', (req, res) => {
