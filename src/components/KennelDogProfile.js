@@ -24,6 +24,7 @@ class KennelDogProfile extends React.Component {
         {/*<div><h3>{this.props.dog.name.$t}</h3></div>*/}
         <img src={dog.media.photos.photo[0]} style={{width: '50%', height: '40%' }}/>
         <div className="profile-description">{dog.description.$t}</div>
+        <div onClick={this.props.removeDog(this.props.dog)}>REMOVE DOG</div>
         <button type="button" className="btn btn default btn-sm" id="close-profile" onClick={() => this.closeProfile()}>
           <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>

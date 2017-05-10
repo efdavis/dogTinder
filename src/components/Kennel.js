@@ -43,7 +43,7 @@ class Kennel extends React.Component {
                     {/*{this.state.clicked ? <KennelDogProfile name={dog.name.$t} image={dog.media.photos.photo[0]}breed={dog.breeds.breed.$t} age={dog.age.$t} sex={dog.sex.$t} description={dog.description.$t}/> : <div></div>}*/}
                 </li>
         })}</ul>
-        {this.state.clicked ? <KennelDogProfile dog={this.state.selectedDog}/> : <div></div> }    
+        {this.state.clicked ? <KennelDogProfile dog={this.state.selectedDog} removeDog={this.props.removeDog}/> : <div></div> }    
     </div>
     </div>
     );

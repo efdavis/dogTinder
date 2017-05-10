@@ -1,4 +1,5 @@
 import React from 'react';
+import breeds from '../../utils/All_Breeds.js'
 //import NumericInput from 'react-numeric-input';
 import { Button, DropdownButton, MenuItem, Navbar, FormGroup, FormControl } from 'react-bootstrap'; 
 
@@ -30,7 +31,7 @@ class NavBar extends React.Component {
 
   render() {
     console.log('navbar this.state:', this.state)
-    const breeds = this.props.breeds.petfinder.breeds.breed;
+    // const breeds = this.props.breeds.petfinder.breeds.breed;
 
     return (
       <div style={{display: 'flex', flexDirection: 'row', alignItems:'center', justifyContent: 'flex-start'}}>
@@ -76,7 +77,7 @@ class NavBar extends React.Component {
                 </select>
               </label>
             </form>
-            {/*<Button type="submit" onClick={() => this.handleSelect()}>Search</Button>*/}
+            <Button type="submit" onClick={() => this.handleSelect()}>Search</Button>
             </div>            
           </div>
       
