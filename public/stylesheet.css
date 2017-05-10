@@ -27,3 +27,21 @@ label {
 .img-fluid {
   margin: auto;
 }
+
+.doggyProfile {
+  display: flex;
+  flex-direction: row;
+  align-self: auto,
+  border-style: solid;
+  border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px;
+  
+}
+
+
+#close-profile {
+  display: flex;
+  align-self: flex-start;
+  background-color: transparent;
+}
