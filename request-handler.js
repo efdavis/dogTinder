@@ -150,4 +150,14 @@ app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
   })
 });
 
+app.get('/logout', (req, res) => {
+  req.session.destroy(function (err) {
+    res.clearCookie('loggedIn');
+    res.redirect('/');
+    if(err) {
+      res.send(err);
+    }
+  });
+})
+
 module.exports = app;
