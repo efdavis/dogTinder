@@ -5,6 +5,7 @@ import ContactShelter from './ContactShelter';
 class KennelDogProfile extends React.Component {
   constructor(props) {
     super(props);
+<<<<<<< HEAD
     this.state = {
       contactClicked: false,
       clicked: false
@@ -20,17 +21,13 @@ class KennelDogProfile extends React.Component {
   }
 
   render() {
-    console.log('this.props from kenneldogprofile:', this.props.dog)
-    console.log('this.props.dog.options', this.props.dog.options)
     const dog = this.props.dog;
-    console.log('DOG', dog)
     if (this.state.clicked) {
         return (<div></div>);
     }
     else {
     return (
     <div>
-     {/*<h3>{dog.name.$t}</h3>*/}
       <div className="doggyProfile" style={{display: 'flex', flexDirection: 'column', alignSelf: 'auto', borderStyle: 'solid'}}>
         <h3>{dog.name.$t}</h3>
         <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -51,7 +48,7 @@ class KennelDogProfile extends React.Component {
           Contact Shelter
         </button>
         {this.state.contactClicked ? <ContactShelter contact={dog.contact} /> : <div></div>}
-    
+
       </div>
     </div>
     );
