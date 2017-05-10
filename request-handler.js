@@ -20,6 +20,7 @@ app.use(passport.session());
 
 app.get('/', (request, response) => {
   if(request.session.user) {
+    response.cookie('loggedIn', true);
     console.log(request.session.user.displayName + ' is logged in with FB ID: ' + request.session.user.id)
   }
   response.sendFile(path.resolve(__dirname, "./public/_index.html"));
@@ -31,10 +32,10 @@ app.get('/auth/facebook',
 
 app.get('/login', (req, res) => {
   res.sendFile(path.resolve(__dirname, './public/login.html'));
-  
 });
 
 app.get('/auth/facebook/callback',
+
   passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
 
   req.session.user = req.user;
@@ -72,7 +73,6 @@ app.get('/auth/facebook/callback',
 });
 
 app.get('/dog-tinder-api/list', (req, res) => {
-  console.log('hello!')
   if (req.user) {
     let facebookID = req.session.user.id;
 
@@ -96,6 +96,7 @@ app.get('/dog-tinder-api/list', (req, res) => {
       res.send([]);
     }
   }
+
 });
 
 app.post('/dog-tinder-api/list', (req, res) => {
@@ -128,6 +129,7 @@ app.post('/dog-tinder-api/list', (req, res) => {
   } else {
     res.send(201)
   }
+
 });
 
 app.get('/dog-tinder-api', (req, res) => {
@@ -140,11 +142,28 @@ app.get('/dog-tinder-api', (req, res) => {
 
 app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
   // need facebookID (req.user)
+  console.log('facebookID: ', req.user)
+  console.log('dog: ', req.body)
   // need dogId (body?)
 
-  dbUtils.removeAnimalFromUsersList(facebookID, petFinderId, () => {
-    console.log('removed from users list');
-  })
+  // dbUtils.removeAnimalFromUsersList(facebookID, petFinderId, () => {
+  //   console.log('removed from users list');
+  // })
 });
+
+app.get('/logout', (req, res) => {
+  req.session.destroy(function (err) {
+    res.clearCookie('loggedIn');
+    res.redirect('/');
+    if(err) {
+      res.send(err);
+    }
+  });
+})
+
+app.post('/dog-tinder-api/dog', (req, res) => {
+  console.log(req.body);
+  res.send(201);
+})
 
 module.exports = app;

@@ -39,7 +39,6 @@ label {
   
 }
 
-
 #close-profile {
   display: flex;
   align-self: flex-start;
@@ -52,4 +51,22 @@ label {
   background-color: lightslategrey;
 }
 
- 
+.dog-form {
+  width: 60%;
+}
+
+.dog-form-short {
+  width: 40%;
+}
+
+.dog-form-x-short {
+  width: 20%;
+}
+
+textarea {
+  resize: none;
+}
+
+.btn {
+  width: 200px;
+}

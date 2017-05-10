@@ -7,6 +7,9 @@ import DogNotFound from './DogNotFound';
 import Cookies from 'universal-cookie';
 import uniqBy from 'lodash.uniqby';
 import uniq from 'lodash.uniq';
+import AddAnimalForm from './AddAnimalForm.js';
+import FacebookLogin from './FacebookLogin.js';
+import ReactDOM from 'react-dom';
 
 const cookies = new Cookies();
 
@@ -18,12 +21,9 @@ class App extends React.Component {
       featuredDog: '',
       allDogs: '',
       animalList: [],
-<<<<<<< HEAD
       dogNotFound: false,
       shelterContactInfo: ''
-=======
-      dogNotFound: false
->>>>>>> Renders no search results message when no dog is found
+
     }
     this.nextDog = this.nextDog.bind(this);
     this.previousDog = this.previousDog.bind(this);
@@ -31,6 +31,7 @@ class App extends React.Component {
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
     this.getShelter = this.getShelter.bind(this);
     this.formatDogName = this.formatDogName.bind(this);
+    this.removeDogFromKennel = this.removeDogFromKennel.bind(this);
   }
 
   componentWillMount() {
@@ -74,6 +75,10 @@ class App extends React.Component {
     });
   }
 
+  handleAddDogClick(event) {
+    event.preventDefault();
+    ReactDOM.render(<AddAnimalForm />, document.getElementById("main"));
+  }
 
   saveDoggy(dog) { 
     let tempArray = this.state.animalList.slice();
@@ -103,10 +108,7 @@ class App extends React.Component {
     if (theState.breed !== '') { data.breed = theState.breed; }
     if (theState.age !== '') { data.age = theState.age; }
     if (theState.sex !== '') { data.sex = theState.sex; }
-<<<<<<< HEAD
-=======
 
->>>>>>> Renders no search results message when no dog is found
     axios.get('/dog-tinder-api', { 
       params: data
     })
@@ -121,6 +123,17 @@ class App extends React.Component {
     .catch(error => {
       this.setState({dogNotFound: !this.state.dogNotFound })
     });
+  }
+
+  removeDogFromKennel(dog) {
+    console.log('You clicked me! Here is your dog: ', dog);
+    axios.delete('/dog-tinder-api/removeAnimal', {data: dog})
+    .then(response => {
+      console.log('remove dog success: ', response);
+    })
+    .catch(error => {
+      console.log('remove dog error: ', error);
+    })
   }
   
   //Passes in shelter id from ContactShelter component
@@ -149,12 +162,42 @@ class App extends React.Component {
 
   
   render() {
+
+    console.log('animalList: ', this.state.animalList)
+    // console.log(this.state.allDogs)
+    var loginPrompt;
+    var addDogs;
+    if(cookies.get('loggedIn') === "true") {
+      loginPrompt = <div>Welcome Back <a href="/logout">Logout?</a></div>;
+      addDogs = <a onClick={this.handleAddDogClick}>Add animals looking for a home</a>;
+    } else {
+      loginPrompt = <FacebookLogin />;
+      addDogs = null;
+    }
+
+
     return (
       <div>
-        <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
-        {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs} breeds={this.props.breeds}/>}
-        {this.state.featuredDog !== ''? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} dogNotFound={this.state.dogNotFound}/> : <div></div>}
-        <Kennel animalList={this.state.animalList} shelterContact={this.state.shelterContactInfo}/>
+        <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>{loginPrompt}
+       { this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
+        {this.state.featuredDog !== '' ? 
+        <DisplayDog 
+          dog={this.state.featuredDog} 
+          dogs={this.state.allDogs} 
+          nextDog={this.nextDog} 
+          previousDog={this.previousDog} 
+          saveDoggy={this.saveDoggy} 
+          dogNotFound={this.state.dogNotFound} 
+        /> 
+        : 
+        <div></div>
+        }
+        <Kennel 
+          animalList={this.state.animalList} 
+          shelterContact={this.state.shelterContactInfo} 
+          removeDog={this.removeDogFromKennel}
+        />
+        {addDogs}
       </div>
     );
   }

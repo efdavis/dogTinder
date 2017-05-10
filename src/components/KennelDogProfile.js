@@ -1,7 +1,6 @@
 import React from 'react';
 import ContactShelter from './ContactShelter';
 
-
 class KennelDogProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +12,7 @@ class KennelDogProfile extends React.Component {
 
   showContactInfo() {
     this.setState({contactClicked: !this.state.clicked})
+
   }
 
   closeProfile() {
@@ -43,6 +43,7 @@ class KennelDogProfile extends React.Component {
           
         </div>
           <div className="profile-description">{dog.description.$t}</div>
+          <div onClick={this.props.removeDog(this.props.dog)}>REMOVE DOG</div>
 
           <button className="btn btn-primary" onClick={() => this.showContactInfo()}>
             Contact Shelter
@@ -55,7 +56,6 @@ class KennelDogProfile extends React.Component {
   }
   }
 }
-
 
 export default KennelDogProfile;
 
