@@ -51,48 +51,39 @@ class NavBar extends React.Component {
           
         <form onSubmit={this.handleSelect}>
           <div className="zipcode">
-            {/*<form onSubmit={this.handleSelect}>*/}
-              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
-                <input placeholder="07470" onChange={this.handleZipChange} />                
-              </label>
-            {/*</form>*/}
+            <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
+              <input placeholder="07470" onChange={this.handleZipChange} />                
+            </label>
           </div>
-              
 
           <div className="formBox" style={{display: 'flex', flexDirection: 'row'}}>
-         
-            {/*<form id="selectGender" >*/}
-              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
-                <select name="sex" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
-                  <option defaultValue="gender">Gender</option>
-                  <option value="F">Female</option>
-                  <option value="M">Male</option>
-                </select>
-              </label>
-            {/*</form>*/}
+            <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
+              <select name="sex" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
+                <option defaultValue="gender">Gender</option>
+                <option value="F">Female</option>
+                <option value="M">Male</option>
+              </select>
+            </label>
 
-            {/*<form id="selectAge">*/}
-              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
-                <select name="age" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
-                  <option defaultValue="age">Age</option>
-                  <option value="Baby">Baby</option>
-                  <option value="Young">Young</option>
-                  <option value="Adult">Adult</option>
-                  <option value="Senior">Senior</option>
-                </select>
-              </label>
-            {/*</form>*/}
-
-            {/*<form id="selectBreed">*/}
-              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
-                <select name="breed" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
-                  <option defaultValue="breed">Breed</option>
-                  {breeds.map(dog =>  <option value={dog.$t} >{dog.$t}</option> )}
-                </select>
-              </label>
-            </div>            
-          </form>
-          </div>
+            <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
+              <select name="age" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
+                <option defaultValue="age">Age</option>
+                <option value="Baby">Baby</option>
+                <option value="Young">Young</option>
+                <option value="Adult">Adult</option>
+                <option value="Senior">Senior</option>
+              </select>
+            </label>
+    
+            <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
+              <select name="breed" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
+                <option defaultValue="breed">Breed</option>
+                {breeds.map(dog =>  <option value={dog.$t} >{dog.$t}</option> )}
+              </select>
+            </label>
+          </div>            
+        </form>
+      </div>
       
     );
   }
