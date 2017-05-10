@@ -9,6 +9,7 @@ import uniqBy from 'lodash.uniqby';
 import uniq from 'lodash.uniq';
 import AddAnimalForm from './AddAnimalForm.js';
 import FacebookLogin from './FacebookLogin.js';
+import ReactDOM from 'react-dom';
 
 const cookies = new Cookies();
 
@@ -69,6 +70,10 @@ class App extends React.Component {
     });
   }
 
+  handleAddDogClick(event) {
+    event.preventDefault();
+    ReactDOM.render(<AddAnimalForm />, document.getElementById("main"));
+  }
 
   saveDoggy(dog) { 
     let tempArray = this.state.animalList.slice();
@@ -131,11 +136,15 @@ class App extends React.Component {
     console.log('animalList: ', this.state.animalList)
     // console.log(this.state.allDogs)
     var loginPrompt;
+    var addDogs;
     if(cookies.get('loggedIn') === "true") {
-      loginPrompt = <div>Welcome Back <a href="/logout">Logout?</a></div>
+      loginPrompt = <div>Welcome Back <a href="/logout">Logout?</a></div>;
+      addDogs = <a onClick={this.handleAddDogClick}>Add animals looking for a home</a>;
     } else {
-      loginPrompt = <FacebookLogin />
+      loginPrompt = <FacebookLogin />;
+      addDogs = null;
     }
+
 
     return (
       <div>
@@ -143,6 +152,8 @@ class App extends React.Component {
        { this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
         {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
         <Kennel animalList={this.state.animalList} removeDog={this.removeDogFromKennel}/>
+        {addDogs}
+
       </div>
     );
   }
