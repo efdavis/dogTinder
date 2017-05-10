@@ -196,8 +196,9 @@ class App extends React.Component {
         <div className="title-logo">
           <h1 className="title">Dog Tinder</h1>
           <img className="dogPaw" src="images/dogPaw.svg"/>
+          <div className="facebook-login">{loginPrompt}</div>
         </div>
-        {loginPrompt}
+  
         {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
         {this.state.featuredDog !== '' ? 
         <DisplayDog 

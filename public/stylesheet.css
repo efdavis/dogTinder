@@ -70,3 +70,31 @@ textarea {
 .btn {
   width: 200px;
 }
+
+
+.homePage {
+  display: flex;
+
+}
+
+.title-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title {
+  font-size: 50px;
+  color: black;
+  padding-right: 20px;
+}
+.dogPaw {
+  position: relative;
+  float: right;
+  width: 50px;
+}
+
+.facebook-login {
+  position: relative;
+  padding-left: 150px;
+}
