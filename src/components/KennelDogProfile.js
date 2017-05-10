@@ -1,9 +1,13 @@
 import React from 'react';
+import ContactShelter from './ContactShelter';
 
 class KennelDogProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {clicked: false};
+    this.state = {
+      clicked: false,
+
+    };
   }
 
   closeProfile() {
@@ -20,11 +24,12 @@ class KennelDogProfile extends React.Component {
     return (
     <div>
      <h3>{dog.name.$t}</h3>
-      <div className="doggyProfile" style={{display: 'flex', flexDirection: 'row', alignSelf: 'auto', borderStyle: 'solid'}}>
+      <div className="doggyProfile" style={{display: 'flex', flexDirection: 'column', alignSelf: 'auto', borderStyle: 'solid'}}>
         {/*<div><h3>{this.props.dog.name.$t}</h3></div>*/}
         <img src={dog.media.photos.photo[0]} style={{width: '50%', height: '40%' }}/>
         <div className="profile-description">{dog.description.$t}</div>
-        <button type="button" className="btn btn default btn-sm" onClick={() => this.closeProfile()}>
+        <ContactShelter />
+        <button type="button" className="btn btn default btn-sm" id="close-profile" onClick={() => this.closeProfile()}>
           <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
       </div>
