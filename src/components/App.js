@@ -62,6 +62,7 @@ class App extends React.Component {
 
   previousDog() {
     let previous = this.state.index - 1;
+    console.log('previous dog index:', previous)
     this.setState({
       featuredDog: this.state.allDogs[previous],
       index: previous
@@ -97,12 +98,10 @@ class App extends React.Component {
     if (theState.breed !== '') { data.breed = theState.breed; }
     if (theState.age !== '') { data.age = theState.age; }
     if (theState.sex !== '') { data.sex = theState.sex; }
-
     axios.get('/dog-tinder-api', { 
       params: data
     })
     .then(response => {
-      console.log('handle search query response data:', response.data)
       let data = response.data
       this.setState({
         featuredDog: data[0],
@@ -110,7 +109,6 @@ class App extends React.Component {
       }) 
     }) 
     .catch(error => {
-      console.log('Dog breed does not exist probably', error);
       this.setState({dogNotFound: !this.state.dogNotFound })
     });
   }
@@ -123,7 +121,7 @@ class App extends React.Component {
       }
     })
     .then(response => {
-      console.log(response);
+      console.log('get request for shelter contact info:', response);
       let data = response.data;
       this.setState({
         shelterContactInfo: data
