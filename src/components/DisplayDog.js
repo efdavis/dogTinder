@@ -8,6 +8,7 @@ class DisplayDog extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
    if (this.props.dogNotFound) {
      return (
@@ -28,23 +29,22 @@ class DisplayDog extends React.Component {
               </div>  
             </div>
           </div>
-          <a className="carousel-control left" role="button" href="#" onClick={() => this.props.nextDog()}>
+          <a className="carousel-control left" role="button" href="#" onClick={() => this.props.previousDog()}>
             <span className="glyphicon glyphicon-chevron-left">
             </span>
-            <span className="sr-only">Next</span>
-          </a>
-          <a className="carousel-control right" role="button" href="#" onClick={() => this.props.previousDog()}>
-            <span className="glyphicon glyphicon-chevron-right">
             <span className="sr-only">Previous</span>
+          </a>
+          <a className="carousel-control right" role="button" href="#" onClick={() => this.props.nextDog()}>
+            <span className="glyphicon glyphicon-chevron-right">
+            <span className="sr-only">Next</span>
             </span>
           </a>
         </div>
       </div>
-
-       <div className="dogInfo" style={{display: 'flex', position: 'float', width: '140px', flexDirection: 'row'}}>
+       <div className="dogInfo" style={{display: 'flex', position: 'float', width: '160px', flexDirection: 'row'}}>
          <ul>
-           <li><b>Name: </b>{this.props.dog.name.$t}</li>
-           <li><b>Breed: </b>{this.props.dog.breeds.breed.$t}</li>
+           <h5><b>Meet {this.props.dog.name.$t}!</b></h5>
+           {Array.isArray(this.props.dog.breeds.breed) ? <li><b>Breed: </b>Mixed Breed</li> : <li><b>Breed: </b>{this.props.dog.breeds.breed.$t}</li>}
            <li><b>Age: </b>{this.props.dog.age.$t}</li>
            <li><b>Sex: </b>{this.props.dog.sex.$t}</li>
          </ul>
@@ -56,4 +56,3 @@ class DisplayDog extends React.Component {
 }
 
 export default DisplayDog;
-

@@ -21,23 +21,27 @@ class App extends React.Component {
       featuredDog: '',
       allDogs: '',
       animalList: [],
-      dogNotFound: false
+      dogNotFound: false,
+      shelterContactInfo: ''
+
     }
     this.nextDog = this.nextDog.bind(this);
     this.previousDog = this.previousDog.bind(this);
     this.saveDoggy = this.saveDoggy.bind(this);
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
+    this.getShelter = this.getShelter.bind(this);
+    this.formatDogName = this.formatDogName.bind(this);
     this.removeDogFromKennel = this.removeDogFromKennel.bind(this);
   }
 
   componentWillMount() {
     // if user has an animalList in their cookies
-
-    axios.get('/dog-tinder-api/list')
-    .then(response => {
-      this.setState({animalList: response.data});
-    })
-
+    if(cookies.get('animalList')) {
+      axios.get('/dog-tinder-api/list')
+      .then(response => {
+        this.setState({animalList: response.data});
+      })
+    }
     axios.get('/dog-tinder-api?location=07470') 
       .then(response => {
         console.log('componentwillmount response.data', response.data)
@@ -64,6 +68,7 @@ class App extends React.Component {
 
   previousDog() {
     let previous = this.state.index - 1;
+    console.log('previous dog index:', previous)
     this.setState({
       featuredDog: this.state.allDogs[previous],
       index: previous
@@ -103,6 +108,7 @@ class App extends React.Component {
     if (theState.breed !== '') { data.breed = theState.breed; }
     if (theState.age !== '') { data.age = theState.age; }
     if (theState.sex !== '') { data.sex = theState.sex; }
+
     axios.get('/dog-tinder-api', { 
       params: data
     })
@@ -121,15 +127,39 @@ class App extends React.Component {
 
   removeDogFromKennel(dog) {
     console.log('You clicked me! Here is your dog: ', dog);
-    axios.delete('/dog-tinder-api/removeAnimal', dog)
+    axios.delete('/dog-tinder-api/removeAnimal', {data: dog})
     .then(response => {
-      console.log('remove dog success: ', resonse);
+      console.log('remove dog success: ', response);
     })
     .catch(error => {
       console.log('remove dog error: ', error);
     })
   }
   
+  //Passes in shelter id from ContactShelter component
+  getShelter(shelterID) {
+    axios.get('/dog-tinder-api/shelter', { 
+      params: {
+        ID: shelterID
+      }
+    })
+    .then(response => {
+      console.log('get request for shelter contact info:', response);
+      let data = response.data;
+      this.setState({
+        shelterContactInfo: data
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  formatDogName() {
+    
+  }
+  
+
   
   render() {
 
@@ -150,10 +180,24 @@ class App extends React.Component {
       <div>
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>{loginPrompt}
        { this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
-        {this.state.featuredDog !== '' ? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} /> : <div></div>}
-        <Kennel animalList={this.state.animalList} removeDog={this.removeDogFromKennel}/>
+        {this.state.featuredDog !== '' ? 
+        <DisplayDog 
+          dog={this.state.featuredDog} 
+          dogs={this.state.allDogs} 
+          nextDog={this.nextDog} 
+          previousDog={this.previousDog} 
+          saveDoggy={this.saveDoggy} 
+          dogNotFound={this.state.dogNotFound} 
+        /> 
+        : 
+        <div></div>
+        }
+        <Kennel 
+          animalList={this.state.animalList} 
+          shelterContact={this.state.shelterContactInfo} 
+          removeDog={this.removeDogFromKennel}
+        />
         {addDogs}
-
       </div>
     );
   }

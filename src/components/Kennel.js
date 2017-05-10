@@ -13,7 +13,7 @@ class Kennel extends React.Component {
   this.clickDogName = this.clickDogName.bind(this);
   this.showProfile = this.showProfile.bind(this);
   }
-
+  
   clickDogName() {
     this.setState({
       clicked: !this.state.clicked
@@ -25,8 +25,6 @@ class Kennel extends React.Component {
       selectedDog: dog
     })
   }
-
-
 
   render(){
     return (
@@ -47,10 +45,8 @@ class Kennel extends React.Component {
     </div>
     </div>
     );
-        
   }
 }
 
 
 module.exports = Kennel;
-// </div>{dog.name}</div><p>{dog.description}</p></div>
