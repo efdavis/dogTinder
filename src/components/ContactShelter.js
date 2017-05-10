@@ -8,22 +8,18 @@ class ContactShelter extends React.Component {
       clicked: false
     };
   }
-
-  getShelterInfo(shelterID) {
-  
-  }
-
-  showContactInfo() {
-    this.setState({clicked: !this.state.clicked})
-  }
+ 
 
   render() {
+    const contactInfo = this.props.contact;
+    console.log('CONTACT SHELTER THIS.PROPS', typeof this.props.contact.email.$t)
     return (
       <div className="contact-shelter">
-        <button className="btn btn-primary" onClick={() => this.showContactInfo()}>
-          Contact Shelter
-        </button>
-        {this.state.clicked ? <div style={{borderStyle: 'solid'}}></div>: <div></div>}
+        {/*Address: {contactInfo.address1.$t, contactInfo.city.$t, contactInfo.state.$t, contactInfo.zip.$t}*/}
+        {/*Email: {contactInfo.email}*/}
+        {typeof contactInfo.email.$t === 'string' ? <span>Email: {contactInfo.email.$t}</span> : <span>Email: Not provided</span>}<br/>
+        Phone: {contactInfo.phone.$t}
+
       </div>
     );
   }

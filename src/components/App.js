@@ -140,7 +140,6 @@ class App extends React.Component {
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
         {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs} breeds={this.props.breeds}/>}
         {this.state.featuredDog !== ''? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} dogNotFound={this.state.dogNotFound}/> : <div></div>}
-        {/*{this.state.dogNotFound ? <DogNotFound /> : <div></div>}*/}
         <Kennel animalList={this.state.animalList} shelterContact={this.state.shelterContactInfo}/>
       </div>
     );

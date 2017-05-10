@@ -20,27 +20,36 @@ class KennelDogProfile extends React.Component {
 
   render() {
     console.log('this.props from kenneldogprofile:', this.props.dog)
+    console.log('this.props.dog.options', this.props.dog.options)
     const dog = this.props.dog;
+    console.log('DOG', dog)
     if (this.state.clicked) {
         return (<div></div>);
     }
     else {
     return (
     <div>
-     <h3>{dog.name.$t}</h3>
+     {/*<h3>{dog.name.$t}</h3>*/}
       <div className="doggyProfile" style={{display: 'flex', flexDirection: 'column', alignSelf: 'auto', borderStyle: 'solid'}}>
-        {/*<div><h3>{this.props.dog.name.$t}</h3></div>*/}
+        <h3>{dog.name.$t}</h3>
         <div style={{display: 'flex', flexDirection: 'row'}}>
           <img src={dog.media.photos.photo[0]} style={{width: '50%', height: '40%' }}/>
+          
+          <ul className="options">
+            {Array.isArray(dog.options.option) ? dog.options.option.map(info => <li>{info.$t}</li>) : <div></div>}
+            {/*{dog.options.map(info => <li>{info.option.$t}</li>)}*/}
+          </ul>
+
           <button type="button" className="btn btn default btn-sm" id="close-profile" onClick={() => this.closeProfile()}>
             <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </button>
+          
         </div>
         <div className="profile-description">{dog.description.$t}</div>
         <button className="btn btn-primary" onClick={() => this.showContactInfo()}>
           Contact Shelter
         </button>
-        {this.state.contactClicked ? <ContactShelter /> : <div></div>}
+        {this.state.contactClicked ? <ContactShelter contact={dog.contact} /> : <div></div>}
     
       </div>
     </div>

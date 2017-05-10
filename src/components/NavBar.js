@@ -38,7 +38,7 @@ class NavBar extends React.Component {
           <div className="zipcode">
             <form onSubmit={this.handleSelect}>
               <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
-                <input placeholder="Zipcode" value={this.state.zipcode} onChange={(e) => this.setState({zipcode: e.target.value})} />                
+                <input placeholder="07470" value={this.state.zipcode} onChange={(e) => this.setState({zipcode: e.target.value})} />                
               </label>
             </form>
           </div>
