@@ -134,6 +134,10 @@ app.post('/dog-tinder-api/list', (req, res) => {
 
 app.get('/dog-tinder-api', (req, res) => {
   // connect to API and get matching dogs
+  if(req.query.location.length !== 5) {
+    req.query.location = 10012
+  }
+  console.log(req.query);
   petFinderFetch.fetchAnimals(req.query, function(animals){
     // get animals from DB here and append them to these 'animals'
     res.send(animals);
