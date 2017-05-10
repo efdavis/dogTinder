@@ -43,8 +43,6 @@ label {
 #close-profile {
   display: flex;
   align-self: flex-start;
-  display: flex;
-  align-self: flex-start;
   background-color: transparent;
 }
 
@@ -53,3 +51,5 @@ label {
   border: 2px solid #337ab7;
   background-color: lightslategrey;
 }
+
+ 
