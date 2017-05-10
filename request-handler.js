@@ -73,7 +73,6 @@ app.get('/auth/facebook/callback',
 });
 
 app.get('/dog-tinder-api/list', (req, res) => {
-  console.log('hello!')
   if (req.user) {
     let facebookID = req.session.user.id;
 
@@ -158,6 +157,11 @@ app.get('/logout', (req, res) => {
       res.send(err);
     }
   });
+})
+
+app.post('/dog-tinder-api/dog', (req, res) => {
+  console.log(req.body);
+  res.send(201);
 })
 
 module.exports = app;
