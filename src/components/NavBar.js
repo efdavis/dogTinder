@@ -20,9 +20,11 @@ class NavBar extends React.Component {
   handleSelect(event) {
     event.preventDefault();
     const name = event.target.name;
-    this.setState({[name]: event.target.value}, () => {
-      this.props.submitQuery(this.state);
-    });
+    if (event.target.name !== "Breed" && event.target.name !== "Age" && event.target.name !== "Gender") {
+      this.setState({[name]: event.target.value}, () => {
+        this.props.submitQuery(this.state);
+      });
+    }
     // this.props.submitQuery(this.state);
   }
 
