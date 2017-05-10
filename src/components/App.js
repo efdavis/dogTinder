@@ -28,12 +28,12 @@ class App extends React.Component {
 
   componentWillMount() {
     // if user has an animalList in their cookies
-    if(cookies.get('animalList')) {
-      axios.get('/dog-tinder-api/list')
-      .then(response => {
-        this.setState({animalList: response.data});
-      })
-    }
+
+    axios.get('/dog-tinder-api/list')
+    .then(response => {
+      this.setState({animalList: response.data});
+    })
+
     axios.get('/dog-tinder-api?location=07470') 
       .then(response => {
         console.log('componentwillmount response.data', response.data)
@@ -90,13 +90,11 @@ class App extends React.Component {
 
 
   handleSearchQuery(theState) { 
-
     let data = {}; 
     data.location = theState.zipcode;
     if (theState.breed !== '') { data.breed = theState.breed; }
     if (theState.age !== '') { data.age = theState.age; }
     if (theState.sex !== '') { data.sex = theState.sex; }
-
     axios.get('/dog-tinder-api', { 
       params: data
     })
@@ -109,7 +107,6 @@ class App extends React.Component {
       }) 
     }) 
     .catch(error => {
-      console.log('Dog breed does not exist probably', error);
       this.setState({dogNotFound: !this.state.dogNotFound })
     });
   }
@@ -121,7 +118,6 @@ class App extends React.Component {
         <h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
         {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs} breeds={this.props.breeds}/>}
         {this.state.featuredDog !== ''? <DisplayDog dog={this.state.featuredDog} dogs={this.state.allDogs} nextDog={this.nextDog} previousDog={this.previousDog} saveDoggy={this.saveDoggy} dogNotFound={this.state.dogNotFound}/> : <div></div>}
-        {/*{this.state.dogNotFound ? <DogNotFound /> : <div></div>}*/}
         <Kennel animalList={this.state.animalList}/>
       </div>
     );
