@@ -36,7 +36,7 @@ class KennelDogProfile extends React.Component {
           <img src={dog.media.photos.photo[0]} style={{width: '50%', height: '40%' }}/>
           
           <ul className="options">
-            {Array.isArray(dog.options.option) ? dog.options.option.map(info => <li>{info.$t}</li>) : <div></div>}
+            {Array.isArray(dog.options.option) ? dog.options.option.map(info => <li key={info.$t}>{info.$t}</li>) : <div></div>}
             {/*{dog.options.map(info => <li>{info.option.$t}</li>)}*/}
           </ul>
 
