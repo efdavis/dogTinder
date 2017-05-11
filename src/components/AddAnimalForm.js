@@ -48,7 +48,7 @@ class AddAnimalForm extends React.Component {
 
   render() {
     return (
-      <div className="dog-form-container"><h1 style={{fontSize:'50px'}}>Dog Tinder</h1>
+      <div className="dog-form-container"><h1>Dog Tinder</h1>
       <h3>Add a Pet to DogTinder</h3>
       <p>Please describe the animal and enter your shelter's contact information.</p>
       <form onSubmit={this.handleSubmit} >
