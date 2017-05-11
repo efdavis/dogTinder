@@ -24,7 +24,6 @@ class DisplayDog extends React.Component {
               <div>
                 <img className="img-fluid" height="250px" style={{display: 'flex'}} alt="Responsive image" src={this.props.dog.media.photos.photo[0]}/>
                 <div className="carousel-caption">
-                {/*<div style={{position: 'relative', left: 'auto', right: 'auto', flexDirection: 'row', borderStyle: 'solid'}}>{this.props.dog.name.$t}</div>*/}
                 <SaveDog currentDog={this.props.dog} saveDog={this.props.saveDoggy} style={{zIndex: 5}}/>
               </div>  
             </div>
