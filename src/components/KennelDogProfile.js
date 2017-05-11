@@ -19,13 +19,6 @@ class KennelDogProfile extends React.Component {
   render() {
     const dog = this.props.dog;
 
-    // if (this.state.clicked) {
-    //   return (
-    //     <div></div>
-    //   );
-    // }
-
-    // else {
     return (
     <div>
       <div className="doggyProfile" style={{display: 'flex', flexDirection: 'column', alignSelf: 'auto', borderStyle: 'solid'}}>
@@ -53,7 +46,6 @@ class KennelDogProfile extends React.Component {
       </div>
     </div>
     );
-  // }
   }
 }
 
