@@ -47,12 +47,12 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <div style={{display: 'flex', flexDirection: 'row', alignItems:'center', justifyContent: 'flex-start'}}>
+      <div className="NavBar">
           
         <form onSubmit={this.handleSelect}>
           <div className="zipcode">
             {/*<form onSubmit={this.handleSelect}>*/}
-              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
+              <label>
                 <input placeholder="07470" onChange={this.handleZipChange} />                
               </label>
             {/*</form>*/}
@@ -62,8 +62,8 @@ class NavBar extends React.Component {
           <div className="formBox" style={{display: 'flex', flexDirection: 'row'}}>
          
             {/*<form id="selectGender" >*/}
-              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
-                <select name="sex" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
+              <label>
+                <select name="sex" onChange={this.handleSelect} >
                   <option defaultValue="gender">Gender</option>
                   <option value="F">Female</option>
                   <option value="M">Male</option>
@@ -72,7 +72,7 @@ class NavBar extends React.Component {
             {/*</form>*/}
 
             {/*<form id="selectAge">*/}
-              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
+              <label>
                 <select name="age" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
                   <option defaultValue="age">Age</option>
                   <option value="Baby">Baby</option>
@@ -84,7 +84,7 @@ class NavBar extends React.Component {
             {/*</form>*/}
 
             {/*<form id="selectBreed">*/}
-              <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
+              <label>
                 <select name="breed" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
                   <option defaultValue="breed">Breed</option>
                   {breeds.map(dog =>  <option value={dog.$t} >{dog.$t}</option> )}
@@ -92,7 +92,7 @@ class NavBar extends React.Component {
               </label>
             </div>            
           </form>
-          </div>
+        </div>
       
     );
   }
