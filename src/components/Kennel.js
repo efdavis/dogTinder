@@ -37,7 +37,7 @@ class Kennel extends React.Component {
                       </div>
                       <div className="doglist-removebutton">
                         <h5 className="dogName" onClick={() => {this.clickDogName(); this.showProfile(dog)}}> {dog.name.$t} / {Array.isArray(dog.breeds.breed) ? <span>Mixed Breed</span> : dog.breeds.breed.$t}  / {dog.age.$t} / {dog.sex.$t}</h5>
-                        <button className="btn btn-default" onClick={() => {this.props.removeDog(dog)}}>REMOVE DOG</button>
+                        <button className="btn btn-default btn-xs" id="remove-dog" onClick={() => {this.props.removeDog(dog)}}>Remove</button>
                       </div>
                    </li>
             })}
