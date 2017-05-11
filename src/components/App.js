@@ -229,12 +229,12 @@ class App extends React.Component {
         : 
         <div></div>
         }
+        {addDogs}
         <Kennel 
           animalList={this.state.animalList} 
           shelterContact={this.state.shelterContactInfo} 
           removeDog={this.removeDogFromKennel}
         />
-        {addDogs}
       </div>
     );
   }

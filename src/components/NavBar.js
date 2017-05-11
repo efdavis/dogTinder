@@ -57,16 +57,16 @@ class NavBar extends React.Component {
             <input placeholder="07470" onChange={this.handleZipChange} />                
           </label>
 
-          <label className="gender">
-            <select name="sex" onChange={this.handleSelect} >
+          <label>
+            <select className="gender" name="sex" onChange={this.handleSelect} >
               <option defaultValue="gender">Gender</option>
               <option value="F">Female</option>
               <option value="M">Male</option>
             </select>
           </label>
 
-          <label className="age">
-            <select name="age" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
+          <label>
+            <select className="age" name="age" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
               <option defaultValue="age">Age</option>
               <option value="Baby">Baby</option>
               <option value="Young">Young</option>
@@ -75,8 +75,8 @@ class NavBar extends React.Component {
             </select>
           </label>
 
-          <label className="breed">
-            <select name="breed" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
+          <label>
+            <select className="breed" name="breed" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
               <option defaultValue="breed">Breed</option>
               {breeds.map(dog =>  <option key={dog.$t} value={dog.$t} >{dog.$t}</option> )}
             </select>

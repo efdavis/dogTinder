@@ -9,7 +9,6 @@ class KennelDogProfile extends React.Component {
     super(props);
     this.state = {
       contactClicked: false
-      // clicked: false
     };
   }
 
@@ -17,20 +16,9 @@ class KennelDogProfile extends React.Component {
     this.setState({contactClicked: !this.state.clicked})
   }
 
-  // closeProfile() {
-  //   this.setState({clicked: !this.state.clicked})
-  // }
-
   render() {
     const dog = this.props.dog;
 
-    // if (this.state.clicked) {
-    //   return (
-    //     <div></div>
-    //   );
-    // }
-
-    // else {
     return (
     <div>
       <div className="doggyProfile" style={{display: 'flex', flexDirection: 'column', alignSelf: 'auto', borderStyle: 'solid'}}>
@@ -58,7 +46,6 @@ class KennelDogProfile extends React.Component {
       </div>
     </div>
     );
-  // }
   }
 }
 
