@@ -170,7 +170,7 @@ textarea {
 }
 
 .bullet {
-  background-image: url('./images/PawHeart.png');
+  background-image: url('./images/pawOutline2.svg') ;
   background-repeat: no-repeat;
   background-size: 20px;
   padding-left: 25px;
