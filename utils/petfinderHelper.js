@@ -82,7 +82,6 @@ exports.fetchAnimals = (params, callback) => {
       if (Object.keys(petArray).length === 0 && petArray.constructor === Object) {
         callback([]);
       } else {
-        console.log(body);
         body = removeSmallPics(body);
         callback(body);
       }
