@@ -2,6 +2,7 @@
   padding-left: 50px;
 }
 
+
 .dog-box {
   margin-bottom: 30px;
 }
@@ -11,8 +12,9 @@
 }
 
 #remove-dog {
-  color: tomato;
+  color: #ef4a2d;
 }
+
 
 .dog-form-container {
   font-size: 50px;
@@ -141,10 +143,11 @@ textarea {
   color: black;
   padding-right: 20px;
 }
+
 .dogPaw {
   position: relative;
   float: right;
-  width: 50px;
+  width: 40px;
 }
 
 .facebook-login {
@@ -170,8 +173,15 @@ textarea {
   order: 1;
   font-weight: 400;
   height: 32px; 
+  background-color: white;
   border-color: #ccc;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 4px;
   margin-right: 17px;
+  /*transition: none;
+  box-shadow: none;*/
+  
 }
 
 .gender {
@@ -181,6 +191,7 @@ textarea {
   border-color: #ccc;
   background-color: white;
   margin-right: 17px;
+
 }
 
 .breed {
@@ -203,8 +214,6 @@ textarea {
  display: flex;
  flex-direction: row;
  position: float;
- width: 180px;
-
 }
 
 .dogInfoTitle {
@@ -214,7 +223,6 @@ textarea {
 
 .carousel-dog-info {
   list-style-type: none;
-  width: 160px;
   padding: 15px;
   margin: 0;
 }
