@@ -48,51 +48,38 @@ class NavBar extends React.Component {
   render() {
     return (
       <div className="NavBar">
-          
         <form onSubmit={this.handleSelect}>
-          <div className="zipcode">
-            {/*<form onSubmit={this.handleSelect}>*/}
-              <label>
-                <input placeholder="07470" onChange={this.handleZipChange} />                
-              </label>
-            {/*</form>*/}
-          </div>
-              
 
-          <div className="formBox" style={{display: 'flex', flexDirection: 'row'}}>
-         
-            {/*<form id="selectGender" >*/}
-              <label>
-                <select name="sex" onChange={this.handleSelect} >
-                  <option defaultValue="gender">Gender</option>
-                  <option value="F">Female</option>
-                  <option value="M">Male</option>
-                </select>
-              </label>
-            {/*</form>*/}
+          <label className="zipcode">
+            <input placeholder="07470" onChange={this.handleZipChange} />                
+          </label>
 
-            {/*<form id="selectAge">*/}
-              <label>
-                <select name="age" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
-                  <option defaultValue="age">Age</option>
-                  <option value="Baby">Baby</option>
-                  <option value="Young">Young</option>
-                  <option value="Adult">Adult</option>
-                  <option value="Senior">Senior</option>
-                </select>
-              </label>
-            {/*</form>*/}
+          <label className="gender">
+            <select name="sex" onChange={this.handleSelect} >
+              <option defaultValue="gender">Gender</option>
+              <option value="F">Female</option>
+              <option value="M">Male</option>
+            </select>
+          </label>
 
-            {/*<form id="selectBreed">*/}
-              <label>
-                <select name="breed" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
-                  <option defaultValue="breed">Breed</option>
-                  {breeds.map(dog =>  <option value={dog.$t} >{dog.$t}</option> )}
-                </select>
-              </label>
-            </div>            
-          </form>
-        </div>
+          <label className="age">
+            <select name="age" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
+              <option defaultValue="age">Age</option>
+              <option value="Baby">Baby</option>
+              <option value="Young">Young</option>
+              <option value="Adult">Adult</option>
+              <option value="Senior">Senior</option>
+            </select>
+          </label>
+
+          <label className="breed">
+            <select name="breed" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
+              <option defaultValue="breed">Breed</option>
+              {breeds.map(dog =>  <option value={dog.$t} >{dog.$t}</option> )}
+            </select>
+          </label>
+        </form>
+      </div>
       
     );
   }

@@ -98,3 +98,47 @@ textarea {
   position: relative;
   padding-left: 150px;
 }
+
+.NavBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+}
+
+.zipcode {
+  /*style={{display: 'flex', flexDirection: 'row', */
+  order: 1;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+}
+
+.gender {
+  order: 2;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+}
+
+.breed {
+  order: 3;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+}
+
+.age {
+  order: 4;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+}
