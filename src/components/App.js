@@ -200,7 +200,7 @@ class App extends React.Component {
     var loginPrompt;
     var addDogs;
     if(cookies.get('loggedIn') === "true") {
-      loginPrompt = <div>Welcome Back <a href="/logout">Logout?</a></div>;
+      loginPrompt = <div>Welcome Back <a href="/logout">Logout</a></div>;
       addDogs = <a href="" className="add-dog-link" onClick={this.handleAddDogClick}><i className="fa fa-plus-square" aria-hidden="true"></i> Add animals looking for a home</a>;
     } else {
       loginPrompt = <FacebookLogin />;
