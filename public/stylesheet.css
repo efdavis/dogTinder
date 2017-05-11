@@ -17,7 +17,7 @@
 
 
 .dog-form-container {
-  font-size: 50px;
+  /*font-size: 50px;*/
   padding-left: 40px;
 }
 body {
@@ -234,5 +234,11 @@ textarea {
   background-size: 20px;
   padding-left: 25px;
   /*line-height: 20px;*/
+}
+
+.dogName:hover {
+  /*color: tomato;*/
+  color: black;
+  text-decoration: underline;
 }
 
