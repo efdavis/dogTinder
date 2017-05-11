@@ -93,3 +93,13 @@ textarea {
 .add-dog-link:hover {
   text-decoration: none;
 }
+
+.profile-description {
+  padding: 8px 8px 8px 0;
+  line-height: 1.2em;
+  letter-spacing: .02em;
+}
+
+.options {
+  list-style-position: inside;
+}
