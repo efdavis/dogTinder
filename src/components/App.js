@@ -168,24 +168,7 @@ class App extends React.Component {
     }
   };
   
-  //Passes in shelter id from ContactShelter component
-  getShelter(shelterID) {
-    axios.get('/dog-tinder-api/shelter', { 
-      params: {
-        ID: shelterID
-      }
-    })
-    .then(response => {
-      console.log('get request for shelter contact info:', response);
-      let data = response.data;
-      this.setState({
-        shelterContactInfo: data
-      })
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  };
+
 
   render() {
 
