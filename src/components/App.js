@@ -187,12 +187,6 @@ class App extends React.Component {
     })
   };
 
-  formatDogName() {
-    
-  }
-  
-
-  
   render() {
 
     console.log('animalList: ', this.state.animalList)
