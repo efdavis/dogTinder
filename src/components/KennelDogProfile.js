@@ -5,8 +5,8 @@ class KennelDogProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      contactClicked: false,
-      clicked: false
+      contactClicked: false
+      // clicked: false
     };
   }
 
@@ -14,20 +14,20 @@ class KennelDogProfile extends React.Component {
     this.setState({contactClicked: !this.state.clicked})
   }
 
-  closeProfile() {
-    this.setState({clicked: !this.state.clicked})
-  }
+  // closeProfile() {
+  //   this.setState({clicked: !this.state.clicked})
+  // }
 
   render() {
     const dog = this.props.dog;
-    if (this.state.clicked) {
-      return (
-        <div>
-          {/*{() => this.props.clickName()}*/}
-        </div>
-      );
-    }
-    else {
+
+    // if (this.state.clicked) {
+    //   return (
+    //     <div></div>
+    //   );
+    // }
+
+    // else {
     return (
     <div>
       <div className="doggyProfile" style={{display: 'flex', flexDirection: 'column', alignSelf: 'auto', borderStyle: 'solid'}}>
@@ -40,8 +40,8 @@ class KennelDogProfile extends React.Component {
             {/*{dog.options.map(info => <li>{info.option.$t}</li>)}*/}
           </ul>
         
-        <div className="changeParentState" onChange={this.props.clickName} >
-          <button type="button" className="btn btn default btn-sm" id="close-profile" onClick={() => this.closeProfile()}>
+        <div className="changeParentState" >
+          <button type="button" className="btn btn default btn-sm" id="close-profile" onClick={() => this.props.clickName()}>
             <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </button>
         </div>
@@ -58,7 +58,7 @@ class KennelDogProfile extends React.Component {
       </div>
     </div>
     );
-  }
+  // }
   }
 }
 

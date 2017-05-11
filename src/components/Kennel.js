@@ -3,6 +3,7 @@ import listOfDogs from '../../dummyKennelData.js';
 import ReactDOM from 'react-dom';
 import KennelDogProfile from './KennelDogProfile';
 
+
 class Kennel extends React.Component {
   constructor(props) {
     super(props);
@@ -47,8 +48,8 @@ class Kennel extends React.Component {
         })}</ul>
         {this.state.nameClicked ? 
           <div>
-            {() => {this.clickDogName(); console.log('made it into conditional render')}}
-            <KennelDogProfile dog={this.state.selectedDog} removeDog={this.props.removeDog} clickName={this.state.clickDogName}/> 
+            {/*{() => {this.clickDogName(); console.log('made it into conditional render')}}*/}
+            <KennelDogProfile dog={this.state.selectedDog} removeDog={this.props.removeDog} clickName={this.clickDogName}/> 
           </div>
           : <div></div> 
         }    
