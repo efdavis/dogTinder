@@ -31,24 +31,21 @@ class KennelDogProfile extends React.Component {
     return (
     <div>
       <div className="doggyProfile" style={{display: 'flex', flexDirection: 'column', alignSelf: 'auto', borderStyle: 'solid'}}>
-        <h3>{dog.name.$t}</h3>
+          <div><button type="button" className="btn btn default btn-sm pull-right" id="close-profile" onClick={() => this.props.clickName()}>
+                                <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                              </button></div>
+        <h3 className="dog-name">{dog.name.$t}</h3>
         <div style={{display: 'flex', flexDirection: 'row'}}>
           <img src={dog.media.photos.photo[0]} style={{width: '50%', height: '40%' }}/>
           
           <ul className="options">
-            {Array.isArray(dog.options.option) ? dog.options.option.map(info => <li>{info.$t}</li>) : <div></div>}
+            {Array.isArray(dog.options.option) ? dog.options.option.map(info => <li key={info.$t}>{info.$t}</li>) : <div></div>}
             {/*{dog.options.map(info => <li>{info.option.$t}</li>)}*/}
           </ul>
-        
-        <div className="changeParentState" >
-          <button type="button" className="btn btn default btn-sm" id="close-profile" onClick={() => this.props.clickName()}>
-            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-          </button>
-        </div>
           
         </div>
           <div className="profile-description">{dog.description.$t}</div>
-          <div onClick={this.props.removeDog(this.props.dog)}>REMOVE DOG</div>
+          {/*<div onClick={() => {this.props.removeDog(this.props.dog)}}>REMOVE DOG</div>*/}
 
           <button className="btn btn-primary" onClick={() => this.showContactInfo()}>
             Contact Shelter

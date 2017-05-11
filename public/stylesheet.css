@@ -49,6 +49,10 @@ label {
   background-color: transparent;
 }
 
+.dog-name {
+  margin-top: -30px;
+}
+
 .contact-shelter {
   /*border-radius: 25px;
   border: 2px solid #337ab7;*/
@@ -70,8 +74,9 @@ textarea {
   resize: none;
 }
 
-.btn {
+.btn-facebook {
   width: 200px;
+
 }
 
 

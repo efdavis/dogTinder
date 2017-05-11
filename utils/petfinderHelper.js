@@ -8,7 +8,12 @@ const querystring = {
 }
 
 function removeSmallPicsFromOneDog(dog) {
-  dog = JSON.parse(dog).petfinder.pet
+  dog = JSON.parse(dog);
+  if(dog.petfinder.pets) {
+    dog = dog.petfinder.pets.pet;
+  } else {
+    dog = dog.petfinder.pet
+  }
 
   var modifyPhotos = function(photoArray){
     var newPhotos = [];
@@ -23,7 +28,7 @@ function removeSmallPicsFromOneDog(dog) {
     dog.media.photos.photo = modifyPhotos(dog.media.photos.photo);
     return dog;
   } else {
-    return null;
+    return;
   }
 }
 
@@ -40,14 +45,20 @@ function removeSmallPics(resultArray) {
     }
     return newPhotos;
   }
-  animals.forEach(function(animal){
-    if(animal.media.photos) {
-      animal.media.photos.photo = modifyPhotos(animal.media.photos.photo);
-      filteredAnimals.push(animal);
-    }
-  })
+  // if the response from Petfinder is an array of animals
+  if(Array.isArray(animals)){
+    animals.forEach(function(animal){
+      if(animal.media.photos) {
+        animal.media.photos.photo = modifyPhotos(animal.media.photos.photo);
+        filteredAnimals.push(animal);
+      }
+    })
+    return filteredAnimals;
+  } else {
+    // we only got one animal object from Petfinder
 
-  return filteredAnimals;
+    return [removeSmallPicsFromOneDog(JSON.stringify(resultArray))];
+  }
 
 }
 
@@ -62,13 +73,18 @@ exports.fetchAnimals = (params, callback) => {
     url: 'http://api.petfinder.com/pet.find',
     qs: querystring
   }, function(error, response, body){
-    let petArray = JSON.parse(body).petfinder.pets;
-    // if the petArray has no pets:
-    if (Object.keys(petArray).length === 0 && petArray.constructor === Object) {
+    
+    if(JSON.parse(body).petfinder.header.status.message.$t === "Invalid geographical location") {
       callback([]);
     } else {
-      body = removeSmallPics(body);
-      callback(body);
+      let petArray = JSON.parse(body).petfinder.pets;
+      // if the petArray has no pets:
+      if (Object.keys(petArray).length === 0 && petArray.constructor === Object) {
+        callback([]);
+      } else {
+        body = removeSmallPics(body);
+        callback(body);
+      }
     }
   })
 }

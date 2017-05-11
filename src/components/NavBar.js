@@ -20,11 +20,15 @@ class NavBar extends React.Component {
   handleSelect(event) {
     event.preventDefault();
     const name = event.target.name;
-    if (event.target.name !== "Breed" && event.target.name !== "Age" && event.target.name !== "Gender") {
-      this.setState({[name]: event.target.value}, () => {
-        this.props.submitQuery(this.state);
-      });
+    let value = event.target.value;
+    if (value === "Breed" || value === "Age" || value === "Gender") {
+      value = '';
     }
+    this.setState({[name]: value}, () => {
+      console.log(this.state);
+      this.props.submitQuery(this.state);
+    });
+    
     // this.props.submitQuery(this.state);
   }
 
@@ -49,7 +53,6 @@ class NavBar extends React.Component {
     return (
       <div className="NavBar">
         <form onSubmit={this.handleSelect}>
-
           <label className="zipcode">
             <input placeholder="07470" onChange={this.handleZipChange} />                
           </label>
@@ -75,7 +78,7 @@ class NavBar extends React.Component {
           <label className="breed">
             <select name="breed" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
               <option defaultValue="breed">Breed</option>
-              {breeds.map(dog =>  <option value={dog.$t} >{dog.$t}</option> )}
+              {breeds.map(dog =>  <option key={dog.$t} value={dog.$t} >{dog.$t}</option> )}
             </select>
           </label>
         </form>

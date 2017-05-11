@@ -74,7 +74,8 @@ app.get('/auth/facebook/callback',
 
 app.get('/dog-tinder-api/list', (req, res) => {
   if (req.user) {
-    let facebookID = req.session.user.id;
+    console.log('===========>', req.user.id);
+    let facebookID = req.user.id;
 
     dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
       let dogIds = results.map(dog => dog.petFinderid);
@@ -86,7 +87,8 @@ app.get('/dog-tinder-api/list', (req, res) => {
   } else {
     const cookies = new Cookies(req.headers.cookie);
     var userAnimalList = cookies.get('animalList');
-  
+    res.clearCookie('loggedIn');
+    
     if (userAnimalList) {
       petFinderFetch.getList(userAnimalList, function(results) {
         // console.log("FINAL FETCH FOR ALL LIST:", results);
@@ -134,6 +136,10 @@ app.post('/dog-tinder-api/list', (req, res) => {
 
 app.get('/dog-tinder-api', (req, res) => {
   // connect to API and get matching dogs
+  if(req.query.location.length !== 5) {
+    req.query.location = 10012
+  }
+  console.log(req.query);
   petFinderFetch.fetchAnimals(req.query, function(animals){
     // get animals from DB here and append them to these 'animals'
     res.send(animals);
@@ -141,14 +147,12 @@ app.get('/dog-tinder-api', (req, res) => {
 });
 
 app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
-  // need facebookID (req.user)
-  console.log('facebookID: ', req.user)
-  console.log('dog: ', req.body)
-  // need dogId (body?)
+  let facebookID = req.user.id;
+  let dogId = req.body.id['$t'];
 
-  // dbUtils.removeAnimalFromUsersList(facebookID, petFinderId, () => {
-  //   console.log('removed from users list');
-  // })
+  dbUtils.removeAnimalFromUsersList(facebookID, dogId, () => {
+    console.log('removed from users list');
+  })
 });
 
 app.get('/logout', (req, res) => {
