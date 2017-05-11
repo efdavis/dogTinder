@@ -9,17 +9,12 @@ class KennelDogProfile extends React.Component {
     super(props);
     this.state = {
       contactClicked: false
-      // clicked: false
     };
   }
 
   showContactInfo() {
     this.setState({contactClicked: !this.state.clicked})
   }
-
-  // closeProfile() {
-  //   this.setState({clicked: !this.state.clicked})
-  // }
 
   render() {
     const dog = this.props.dog;
