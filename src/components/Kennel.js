@@ -19,11 +19,6 @@ class Kennel extends React.Component {
     this.setState({nameClicked: !this.state.nameClicked})
   }
 
-
-  // closeProfile() {
-  //   this.setState({clicked: !this.state.clicked})
-  // }
-
   showProfile(dog) {
     this.setState({
       selectedDog: dog
@@ -31,30 +26,29 @@ class Kennel extends React.Component {
   }
 
   render() {
-    console.log('THIS.STATE.CLICKED', this.state.nameClicked)
     return (
-    <div>
-    <h1 className="page-header">My Kennel</h1>
-    <div style={{display: 'flex'}}>
-        <ul className="media-list col-md-6">{this.props.animalList.map((dog) => {
-          return <li className="media dog-box" key={dog.id.$t} style={{display: 'flex', justifyContent: 'flex-start'}}>
-                    <div className="media-left">
-                      <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="50px" height="50px" />
-                    </div>
-                    <h5 className="dogName" onClick={() => {this.clickDogName(); this.showProfile(dog)}}> {dog.name.$t} / {Array.isArray(dog.breeds.breed) ? <span>Mixed Breed</span> : dog.breeds.breed.$t}  / {dog.age.$t} / {dog.sex.$t}</h5>
-                    <h7 onClick={() => {this.props.removeDog(dog)}}>REMOVE DOG</h7>
-                </li>
-        })}</ul>
-        {this.state.nameClicked ? 
-          <div>
-            {/*{() => {this.clickDogName(); console.log('made it into conditional render')}}*/}
-            <KennelDogProfile dog={this.state.selectedDog} removeDog={this.props.removeDog} clickName={this.clickDogName}/> 
-          </div>
-          : <div></div> 
-        }    
-    </div>
-    </div>
-    );
+      <div>
+        {this.props.animalList.length === 0 ? <div></div> : <h1 className="page-header">My Kennel</h1> }
+      <div style={{display: 'flex'}}>
+          <ul className="media-list col-md-6">{this.props.animalList.map((dog) => {
+            return <li className="media dog-box" key={dog.id.$t} style={{display: 'flex', justifyContent: 'flex-start'}}>
+                      <div className="media-left">
+                        <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="50px" height="50px" />
+                      </div>
+                      <h5 className="dogName" onClick={() => {this.clickDogName(); this.showProfile(dog)}}> {dog.name.$t} / {Array.isArray(dog.breeds.breed) ? <span>Mixed Breed</span> : dog.breeds.breed.$t}  / {dog.age.$t} / {dog.sex.$t}</h5>
+                      <h7 onClick={() => {this.props.removeDog(dog)}}>REMOVE DOG</h7>
+                  </li>
+          })}</ul>
+          {this.state.nameClicked ? 
+            <div>
+              {/*{() => {this.clickDogName(); console.log('made it into conditional render')}}*/}
+              <KennelDogProfile dog={this.state.selectedDog} removeDog={this.props.removeDog} clickName={this.clickDogName}/> 
+            </div>
+            : <div></div> 
+          }    
+      </div>
+      </div>
+      );
   }
 }
 
