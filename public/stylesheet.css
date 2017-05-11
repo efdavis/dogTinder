@@ -33,14 +33,15 @@ label {
 }
 
 .doggyProfile {
-  display: flex;
-  flex-direction: row;
-  align-self: auto;
-  border-style: solid;
-  border-radius: 25px;
-  border: 2px solid #337ab7;
-  padding: 20px;
-  
+    display: flex;
+    flex-direction: row;
+    align-self: auto;
+    border-style: solid;
+    border-radius: 3px;
+    border: 2px solid #337ab7;
+    padding: 20px;
+    background-color: #484848;
+    color: #f1f0f0;
 }
 
 #close-profile {
@@ -76,7 +77,35 @@ textarea {
 
 .btn-facebook {
   width: 200px;
+}
 
+.dog-form-container {
+  margin-bottom: 20px;
+}
+
+.bd-footer {
+  padding: 4rem 0;
+  font-size: 85%;
+  text-align: center;
+  background-color: #f7f7f7;
+}
+
+.text-muted {
+    color: #636c72;
+}
+
+.add-dog-link:hover {
+  text-decoration: none;
+}
+
+.profile-description {
+  padding: 8px 8px 8px 0;
+  line-height: 1.2em;
+  letter-spacing: .02em;
+}
+
+.options {
+  list-style-position: inside;
 }
 
 

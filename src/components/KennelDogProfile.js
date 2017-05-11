@@ -1,5 +1,8 @@
 import React from 'react';
 import ContactShelter from './ContactShelter';
+const Entities = require('html-entities').XmlEntities;
+ 
+const entities = new Entities();
 
 class KennelDogProfile extends React.Component {
   constructor(props) {
@@ -38,13 +41,13 @@ class KennelDogProfile extends React.Component {
         <div style={{display: 'flex', flexDirection: 'row'}}>
           <img src={dog.media.photos.photo[0]} style={{width: '50%', height: '40%' }}/>
           
-          <ul className="options">
-            {Array.isArray(dog.options.option) ? dog.options.option.map(info => <li key={info.$t}>{info.$t}</li>) : <div></div>}
+          <ul className="options fa-ul">
+            {Array.isArray(dog.options.option) ? dog.options.option.map(info => <li key={info.$t}><i className="fa-li fa fa-check-square"></i>{info.$t}</li>) : <div></div>}
             {/*{dog.options.map(info => <li>{info.option.$t}</li>)}*/}
           </ul>
           
         </div>
-          <div className="profile-description">{dog.description.$t}</div>
+          <div className="profile-description"><p>{entities.decode(dog.description.$t)}</p></div>
           {/*<div onClick={() => {this.props.removeDog(this.props.dog)}}>REMOVE DOG</div>*/}
 
           <button className="btn btn-primary" onClick={() => this.showContactInfo()}>

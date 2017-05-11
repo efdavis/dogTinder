@@ -1,5 +1,6 @@
 const request = require('request');
 var qs = require('querystring');
+var _ = require('./lodash.min.js');
 
 const querystring = {
   key: process.env.PET_API_KEY,
@@ -93,6 +94,7 @@ exports.getList = (list, callback) => {
 
   function getRecursive(listSoFar, results) {
     if(listSoFar.length === 0) {
+      results.forEach(animal => animal.description.$t = _.replace(animal.description.$t, /â/g, '&#39;'));
       callback(results);
       return;
     }

@@ -6,7 +6,8 @@ var request = require('request');
 var passport = require('./utils/fbPassportHelper');
 var session = require('express-session');
 var dbUtils = require('./db/dbUtils');
-var Cookies = require('universal-cookie'); 
+var Cookies = require('universal-cookie');
+var _ = require('./utils/lodash.min.js');
 
 var app = express();
 
@@ -88,7 +89,7 @@ app.get('/dog-tinder-api/list', (req, res) => {
     const cookies = new Cookies(req.headers.cookie);
     var userAnimalList = cookies.get('animalList');
     res.clearCookie('loggedIn');
-    
+  
     if (userAnimalList) {
       petFinderFetch.getList(userAnimalList, function(results) {
         // console.log("FINAL FETCH FOR ALL LIST:", results);
