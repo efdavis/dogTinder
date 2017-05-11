@@ -29,12 +29,12 @@ class DisplayDog extends React.Component {
               </div>  
             </div>
           </div>
-          <a className="carousel-control left" role="button" href="#" onClick={() => this.props.previousDog()}>
+          <a className="carousel-control left" role="button" onClick={() => this.props.previousDog()}>
             <span className="glyphicon glyphicon-chevron-left">
             </span>
             <span className="sr-only">Previous</span>
           </a>
-          <a className="carousel-control right" role="button" href="#" onClick={() => this.props.nextDog()}>
+          <a className="carousel-control right" role="button" onClick={() => this.props.nextDog()}>
             <span className="glyphicon glyphicon-chevron-right">
             <span className="sr-only">Next</span>
             </span>
