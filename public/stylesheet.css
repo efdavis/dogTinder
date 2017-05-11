@@ -28,6 +28,10 @@ label {
   margin: auto;
 }
 
+.carousel {
+  display: flex;
+}
+
 .doggyProfile {
   display: flex;
   flex-direction: row;
@@ -50,9 +54,8 @@ label {
 }
 
 .contact-shelter {
-  border-radius: 25px;
-  border: 2px solid #337ab7;
-  background-color: lightslategrey;
+  /*border-radius: 25px;
+  border: 2px solid #337ab7;*/
 }
 
 .dog-form {
@@ -73,4 +76,109 @@ textarea {
 
 .btn-facebook {
   width: 200px;
+
 }
+
+
+.homePage {
+  display: flex;
+
+}
+
+.title-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title {
+  font-size: 50px;
+  color: black;
+  padding-right: 20px;
+}
+.dogPaw {
+  position: relative;
+  float: right;
+  width: 50px;
+}
+
+.facebook-login {
+  position: relative;
+  padding-left: 150px;
+}
+
+.NavBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.zipcode {
+  /*style={{display: 'flex', flexDirection: 'row', */
+  order: 1;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+}
+
+.gender {
+  order: 2;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  background-color: white;
+  margin-right: 17px;
+}
+
+.breed {
+  order: 3;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+}
+
+.age {
+  order: 4;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+}
+
+.dogInfo {
+ display: flex;
+ flex-direction: row;
+ position: float;
+ width: 180px;
+
+}
+
+.dogInfoTitle {
+  color: black;
+  font-size: 20px;
+}
+
+.carousel-dog-info {
+  list-style-type: none;
+  width: 160px;
+  padding: 15px;
+  margin: 0;
+}
+
+.bullet {
+  background-image: url('./images/pawOutline2.svg') ;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  padding-left: 25px;
+  /*line-height: 20px;*/
+}
+

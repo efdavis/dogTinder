@@ -3,11 +3,12 @@ import listOfDogs from '../../dummyKennelData.js';
 import ReactDOM from 'react-dom';
 import KennelDogProfile from './KennelDogProfile';
 
+
 class Kennel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clicked: false,
+      nameClicked: false,
       selectedDog: ''
     };
   this.clickDogName = this.clickDogName.bind(this);
@@ -15,10 +16,13 @@ class Kennel extends React.Component {
   }
   
   clickDogName() {
-    this.setState({
-      clicked: !this.state.clicked
-    })
+    this.setState({nameClicked: !this.state.nameClicked})
   }
+
+
+  // closeProfile() {
+  //   this.setState({clicked: !this.state.clicked})
+  // }
 
   showProfile(dog) {
     this.setState({
@@ -26,7 +30,8 @@ class Kennel extends React.Component {
     })
   }
 
-  render(){
+  render() {
+    console.log('THIS.STATE.CLICKED', this.state.nameClicked)
     return (
     <div>
     <h1 className="page-header">My Kennel</h1>
@@ -36,13 +41,17 @@ class Kennel extends React.Component {
                     <div className="media-left">
                       <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="50px" height="50px" />
                     </div>
-                    <h5 className="dogName" onClick={() => {this.clickDogName(); this.showProfile(dog)}}> {dog.name.$t} / {Array.isArray(dog.breeds.breed)? <span>Mixed Breed</span> : dog.breeds.breed.$t}  / {dog.age.$t} / {dog.sex.$t}</h5>
+                    <h5 className="dogName" onClick={() => {this.clickDogName(); this.showProfile(dog)}}> {dog.name.$t} / {Array.isArray(dog.breeds.breed) ? <span>Mixed Breed</span> : dog.breeds.breed.$t}  / {dog.age.$t} / {dog.sex.$t}</h5>
                     <h7 onClick={() => {this.props.removeDog(dog)}}>REMOVE DOG</h7>
-                    {/*{this.state.clicked ? <div>{this.state.selectedDog.name.$t}</div> : <div></div>}*/}
-                    {/*{this.state.clicked ? <KennelDogProfile name={dog.name.$t} image={dog.media.photos.photo[0]}breed={dog.breeds.breed.$t} age={dog.age.$t} sex={dog.sex.$t} description={dog.description.$t}/> : <div></div>}*/}
                 </li>
         })}</ul>
-        {this.state.clicked ? <KennelDogProfile dog={this.state.selectedDog} removeDog={this.props.removeDog}/> : <div></div> }    
+        {this.state.nameClicked ? 
+          <div>
+            {/*{() => {this.clickDogName(); console.log('made it into conditional render')}}*/}
+            <KennelDogProfile dog={this.state.selectedDog} removeDog={this.props.removeDog} clickName={this.clickDogName}/> 
+          </div>
+          : <div></div> 
+        }    
     </div>
     </div>
     );

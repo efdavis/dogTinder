@@ -15,9 +15,9 @@ class DisplayDog extends React.Component {
        <DogNotFound />
      );
    }
-    else {
-    return (
-      <div style={{display: 'flex'}}>
+   else {
+     return (
+      <div className="carousel">
         <div id="featuredDog"className="carousel slide" style={{display: 'flex', justifyContent: 'center', overflow: 'visible'}}>
           <div className="carousel-inner" style={{overflow: 'visible'}} >
             <div className="item active" id="dog">
@@ -41,12 +41,12 @@ class DisplayDog extends React.Component {
           </a>
         </div>
       </div>
-       <div className="dogInfo" style={{display: 'flex', position: 'float', width: '160px', flexDirection: 'row'}}>
-         <ul>
-           <h5><b>Meet {this.props.dog.name.$t}!</b></h5>
-           {Array.isArray(this.props.dog.breeds.breed) ? <li><b>Breed: </b>Mixed Breed</li> : <li><b>Breed: </b>{this.props.dog.breeds.breed.$t}</li>}
-           <li><b>Age: </b>{this.props.dog.age.$t}</li>
-           <li><b>Sex: </b>{this.props.dog.sex.$t}</li>
+       <div className="dogInfo">
+         <ul className="carousel-dog-info">
+           <h5 className="dogInfoTitle"><b>Meet {this.props.dog.name.$t}!</b></h5>
+           {Array.isArray(this.props.dog.breeds.breed) ? <li className="bullet"><b>Breed: </b>Mixed Breed</li> : <li className="bullet"><b>Breed: </b>{this.props.dog.breeds.breed.$t}</li>}
+           <li className="bullet"><b>Age: </b>{this.props.dog.age.$t}</li>
+           <li className="bullet"><b>Sex: </b>{this.props.dog.sex.$t}</li>
          </ul>
       </div>
     </div>

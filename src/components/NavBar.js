@@ -51,41 +51,36 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <div style={{display: 'flex', flexDirection: 'row', alignItems:'center', justifyContent: 'flex-start'}}>
-          
+      <div className="NavBar">
         <form onSubmit={this.handleSelect}>
-          <div className="zipcode">
-            <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
-              <input placeholder="07470" onChange={this.handleZipChange} />                
-            </label>
-          </div>
+          <label className="zipcode">
+            <input placeholder="07470" onChange={this.handleZipChange} />                
+          </label>
 
-          <div className="formBox" style={{display: 'flex', flexDirection: 'row'}}>
-            <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
-              <select name="sex" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
-                <option defaultValue="gender">Gender</option>
-                <option value="F">Female</option>
-                <option value="M">Male</option>
-              </select>
-            </label>
+          <label className="gender">
+            <select name="sex" onChange={this.handleSelect} >
+              <option defaultValue="gender">Gender</option>
+              <option value="F">Female</option>
+              <option value="M">Male</option>
+            </select>
+          </label>
 
-            <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
-              <select name="age" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
-                <option defaultValue="age">Age</option>
-                <option value="Baby">Baby</option>
-                <option value="Young">Young</option>
-                <option value="Adult">Adult</option>
-                <option value="Senior">Senior</option>
-              </select>
-            </label>
-    
-            <label style={{display: 'flex', flexDirection: 'row', fontWeight: 400, height: '32px', backgroundColor: 'white', borderColor: '#ccc', marginRight: '17px'}}>
-              <select name="breed" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
-                <option defaultValue="breed">Breed</option>
-                {breeds.map(dog =>  <option key={dog.$t} value={dog.$t} >{dog.$t}</option> )}
-              </select>
-            </label>
-          </div>            
+          <label className="age">
+            <select name="age" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
+              <option defaultValue="age">Age</option>
+              <option value="Baby">Baby</option>
+              <option value="Young">Young</option>
+              <option value="Adult">Adult</option>
+              <option value="Senior">Senior</option>
+            </select>
+          </label>
+
+          <label className="breed">
+            <select name="breed" onChange={this.handleSelect} style={{ backgroundColor: 'white'}}>
+              <option defaultValue="breed">Breed</option>
+              {breeds.map(dog =>  <option key={dog.$t} value={dog.$t} >{dog.$t}</option> )}
+            </select>
+          </label>
         </form>
       </div>
       
