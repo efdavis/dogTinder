@@ -8,30 +8,33 @@ class KennelDogProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      contactClicked: false,
-      clicked: false
+      contactClicked: false
+      // clicked: false
     };
   }
 
   showContactInfo() {
     this.setState({contactClicked: !this.state.clicked})
-
   }
 
-  closeProfile() {
-    this.setState({clicked: !this.state.clicked})
-  }
+  // closeProfile() {
+  //   this.setState({clicked: !this.state.clicked})
+  // }
 
   render() {
     const dog = this.props.dog;
-    if (this.state.clicked) {
-        return (<div></div>);
-    }
-    else {
+
+    // if (this.state.clicked) {
+    //   return (
+    //     <div></div>
+    //   );
+    // }
+
+    // else {
     return (
     <div>
       <div className="doggyProfile" style={{display: 'flex', flexDirection: 'column', alignSelf: 'auto', borderStyle: 'solid'}}>
-          <div><button type="button" className="btn btn default btn-sm pull-right" id="close-profile" onClick={() => this.closeProfile()}>
+          <div><button type="button" className="btn btn default btn-sm pull-right" id="close-profile" onClick={() => this.props.clickName()}>
                                 <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
                               </button></div>
         <h3 className="dog-name">{dog.name.$t}</h3>
@@ -42,7 +45,6 @@ class KennelDogProfile extends React.Component {
             {Array.isArray(dog.options.option) ? dog.options.option.map(info => <li key={info.$t}><i className="fa-li fa fa-check-square"></i>{info.$t}</li>) : <div></div>}
             {/*{dog.options.map(info => <li>{info.option.$t}</li>)}*/}
           </ul>
-
           
         </div>
           <div className="profile-description"><p>{entities.decode(dog.description.$t)}</p></div>
@@ -56,7 +58,7 @@ class KennelDogProfile extends React.Component {
       </div>
     </div>
     );
-  }
+  // }
   }
 }
 

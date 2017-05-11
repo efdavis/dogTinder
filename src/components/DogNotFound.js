@@ -8,7 +8,8 @@ class DogNotFound extends React.Component {
     return (
     <div>
       <h4>Sorry, no search results!</h4>
-    </div>
+      <img className="sad-dog" src="images/droopy.jpg"/>
+    </div> 
     );
   }
 }
