@@ -42,11 +42,11 @@ class DisplayDog extends React.Component {
         </div>
       </div>
        <div className="dogInfo">
-         <ul>
+         <ul className="carousel-dog-info">
            <h5 className="dogInfoTitle"><b>Meet {this.props.dog.name.$t}!</b></h5>
-           {Array.isArray(this.props.dog.breeds.breed) ? <li><b>Breed: </b>Mixed Breed</li> : <li><b>Breed: </b>{this.props.dog.breeds.breed.$t}</li>}
-           <li><b>Age: </b>{this.props.dog.age.$t}</li>
-           <li><b>Sex: </b>{this.props.dog.sex.$t}</li>
+           {Array.isArray(this.props.dog.breeds.breed) ? <li className="bullet"><b>Breed: </b>Mixed Breed</li> : <li className="bullet"><b>Breed: </b>{this.props.dog.breeds.breed.$t}</li>}
+           <li className="bullet"><b>Age: </b>{this.props.dog.age.$t}</li>
+           <li className="bullet"><b>Sex: </b>{this.props.dog.sex.$t}</li>
          </ul>
       </div>
     </div>

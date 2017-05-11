@@ -28,6 +28,10 @@ label {
   margin: auto;
 }
 
+.carousel {
+  display: flex;
+}
+
 .doggyProfile {
   display: flex;
   flex-direction: row;
@@ -46,9 +50,8 @@ label {
 }
 
 .contact-shelter {
-  border-radius: 25px;
-  border: 2px solid #337ab7;
-  background-color: lightslategrey;
+  /*border-radius: 25px;
+  border: 2px solid #337ab7;*/
 }
 
 .dog-form {
@@ -108,6 +111,8 @@ textarea {
   height: 32px; 
   border-color: #ccc;
   margin-right: 17px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .zipcode {
@@ -124,6 +129,7 @@ textarea {
   font-weight: 400;
   height: 32px; 
   border-color: #ccc;
+  background-color: white;
   margin-right: 17px;
 }
 
@@ -142,3 +148,32 @@ textarea {
   border-color: #ccc;
   margin-right: 17px;
 }
+
+.dogInfo {
+ display: flex;
+ flex-direction: row;
+ position: float;
+ width: 180px;
+
+}
+
+.dogInfoTitle {
+  color: black;
+  font-size: 20px;
+}
+
+.carousel-dog-info {
+  list-style-type: none;
+  width: 160px;
+  padding: 15px;
+  margin: 0;
+}
+
+.bullet {
+  background-image: url('./images/PawHeart.png');
+  background-repeat: no-repeat;
+  background-size: 20px;
+  padding-left: 25px;
+  /*line-height: 20px;*/
+}
+
