@@ -58,6 +58,9 @@ class App extends React.Component {
   
   nextDog() {
     let next = this.state.index + 1; 
+    if(next > this.state.allDogs.length - 1) {
+      next = 0;
+    }
     this.setState({
       featuredDog: this.state.allDogs[next],
       index: next
@@ -66,6 +69,9 @@ class App extends React.Component {
 
   previousDog() {
     let previous = this.state.index - 1;
+    if (previous < 0) {
+      previous = this.state.allDogs.length - 1;
+    }
     console.log('previous dog index:', previous)
     this.setState({
       featuredDog: this.state.allDogs[previous],
@@ -126,7 +132,8 @@ class App extends React.Component {
         this.setState({
           featuredDog: data[0],
           allDogs: data,
-          dogNotFound: false
+          dogNotFound: false,
+          index: 0
         }) 
       }
     }) 
