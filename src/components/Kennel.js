@@ -37,6 +37,7 @@ class Kennel extends React.Component {
                       <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="50px" height="50px" />
                     </div>
                     <h5 className="dogName" onClick={() => {this.clickDogName(); this.showProfile(dog)}}> {dog.name.$t} / {Array.isArray(dog.breeds.breed)? <span>Mixed Breed</span> : dog.breeds.breed.$t}  / {dog.age.$t} / {dog.sex.$t}</h5>
+                    <h7 onClick={() => {this.props.removeDog(dog)}}>REMOVE DOG</h7>
                     {/*{this.state.clicked ? <div>{this.state.selectedDog.name.$t}</div> : <div></div>}*/}
                     {/*{this.state.clicked ? <KennelDogProfile name={dog.name.$t} image={dog.media.photos.photo[0]}breed={dog.breeds.breed.$t} age={dog.age.$t} sex={dog.sex.$t} description={dog.description.$t}/> : <div></div>}*/}
                 </li>
