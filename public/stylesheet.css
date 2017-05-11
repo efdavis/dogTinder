@@ -74,3 +74,22 @@ textarea {
 .btn-facebook {
   width: 200px;
 }
+
+.dog-form-container {
+  margin-bottom: 20px;
+}
+
+.bd-footer {
+  padding: 4rem 0;
+  font-size: 85%;
+  text-align: center;
+  background-color: #f7f7f7;
+}
+
+.text-muted {
+    color: #636c72;
+}
+
+.add-dog-link:hover {
+  text-decoration: none;
+}
