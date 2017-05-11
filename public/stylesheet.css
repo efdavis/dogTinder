@@ -280,3 +280,8 @@ textarea {
   margin: 50px;
 }
 
+.dogName:hover {
+  /*color: tomato;*/
+  color: black;
+  text-decoration: underline;
+}
