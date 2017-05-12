@@ -90,7 +90,7 @@ class App extends React.Component {
 
   saveDoggy(dog) {
     let tempArray = this.state.animalList.slice();
-    tempArray.push(dog);
+    tempArray.unshift(dog);
     tempArray = uniqBy(tempArray, 'id.$t');
     
     let idArray = uniq(tempArray.map(function(item){return parseInt(item.id.$t)}));
@@ -111,7 +111,7 @@ class App extends React.Component {
         console.log("There was an error saving the list to the database")
       })
     } else {
-      this.setState({animalList: tempArray.reverse()}, () => {
+      this.setState({animalList: tempArray}, () => {
         cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
       });
     }
@@ -209,7 +209,7 @@ class App extends React.Component {
                         <span className="sr-only">Loading...</span></div>
     } else {
       kennelComponent = <Kennel 
-          animalList={this.state.animalList.reverse()} 
+          animalList={this.state.animalList} 
           shelterContact={this.state.shelterContactInfo} 
           removeDog={this.removeDogFromKennel}
           spinning={this.state.kennelSpinning}
