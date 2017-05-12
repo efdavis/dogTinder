@@ -31,8 +31,6 @@ class App extends React.Component {
     this.previousDog = this.previousDog.bind(this);
     this.saveDoggy = this.saveDoggy.bind(this);
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
-    this.getShelter = this.getShelter.bind(this);
-    this.formatDogName = this.formatDogName.bind(this);
     this.removeDogFromKennel = this.removeDogFromKennel.bind(this);
   }
 
@@ -88,6 +86,7 @@ class App extends React.Component {
   }
 
   saveDoggy(dog) {
+    console.log('tempArray', tempArray)
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
     tempArray = uniqBy(tempArray, 'id.$t');
@@ -108,7 +107,7 @@ class App extends React.Component {
         console.log("There was an error saving the list to the database")
       })
     } else {
-      this.setState({animalList: tempArray}, () => {
+      this.setState({animalList: tempArray.reverse()}, () => {
         cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
       });
     }
@@ -168,12 +167,8 @@ class App extends React.Component {
     }
   };
   
-
-
   render() {
-
     console.log('animalList: ', this.state.animalList)
-    // console.log(this.state.allDogs)
     var loginPrompt;
     var addDogs;
     if(cookies.get('loggedIn') === "true") {
@@ -183,7 +178,6 @@ class App extends React.Component {
       loginPrompt = <FacebookLogin />;
       addDogs = null;
     }
-
 
     return (
       <div className="homepage">
@@ -195,20 +189,20 @@ class App extends React.Component {
   
         {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
         {this.state.featuredDog !== '' ? 
-        <DisplayDog 
-          dog={this.state.featuredDog} 
-          dogs={this.state.allDogs} 
-          nextDog={this.nextDog} 
-          previousDog={this.previousDog} 
-          saveDoggy={this.saveDoggy} 
-          dogNotFound={this.state.dogNotFound} 
-        /> 
-        : 
-        <div></div>
+          <DisplayDog 
+            dog={this.state.featuredDog} 
+            dogs={this.state.allDogs} 
+            nextDog={this.nextDog} 
+            previousDog={this.previousDog} 
+            saveDoggy={this.saveDoggy} 
+            dogNotFound={this.state.dogNotFound} 
+          /> 
+          : 
+          <div></div>
         }
         {addDogs}
         <Kennel 
-          animalList={this.state.animalList} 
+          animalList={this.state.animalList.reverse()} 
           shelterContact={this.state.shelterContactInfo} 
           removeDog={this.removeDogFromKennel}
         />
