@@ -78,7 +78,6 @@ app.get('/dog-tinder-api/list', (req, res) => {
     let facebookID = req.user.id;
 
     dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
-      console.log(results)
       let dogIds = [];
       let dogs = [];
       
@@ -89,6 +88,7 @@ app.get('/dog-tinder-api/list', (req, res) => {
           dogs.push(dog.id);
         }
       });
+
 
       petFinderFetch.getList(dogIds, (pfDogs) => {
         let petfinderDogs = pfDogs
