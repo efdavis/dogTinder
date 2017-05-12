@@ -32,6 +32,7 @@ class Kennel extends React.Component {
     <h1 className="page-header">My Kennel</h1>
     <div style={{display: 'flex'}}>
         <ul className="media-list col-md-6">{this.props.animalList.map((dog) => {
+          console.log('dog=> ',dog)
           return <li className="media dog-box" key={dog.id.$t} style={{display: 'flex', justifyContent: 'flex-start'}}>
                     <div className="media-left">
                       <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="50px" height="50px" />

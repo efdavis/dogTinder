@@ -79,6 +79,7 @@ exports.fetchAnimals = (params, callback) => {
 }
 
 exports.getList = (list, callback) => {
+  console.log('fetch list ============>', list);
 
   function getRecursive(listSoFar, results) {
     if(listSoFar.length === 0) {

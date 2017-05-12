@@ -74,25 +74,55 @@ app.get('/auth/facebook/callback',
 
 app.get('/dog-tinder-api/list', (req, res) => {
   if (req.user) {
-    console.log('===========>', req.user.id);
     let facebookID = req.user.id;
 
     dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
-      let dogIds = results.map(dog => dog.petFinderid);
+      console.log(results)
+      let dogIds = [];
+      let dogs = [];
+      
+      results.forEach((dog) => {
+        if (dog.petFinderid) {
+          dogIds.push(dog.petFinderid)
+        } else {
+          dogs.push(dog.id);
+        }
+      });
 
-      petFinderFetch.getList(dogIds, (dogs) => {
-        res.send(dogs)
+      petFinderFetch.getList(dogIds, (pfDogs) => {
+        let petfinderDogs = pfDogs
+        dbUtils.fetchDogsFromDatabase(dogs, (databaseResults) => {
+          let dogs = petfinderDogs.concat(databaseResults);
+          res.send(dogs)
+        })
       })
     })
   } else {
     const cookies = new Cookies(req.headers.cookie);
     var userAnimalList = cookies.get('animalList');
     res.clearCookie('loggedIn');
-    
+
     if (userAnimalList) {
-      petFinderFetch.getList(userAnimalList, function(results) {
-        // console.log("FINAL FETCH FOR ALL LIST:", results);
-        res.send(results);
+      let petFinderDogs = [];
+      let dogTinderDogs = [];
+
+      userAnimalList.forEach((dogId) => {
+        // console.log('dog id =========>>', dogId)
+        if (dogId > 10000) {
+          petFinderDogs.push(dogId);
+        } else {
+          dogTinderDogs.push({id: dogId.toString()});
+        }
+      }); 
+
+      
+      
+      petFinderFetch.getList(petFinderDogs, function(results) {
+        petFinderDogs = results;
+        dbUtils.fetchDogsFromDatabase(dogTinderDogs, (databaseResults) => {
+          let userDogs = petFinderDogs.concat(databaseResults);
+          res.send(userDogs);
+        })
       });
     } else {
       res.send([]);
@@ -107,11 +137,11 @@ app.post('/dog-tinder-api/list', (req, res) => {
   if (req.user) {
     // make animalObjArr
     let animalObjArr = req.body.map((id) => {
-      if (id) {
+      console.log(id);
+      if (id > 100000) {
         return {petFinderid: id.toString()}
       } else {
-        // this is a dogTinder dog
-          // functionality not built out
+        return {id: id.toString()}
       }
     });
 
@@ -141,8 +171,16 @@ app.get('/dog-tinder-api', (req, res) => {
   }
   console.log(req.query);
   petFinderFetch.fetchAnimals(req.query, function(animals){
-    // get animals from DB here and append them to these 'animals'
-    res.send(animals);
+    let zip = req.query.location;
+    let query = req.query;
+    query.zip = zip;
+    delete query.location;
+
+    dbUtils.findDogsFromDatabase(query, (results) => {
+      let combinedResults = animals.concat(results);
+      // console.log('dogTinderDogs ======>>> ', combinedResults.length);
+      res.send(combinedResults);
+    })
   })
 });
 
@@ -166,7 +204,8 @@ app.get('/logout', (req, res) => {
 })
 
 app.post('/dog-tinder-api/dog', (req, res) => {
-  console.log(req.body);
+  dogObj = req.body.data
+  dbUtils.addDogToDatabase(dogObj, () => {})
   res.send(201);
 })
 

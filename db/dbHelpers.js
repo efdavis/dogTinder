@@ -49,7 +49,6 @@ exports.getAnimalBreeds = (animalId, callback) => {
     WHERE "Animal_Breeds"."animalId" = ${animalId};`;
 
   db.sequelize.query(queryString).spread((results, metadata) => {
-    
     callback(results, metadata);
   });
 };
@@ -84,7 +83,6 @@ exports.findUserList = (UserId, callback) => {
 };
 
 exports.updateList = (list, animalIdArr, callback) => {
-  console.log('==>>>', list);
   if (animalIdArr.length > 0) {
     let animal = animalIdArr.pop();
     list[0].addAnimal(animal)
@@ -98,7 +96,7 @@ exports.updateList = (list, animalIdArr, callback) => {
 
 exports.getUserAnimals = (listId, callback) => {
   let queryString = `
-    SELECT animals."petFinderid"
+    SELECT animals."petFinderid", animals.id
     FROM "AnimalList_Animal"
     INNER JOIN animals
     ON "AnimalList_Animal"."animalId" = animals.id
@@ -194,3 +192,130 @@ exports.removeDogFromUserList = (animalListId, animalId, callback) => {
   })
 }
 
+exports.addDogToDatabase = (dogObj, callback) => {
+  db.Animal.create(dogObj)
+           .then((results) => {
+             callback(results);
+           })
+}
+
+exports.findDogTinderDogs = (query, callback) => {
+  db.Animal.findAll({where: query})
+           .then((results) => {
+             callback(results);
+           })
+}
+
+exports.findBreedId = (breedName, callback) => {
+  db.Breed.findOne({where: {breed: breedName}})
+          .then((result) => {
+            callback(result.dataValues.id);
+          })
+}
+
+exports.filterForMatchBreeds = (queryBreed, animalArr, callback) => {
+
+  let matches = [];
+
+  const recurseAnimalArr = (animalArr, callback) => {
+    if (animalArr.length > 0) {
+      let animal = animalArr.pop();
+
+      exports.getAnimalBreeds(animal.id, (breeds) => {
+        breeds.forEach((breed) => { 
+          if (breed.breed === queryBreed) {
+            console.log(animal);
+            animal.breeds = breeds;
+            matches.push(animal);
+          }
+        });
+
+        recurseAnimalArr(animalArr, callback);
+      })
+
+    } else {
+      // console.log('matches: ', matches);
+      exports.formatAnimalList(matches, (reformatted) => {
+        callback(reformatted);
+      });
+    }
+  };
+
+  recurseAnimalArr(animalArr, callback);
+}
+
+
+exports.formatAnimalList = (animalArr, callback) => {
+  let reformatedList = [];
+
+  const recurseAnimals = (animalArr, callback) => {
+    if (animalArr.length > 0) {
+      let animal = animalArr.pop();
+
+      exports.getAnimalBreeds(animal.id, (breeds) => {
+        breeds = breeds.map(breed => {return {$t: breed.breed}});
+      
+        animal = animal.dataValues;
+
+        let reformat = {
+          age: { $t: animal.age},
+          animal: { $t: animal.animal},
+          breeds: {
+            breed: breeds
+          },
+          contact: {
+            address1: { $t: animal.address1},
+            address2: { $t: animal.address2},
+            city: { $t: animal.city},
+            email: { $t: animal.email},
+            fax: { $t: 'none'},
+            phone: { $t: animal.phone},
+            state: { $t: animal.state},
+            zip: { $t: animal.zip}
+          },
+          description: { $t: animal.description},
+          id: { $t: animal.id.toString()},
+          media: {
+            photos: {
+              photo: [animal.photo]
+            }
+          },
+          mix: { $t: animal.mix},
+          name: { $t: animal.name},
+          option: { $t: null},
+          sex: { $t: animal.sex},
+          size: { $t: animal.size},
+          status: { $t: null}
+        };
+        
+        reformatedList.push(reformat);
+
+        recurseAnimals(animalArr, callback)
+      })
+    } else {
+      callback(reformatedList);
+    } 
+  };
+
+  recurseAnimals(animalArr, callback);
+}
+
+exports.fetchDogs = (dogIdArr, callback) => {
+  let dogs = [];
+
+  const recurseDogIdArr = (dogIdArr, callback) => {
+    if (dogIdArr.length > 0) {
+      let dogId = dogIdArr.pop();
+
+      db.Animal.find({where: {id: dogId}})  
+               .then((dog) => { 
+                 dogs.push(dog); 
+                 recurseDogIdArr(dogIdArr, callback);
+              })
+    } else {
+      callback(dogs);
+    }
+  };
+
+  recurseDogIdArr(dogIdArr, callback)
+}
