@@ -2,7 +2,6 @@
   padding-left: 50px;
 }
 
-
 .dog-box {
   margin-bottom: 30px;
 }
@@ -20,11 +19,10 @@
 }
 
 .dog-form-container {
-  /*font-size: 50px;*/
   padding-left: 40px;
 }
 body {
-  background-color: #6F6F6F;
+  background-color: #ddd;
 }
 
 .container {
@@ -152,16 +150,18 @@ textarea {
 }
 
 
-.homePage {
-  display: flex;
-
+.homepage {
+  padding-top: 30px;
+  padding-left: 60px;
 }
 
 .title-logo {
   display: flex;
   flex-direction: row;
   align-items: center;
+  /*justify-content: space-between;*/
   padding-top: 40px;
+  padding-bottom: 20px;
 }
 
 .title {
@@ -179,7 +179,9 @@ textarea {
 
 .facebook-login {
   position: relative;
+  float: right;
   padding-left: 150px;
+  padding-right: 50px;
 }
 
 .NavBar {
@@ -192,7 +194,7 @@ textarea {
   border-color: #ccc;
   margin-right: 17px;
   padding-top: 30px;
-  padding-bottom: 30px;
+  padding-bottom: 45px;
 }
 
 .zipcode {
@@ -260,17 +262,14 @@ textarea {
 .bullet {
   background-image: url('./images/dog-paw.svg') ;
   background-repeat: no-repeat;
-  background-size: 13px;
+  background-size: 11px;
   background-position-y: 50%;
-  /*background-origin: content-box;*/
   padding-left: 20px;
   /*padding-bottom: 20px;*/
   /*line-height: 20px;*/
 }
 
 .dogName:hover {
-  /*color: tomato;*/
-  color: black;
   text-decoration: underline;
 }
 
