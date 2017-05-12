@@ -88,11 +88,14 @@ class App extends React.Component {
   }
 
   saveDoggy(dog) {
+    console.log('dog item: ', dog)
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
     tempArray = uniqBy(tempArray, 'id.$t');
+    
     let idArray = uniq(tempArray.map(function(item){return parseInt(item.id.$t)}));
 
+    console.log('idArray: ', idArray)
     if(cookies.get('loggedIn') === "true") {
       axios({
         method: 'post',
@@ -194,9 +197,7 @@ class App extends React.Component {
 
   
   render() {
-
-    console.log('animalList: ', this.state.animalList)
-    // console.log(this.state.allDogs)
+    
     var loginPrompt;
     var addDogs;
     if(cookies.get('loggedIn') === "true") {

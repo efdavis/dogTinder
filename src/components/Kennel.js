@@ -27,6 +27,7 @@ class Kennel extends React.Component {
 
   render() {
     return (
+
       <div>
         {this.props.animalList.length === 0 ? <div></div> : <h1 className="page-header">My Kennel</h1> }
         <div style={{display: 'flex'}}>
