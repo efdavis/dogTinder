@@ -15,6 +15,7 @@ function removeSmallPicsFromOneDog(dog) {
   } else {
     dog = dog.petfinder.pet
   }
+  console.log(JSON.stringify(dog));
 
   var modifyPhotos = function(photoArray){
     var newPhotos = [];
@@ -75,7 +76,7 @@ exports.fetchAnimals = (params, callback) => {
     qs: querystring
   }, function(error, response, body){
     
-    if(JSON.parse(body).petfinder.header.status.message.$t === "Invalid geographical location") {
+    if(JSON.parse(body).petfinder.header.status.code.$t !== "100") {
       callback([]);
     } else {
       let petArray = JSON.parse(body).petfinder.pets;
@@ -114,8 +115,12 @@ exports.getList = (list, callback) => {
         if(error) {
           console.log(error);
         } else {
-          results.push(removeSmallPicsFromOneDog(body));
-          return getRecursive(listSoFar, results);
+          if(JSON.parse(body).petfinder.header.status.code.$t === '100') {
+            results.push(removeSmallPicsFromOneDog(body));
+            return getRecursive(listSoFar, results);
+          } else {
+            return getRecursive(listSoFar, results);
+          }
         };
       });
     }

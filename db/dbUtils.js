@@ -95,13 +95,26 @@ exports.addDogToDatabase = (dogObj, callback) => {
 };
 
 exports.findDogsFromDatabase = (searchQuery, callback) => {
+  for(var key in searchQuery) {
+    if(typeof searchQuery[key] !== 'string') {
+      searchQuery[key] = searchQuery[key].toString();
+    }
+  }
   let queryBreed = searchQuery.breed;
   delete searchQuery.breed;
+  console.log("1")
   helper.findDogTinderDogs(searchQuery, (results) => {
+    console.log("2")
     if (queryBreed) {
-      helper.filterForMatchBreeds(queryBreed, results, callback);
+      console.log("3")
+      helper.filterForMatchBreeds(queryBreed, results, (formattedAnimal) => {
+        console.log("3.5")
+        callback(formattedAnimal);
+      });
     } else {
+      console.log("4")
       helper.formatAnimalList(results, (reformatted) => {
+        console.log("5")
         callback(reformatted);
       });
     }

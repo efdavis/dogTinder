@@ -115,9 +115,9 @@ app.get('/dog-tinder-api/list', (req, res) => {
           dogTinderDogs.push({id: dogId.toString()});
         }
       }); 
-
       
       
+      console.log(petFinderDogs);
       petFinderFetch.getList(petFinderDogs, function(results) {
         petFinderDogs = results;
         dbUtils.fetchDogsFromDatabase(dogTinderDogs, (databaseResults) => {

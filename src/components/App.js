@@ -90,7 +90,7 @@ class App extends React.Component {
 
   saveDoggy(dog) {
     let tempArray = this.state.animalList.slice();
-    tempArray.push(dog);
+    tempArray.unshift(dog);
     tempArray = uniqBy(tempArray, 'id.$t');
     
     let idArray = uniq(tempArray.map(function(item){return parseInt(item.id.$t)}));
@@ -111,7 +111,7 @@ class App extends React.Component {
         console.log("There was an error saving the list to the database")
       })
     } else {
-      this.setState({animalList: tempArray.reverse()}, () => {
+      this.setState({animalList: tempArray}, () => {
         cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
       });
     }
@@ -173,6 +173,25 @@ class App extends React.Component {
     }
   };
   
+  //Passes in shelter id from ContactShelter component
+  getShelter(shelterID) {
+    axios.get('/dog-tinder-api/shelter', { 
+      params: {
+        ID: shelterID
+      }
+    })
+    .then(response => {
+      console.log('get request for shelter contact info:', response);
+      let data = response.data;
+      this.setState({
+        shelterContactInfo: data
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  };
+
   render() {
     var loginPrompt;
     var addDogs;
@@ -190,7 +209,7 @@ class App extends React.Component {
                         <span className="sr-only">Loading...</span></div>
     } else {
       kennelComponent = <Kennel 
-          animalList={this.state.animalList.reverse()} 
+          animalList={this.state.animalList} 
           shelterContact={this.state.shelterContactInfo} 
           removeDog={this.removeDogFromKennel}
           spinning={this.state.kennelSpinning}

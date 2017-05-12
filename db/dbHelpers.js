@@ -200,6 +200,7 @@ exports.addDogToDatabase = (dogObj, callback) => {
 }
 
 exports.findDogTinderDogs = (query, callback) => {
+  console.log(typeof query, query);
   db.Animal.findAll({where: query})
            .then((results) => {
              callback(results);
@@ -220,7 +221,6 @@ exports.filterForMatchBreeds = (queryBreed, animalArr, callback) => {
   const recurseAnimalArr = (animalArr, callback) => {
     if (animalArr.length > 0) {
       let animal = animalArr.pop();
-
       exports.getAnimalBreeds(animal.id, (breeds) => {
         breeds.forEach((breed) => { 
           if (breed.breed === queryBreed) {

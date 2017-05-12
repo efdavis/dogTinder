@@ -81,10 +81,7 @@ label {
   background-color: rgba(18, 123, 118, 0.35);
   font-weight: 210;
   border-color: white;
-
 }
-
-
 
 #close-profile {
   display: flex;
@@ -280,3 +277,6 @@ textarea {
   margin: 50px;
 }
 
+.dogName:hover {
+  text-decoration: underline;
+}
