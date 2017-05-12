@@ -91,6 +91,7 @@ exports.fetchAnimals = (params, callback) => {
 }
 
 exports.getList = (list, callback) => {
+  console.log('fetch list ============>', list);
 
   function getRecursive(listSoFar, results) {
     if(listSoFar.length === 0) {
@@ -99,20 +100,25 @@ exports.getList = (list, callback) => {
       return;
     }
     querystring.id = listSoFar[0];
-    listSoFar.shift();
-    request({
-      method: 'get',
-      url: 'http://api.petfinder.com/pet.get',
-      qs: querystring
-    }, function(error, response, body){
-      if(error) {
-        console.log(error);
-      } else {
-        results.push(removeSmallPicsFromOneDog(body));
-        return getRecursive(listSoFar, results);
-      }
-    })
-
+    console.log("THE ID IN THE LIST: ", typeof listSoFar[0])
+    if (querystring.id.length < 7) {
+      listSoFar.shift();
+      return getRecursive(listSoFar, results);
+    } else {
+      listSoFar.shift();
+      request({
+        method: 'get',
+        url: 'http://api.petfinder.com/pet.get',
+        qs: querystring
+      }, function(error, response, body){
+        if(error) {
+          console.log(error);
+        } else {
+          results.push(removeSmallPicsFromOneDog(body));
+          return getRecursive(listSoFar, results);
+        };
+      });
+    }
   }
   var emptyArr = [];
   getRecursive(list, emptyArr);

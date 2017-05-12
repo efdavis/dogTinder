@@ -28,6 +28,7 @@ class Kennel extends React.Component {
   render() {
     console.log('animal list from kennel:', this.props.animalList)
     return (
+
       <div>
         {this.props.animalList.length === 0 ? <div></div> : <h2 className="page-header">My Kennel</h2> }
         <div style={{display: 'flex', flexWrap: 'nowrap'}}>

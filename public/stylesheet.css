@@ -21,6 +21,7 @@
 .dog-form-container {
   padding-left: 40px;
 }
+
 body {
   background-color: #ddd;
 }
@@ -269,7 +270,13 @@ textarea {
   /*line-height: 20px;*/
 }
 
+
 .dogName:hover {
   text-decoration: underline;
+}
+
+
+.kennel-spin {
+  margin: 50px;
 }
 

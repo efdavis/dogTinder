@@ -53,7 +53,7 @@ exports.fetchUserAnimals = (userLookup, callback) => {
       })
     })
   })
-}
+};
 
 exports.doesUserHaveList = (FacebookID, callback) => {
   helper.checkForUserList(FacebookID, (results, metadata) => {
@@ -63,7 +63,7 @@ exports.doesUserHaveList = (FacebookID, callback) => {
       callback(false);
     }
   })
-}
+};
 
 exports.removeAnimalFromUsersList = (FacebookID, petFinderId, callback) => {
   let listId;
@@ -79,4 +79,39 @@ exports.removeAnimalFromUsersList = (FacebookID, petFinderId, callback) => {
       })
     })
   })
-} 
+}; 
+
+exports.addDogToDatabase = (dogObj, callback) => {
+  let breed = dogObj.breed;
+  delete dogObj.breed;
+  helper.addDogToDatabase(dogObj, (dog) => {
+    helper.findBreedId(breed, (id) => {
+      helper.addBreedsToAnimal({id: dog.id}, [id], () => {
+        callback();
+      })
+    })
+  })
+
+};
+
+exports.findDogsFromDatabase = (searchQuery, callback) => {
+  let queryBreed = searchQuery.breed;
+  delete searchQuery.breed;
+  helper.findDogTinderDogs(searchQuery, (results) => {
+    if (queryBreed) {
+      helper.filterForMatchBreeds(queryBreed, results, callback);
+    } else {
+      helper.formatAnimalList(results, (reformatted) => {
+        callback(reformatted);
+      });
+    }
+  })
+};
+
+exports.fetchDogsFromDatabase = (dogIdArr, callback) => {
+  helper.fetchDogs(dogIdArr, (dogs) => {
+    helper.formatAnimalList(dogs, (reformattedDogs) => {
+      callback(reformattedDogs);
+    })
+  })
+};
