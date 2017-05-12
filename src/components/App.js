@@ -32,8 +32,6 @@ class App extends React.Component {
     this.previousDog = this.previousDog.bind(this);
     this.saveDoggy = this.saveDoggy.bind(this);
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
-    this.getShelter = this.getShelter.bind(this);
-    this.formatDogName = this.formatDogName.bind(this);
     this.removeDogFromKennel = this.removeDogFromKennel.bind(this);
   }
 
@@ -91,7 +89,6 @@ class App extends React.Component {
   }
 
   saveDoggy(dog) {
-    console.log('dog item: ', dog)
     let tempArray = this.state.animalList.slice();
     tempArray.push(dog);
     tempArray = uniqBy(tempArray, 'id.$t');
@@ -114,7 +111,7 @@ class App extends React.Component {
         console.log("There was an error saving the list to the database")
       })
     } else {
-      this.setState({animalList: tempArray}, () => {
+      this.setState({animalList: tempArray.reverse()}, () => {
         cookies.set('animalList', JSON.stringify(idArray), { path: '/'});
       });
     }
@@ -176,49 +173,24 @@ class App extends React.Component {
     }
   };
   
-  //Passes in shelter id from ContactShelter component
-  getShelter(shelterID) {
-    axios.get('/dog-tinder-api/shelter', { 
-      params: {
-        ID: shelterID
-      }
-    })
-    .then(response => {
-      console.log('get request for shelter contact info:', response);
-      let data = response.data;
-      this.setState({
-        shelterContactInfo: data
-      })
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  };
-
-  formatDogName() {
-    
-  }
-  
-
-  
   render() {
-    
     var loginPrompt;
     var addDogs;
     if(cookies.get('loggedIn') === "true") {
-      loginPrompt = <div>Welcome Back <a href="/logout">Logout?</a></div>;
+      loginPrompt = <div>Welcome Back <a href="/logout">Logout</a></div>;
       addDogs = <a href="" className="add-dog-link" onClick={this.handleAddDogClick}><i className="fa fa-plus-square" aria-hidden="true"></i> Add animals looking for a home</a>;
     } else {
       loginPrompt = <FacebookLogin />;
       addDogs = null;
     }
+
     var kennelComponent;
     if(this.state.kennelSpinning) {
       kennelComponent = <div><i className="kennel-spin fa fa-spinner fa-pulse fa-3x fa-fw"></i>
                         <span className="sr-only">Loading...</span></div>
     } else {
       kennelComponent = <Kennel 
-          animalList={this.state.animalList} 
+          animalList={this.state.animalList.reverse()} 
           shelterContact={this.state.shelterContactInfo} 
           removeDog={this.removeDogFromKennel}
           spinning={this.state.kennelSpinning}
@@ -228,23 +200,22 @@ class App extends React.Component {
     return (
       <div className="homepage">
         <div className="title-logo">
-          <h1 className="title">Dog Tinder</h1>
-          <img className="dogPaw" src="images/dogPaw.svg"/>
+          <div className="title">Dog Tinder</div>
+          <img className="dogPaw" src="images/cuteDog.svg"/>
           <div className="facebook-login">{loginPrompt}</div>
         </div>
-  
         {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs} spinning={this.state.spinning}/>}
         {this.state.featuredDog !== '' ? 
-        <DisplayDog 
-          dog={this.state.featuredDog} 
-          dogs={this.state.allDogs} 
-          nextDog={this.nextDog} 
-          previousDog={this.previousDog} 
-          saveDoggy={this.saveDoggy} 
-          dogNotFound={this.state.dogNotFound} 
-        /> 
-        : 
-        <div></div>
+          <DisplayDog 
+            dog={this.state.featuredDog} 
+            dogs={this.state.allDogs} 
+            nextDog={this.nextDog} 
+            previousDog={this.previousDog} 
+            saveDoggy={this.saveDoggy} 
+            dogNotFound={this.state.dogNotFound} 
+          /> 
+          : 
+          <div></div>
         }
         {addDogs}
         {kennelComponent}
