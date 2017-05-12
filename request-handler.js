@@ -196,7 +196,7 @@ app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
     })
   } else {
     dbUtils.removeDogTinderAnimalFromUsersList(facebookID, dogId, () => {
-      console.log('removed from users list')
+      console.log()
     })
   }
 });
