@@ -47,11 +47,11 @@ app.get('/auth/facebook/callback',
   //ADD ANIMALS FROM COOKIE LIST TO DATABASE
   if (userAnimalList) {
     let animalObjArr = userAnimalList.map((id) => {
-      if (id) {
+      if (id > 100000) {
         return {petFinderid: id.toString()}
       } else {
-        // this is a dogTinder dog
-          // functionality not built out
+        console.log('You are adding a dogTinder Dog!')
+        return {id: id}     
       }
     });
 
@@ -108,16 +108,16 @@ app.get('/dog-tinder-api/list', (req, res) => {
       let dogTinderDogs = [];
 
       userAnimalList.forEach((dogId) => {
-        // console.log('dog id =========>>', dogId)
-        if (dogId > 10000) {
+  
+        if (dogId > 100000) {
           petFinderDogs.push(dogId);
         } else {
-          dogTinderDogs.push({id: dogId.toString()});
+          console.log('you are adding a dogTinderDog!')
+          dogTinderDogs.push({id: dogId});
         }
       }); 
       
       
-      console.log(petFinderDogs);
       petFinderFetch.getList(petFinderDogs, function(results) {
         petFinderDogs = results;
         dbUtils.fetchDogsFromDatabase(dogTinderDogs, (databaseResults) => {
@@ -142,6 +142,7 @@ app.post('/dog-tinder-api/list', (req, res) => {
       if (id > 100000) {
         return {petFinderid: id.toString()}
       } else {
+        console.log('you are adding a dogTinder dog!')
         return {id: id}
       }
     });
@@ -179,7 +180,6 @@ app.get('/dog-tinder-api', (req, res) => {
 
     dbUtils.findDogsFromDatabase(query, (results) => {
       let combinedResults = animals.concat(results);
-      // console.log('dogTinderDogs ======>>> ', combinedResults.length);
       res.send(combinedResults);
     })
   })
@@ -188,10 +188,17 @@ app.get('/dog-tinder-api', (req, res) => {
 app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
   let facebookID = req.user.id;
   let dogId = req.body.id['$t'];
-
-  dbUtils.removeAnimalFromUsersList(facebookID, dogId, () => {
-    console.log('removed from users list');
-  })
+  console.log('removing dog. ID =====> :', typeof dogId);
+  
+  if (typeof dogId === 'string') {
+    dbUtils.removePetFinderAnimalFromUsersList(facebookID, dogId, () => {
+      console.log('removed from users list');
+    })
+  } else {
+    dbUtils.removeDogTinderAnimalFromUsersList(facebookID, dogId, () => {
+      console.log()
+    })
+  }
 });
 
 app.get('/logout', (req, res) => {
@@ -209,5 +216,6 @@ app.post('/dog-tinder-api/dog', (req, res) => {
   dbUtils.addDogToDatabase(dogObj, () => {})
   res.send(201);
 })
+
 
 module.exports = app;

@@ -158,9 +158,14 @@ class App extends React.Component {
     
     let currentList = cookies.get('animalList');
     let dogId = parseInt(dog.id.$t);
-    let indexToDelete = currentList.indexOf(dogId);
-    currentList.splice(indexToDelete,1);
-    cookies.set('animalList', currentList);
+    
+    if (currentList) {
+      let indexToDelete = currentList.indexOf(dogId);
+      currentList.splice(indexToDelete,1);
+      cookies.set('animalList', currentList);
+    }
+
+    console.log('dog to delete: ', dog);
 
     if(cookies.get('loggedIn') === "true") {
       axios.delete('/dog-tinder-api/removeAnimal', {data: dog})

@@ -272,7 +272,7 @@ exports.formatAnimalList = (animalArr, callback) => {
             zip: { $t: animal.zip}
           },
           description: { $t: animal.description},
-          id: { $t: animal.id.toString()},
+          id: { $t: animal.id},
           media: {
             photos: {
               photo: [animal.photo]
