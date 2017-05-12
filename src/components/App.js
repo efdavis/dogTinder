@@ -24,8 +24,9 @@ class App extends React.Component {
       allDogs: '',
       animalList: [],
       dogNotFound: false,
-      shelterContactInfo: ''
-
+      shelterContactInfo: '',
+      spinning: false,
+      kennelSpinning: false
     }
     this.nextDog = this.nextDog.bind(this);
     this.previousDog = this.previousDog.bind(this);
@@ -37,9 +38,10 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-
+    this.setState({kennelSpinning: true});
     axios.get('/dog-tinder-api/list')
     .then(response => {
+      this.setState({kennelSpinning: false});
       this.setState({animalList: response.data});
     });
     axios.get('/dog-tinder-api?location=07470') 
@@ -57,7 +59,8 @@ class App extends React.Component {
         console.error('Error on componentWillMount', error)
       });
   }
-  
+
+
   nextDog() {
     let next = this.state.index + 1; 
     if(next > this.state.allDogs.length - 1) {
@@ -120,6 +123,7 @@ class App extends React.Component {
 
 
   handleSearchQuery(theState) { 
+    this.setState({spinning: true});
     let data = {}; 
     data.location = theState.zipcode;
     if (theState.breed !== '') { data.breed = theState.breed; }
@@ -130,8 +134,9 @@ class App extends React.Component {
       params: data
     })
     .then(response => {
-      console.log('handle search query response data:', response.data)
-      let data = response.data
+      console.log('handle search query response data:', response.data);
+      let data = response.data;
+      this.setState({spinning: false})
       if(response.data.length === 0) {
         this.setState({dogNotFound: true });
       } else {
@@ -207,7 +212,18 @@ class App extends React.Component {
       loginPrompt = <FacebookLogin />;
       addDogs = null;
     }
-
+    var kennelComponent;
+    if(this.state.kennelSpinning) {
+      kennelComponent = <div><i className="kennel-spin fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                        <span className="sr-only">Loading...</span></div>
+    } else {
+      kennelComponent = <Kennel 
+          animalList={this.state.animalList} 
+          shelterContact={this.state.shelterContactInfo} 
+          removeDog={this.removeDogFromKennel}
+          spinning={this.state.kennelSpinning}
+        />
+    }
 
     return (
       <div className="homepage">
@@ -217,7 +233,7 @@ class App extends React.Component {
           <div className="facebook-login">{loginPrompt}</div>
         </div>
   
-        {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
+        {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs} spinning={this.state.spinning}/>}
         {this.state.featuredDog !== '' ? 
         <DisplayDog 
           dog={this.state.featuredDog} 
@@ -231,11 +247,7 @@ class App extends React.Component {
         <div></div>
         }
         {addDogs}
-        <Kennel 
-          animalList={this.state.animalList} 
-          shelterContact={this.state.shelterContactInfo} 
-          removeDog={this.removeDogFromKennel}
-        />
+        {kennelComponent}
       </div>
     );
   }
