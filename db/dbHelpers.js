@@ -224,7 +224,6 @@ exports.filterForMatchBreeds = (queryBreed, animalArr, callback) => {
       exports.getAnimalBreeds(animal.id, (breeds) => {
         breeds.forEach((breed) => { 
           if (breed.breed === queryBreed) {
-            console.log(animal);
             animal.breeds = breeds;
             matches.push(animal);
           }
@@ -251,7 +250,6 @@ exports.formatAnimalList = (animalArr, callback) => {
   const recurseAnimals = (animalArr, callback) => {
     if (animalArr.length > 0) {
       let animal = animalArr.pop();
-
       exports.getAnimalBreeds(animal.id, (breeds) => {
         breeds = breeds.map(breed => {return {$t: breed.breed}});
       
@@ -303,19 +301,22 @@ exports.formatAnimalList = (animalArr, callback) => {
 exports.fetchDogs = (dogIdArr, callback) => {
   let dogs = [];
 
-  const recurseDogIdArr = (dogIdArr, callback) => {
+  const recurseDogIdArr = (dogIdArr) => {
     if (dogIdArr.length > 0) {
       let dogId = dogIdArr.pop();
-
-      db.Animal.find({where: {id: dogId}})  
-               .then((dog) => { 
-                 dogs.push(dog); 
-                 recurseDogIdArr(dogIdArr, callback);
-              })
+      if(Number.isInteger(dogId)) {
+        dogId = {id: dogId};
+      }
+      db.Animal.findById(dogId.id)
+      .then((dog) => {
+        dogs.push(dog);
+        recurseDogIdArr(dogIdArr)
+      })
+      .catch(error => console.log(error));
     } else {
       callback(dogs);
     }
   };
 
-  recurseDogIdArr(dogIdArr, callback)
+  recurseDogIdArr(dogIdArr)
 }
