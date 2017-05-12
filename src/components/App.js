@@ -25,7 +25,8 @@ class App extends React.Component {
       animalList: [],
       dogNotFound: false,
       shelterContactInfo: '',
-      spinning: false
+      spinning: false,
+      kennelSpinning: false
     }
     this.nextDog = this.nextDog.bind(this);
     this.previousDog = this.previousDog.bind(this);
@@ -37,9 +38,10 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-
+    this.setState({kennelSpinning: true});
     axios.get('/dog-tinder-api/list')
     .then(response => {
+      this.setState({kennelSpinning: false});
       this.setState({animalList: response.data});
     });
     axios.get('/dog-tinder-api?location=07470') 
@@ -209,7 +211,18 @@ class App extends React.Component {
       loginPrompt = <FacebookLogin />;
       addDogs = null;
     }
-
+    var kennelComponent;
+    if(this.state.kennelSpinning) {
+      kennelComponent = <div><i className="kennel-spin fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                        <span className="sr-only">Loading...</span></div>
+    } else {
+      kennelComponent = <Kennel 
+          animalList={this.state.animalList} 
+          shelterContact={this.state.shelterContactInfo} 
+          removeDog={this.removeDogFromKennel}
+          spinning={this.state.kennelSpinning}
+        />
+    }
 
     return (
       <div className="homepage">
@@ -233,11 +246,7 @@ class App extends React.Component {
         <div></div>
         }
         {addDogs}
-        <Kennel 
-          animalList={this.state.animalList} 
-          shelterContact={this.state.shelterContactInfo} 
-          removeDog={this.removeDogFromKennel}
-        />
+        {kennelComponent}
       </div>
     );
   }
