@@ -1,7 +1,25 @@
+.container main {
+  padding-left: 50px;
+}
+
+
 .dog-box {
   margin-bottom: 30px;
 }
 
+.media-left {
+  padding-top: 13px;
+}
+
+#remove-dog {
+  color: #ef4a2d;
+}
+
+
+.dog-form-container {
+  font-size: 50px;
+  padding-left: 40px;
+}
 body {
   background-color: #6F6F6F;
 }
@@ -28,15 +46,20 @@ label {
   margin: auto;
 }
 
-.doggyProfile {
+.carousel {
   display: flex;
-  flex-direction: row;
-  align-self: auto;
-  border-style: solid;
-  border-radius: 25px;
-  border: 2px solid #337ab7;
-  padding: 20px;
-  
+}
+
+.doggyProfile {
+    display: flex;
+    flex-direction: row;
+    align-self: auto;
+    border-style: solid;
+    border-radius: 3px;
+    border: 2px solid #337ab7;
+    padding: 20px;
+    background-color: #484848;
+    color: #f1f0f0;
 }
 
 #close-profile {
@@ -45,10 +68,13 @@ label {
   background-color: transparent;
 }
 
+.dog-name {
+  margin-top: -30px;
+}
+
 .contact-shelter {
-  border-radius: 25px;
-  border: 2px solid #337ab7;
-  background-color: lightslategrey;
+  /*border-radius: 25px;
+  border: 2px solid #337ab7;*/
 }
 
 .dog-form {
@@ -67,6 +93,145 @@ textarea {
   resize: none;
 }
 
-.btn {
+.btn-facebook {
   width: 200px;
 }
+
+.dog-form-container {
+  margin-bottom: 20px;
+}
+
+.bd-footer {
+  padding: 4rem 0;
+  font-size: 85%;
+  text-align: center;
+  background-color: #f7f7f7;
+}
+
+.text-muted {
+    color: #636c72;
+}
+
+.add-dog-link:hover {
+  text-decoration: none;
+}
+
+.profile-description {
+  padding: 8px 8px 8px 0;
+  line-height: 1.2em;
+  letter-spacing: .02em;
+}
+
+.options {
+  list-style-position: inside;
+}
+
+
+.homePage {
+  display: flex;
+
+}
+
+.title-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title {
+  font-size: 50px;
+  color: black;
+  padding-right: 20px;
+}
+
+.dogPaw {
+  position: relative;
+  float: right;
+  width: 40px;
+}
+
+.facebook-login {
+  position: relative;
+  padding-left: 150px;
+}
+
+.NavBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.zipcode {
+  /*style={{display: 'flex', flexDirection: 'row', */
+  order: 1;
+  font-weight: 400;
+  height: 32px; 
+  background-color: white;
+  border-color: #ccc;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 4px;
+  margin-right: 17px;
+  /*transition: none;
+  box-shadow: none;*/
+  
+}
+
+.gender {
+  order: 2;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  background-color: white;
+  margin-right: 17px;
+
+}
+
+.breed {
+  order: 3;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+}
+
+.age {
+  order: 4;
+  font-weight: 400;
+  height: 32px; 
+  border-color: #ccc;
+  margin-right: 17px;
+}
+
+.dogInfo {
+ display: flex;
+ flex-direction: row;
+ position: float;
+}
+
+.dogInfoTitle {
+  color: black;
+  font-size: 20px;
+}
+
+.carousel-dog-info {
+  list-style-type: none;
+  padding: 15px;
+  margin: 0;
+}
+
+.bullet {
+  background-image: url('./images/pawOutline2.svg') ;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  padding-left: 25px;
+  /*line-height: 20px;*/
+}
+

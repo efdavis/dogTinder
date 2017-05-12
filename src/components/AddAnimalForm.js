@@ -28,6 +28,10 @@ class AddAnimalForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount () {
+    window.scrollTo(0, 0)
+  }
+
   handleSubmit(event) {
     axios.post('/dog-tinder-api/dog', {
       data: this.state
@@ -44,6 +48,9 @@ class AddAnimalForm extends React.Component {
 
   render() {
     return (
+      <div className="dog-form-container"><h1>Dog Tinder</h1>
+      <h3>Add a Pet to DogTinder</h3>
+      <p>Please describe the animal and enter your shelter's contact information.</p>
       <form onSubmit={this.handleSubmit} >
         <div className="form-group dog-form-short">
           <label className="form-group">Dog's Name</label>
@@ -178,7 +185,7 @@ class AddAnimalForm extends React.Component {
           <input className="form-control" name="phone" type="text" onChange={this.handleChange}/>
         </div>
         <input type="submit" value="Submit"/>
-      </form>
+      </form></div>
     );
   }
 

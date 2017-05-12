@@ -1,5 +1,6 @@
 const request = require('request');
 var qs = require('querystring');
+var _ = require('./lodash.min.js');
 
 const querystring = {
   key: process.env.PET_API_KEY,
@@ -8,7 +9,12 @@ const querystring = {
 }
 
 function removeSmallPicsFromOneDog(dog) {
-  dog = JSON.parse(dog).petfinder.pet
+  dog = JSON.parse(dog);
+  if(dog.petfinder.pets) {
+    dog = dog.petfinder.pets.pet;
+  } else {
+    dog = dog.petfinder.pet
+  }
 
   var modifyPhotos = function(photoArray){
     var newPhotos = [];
@@ -23,7 +29,7 @@ function removeSmallPicsFromOneDog(dog) {
     dog.media.photos.photo = modifyPhotos(dog.media.photos.photo);
     return dog;
   } else {
-    return null;
+    return;
   }
 }
 
@@ -40,14 +46,20 @@ function removeSmallPics(resultArray) {
     }
     return newPhotos;
   }
-  animals.forEach(function(animal){
-    if(animal.media.photos) {
-      animal.media.photos.photo = modifyPhotos(animal.media.photos.photo);
-      filteredAnimals.push(animal);
-    }
-  })
+  // if the response from Petfinder is an array of animals
+  if(Array.isArray(animals)){
+    animals.forEach(function(animal){
+      if(animal.media.photos) {
+        animal.media.photos.photo = modifyPhotos(animal.media.photos.photo);
+        filteredAnimals.push(animal);
+      }
+    })
+    return filteredAnimals;
+  } else {
+    // we only got one animal object from Petfinder
 
-  return filteredAnimals;
+    return [removeSmallPicsFromOneDog(JSON.stringify(resultArray))];
+  }
 
 }
 
@@ -83,6 +95,7 @@ exports.getList = (list, callback) => {
 
   function getRecursive(listSoFar, results) {
     if(listSoFar.length === 0) {
+      results.forEach(animal => animal.description.$t = _.replace(animal.description.$t, /â/g, '&#39;'));
       callback(results);
       return;
     }

@@ -6,7 +6,8 @@ var request = require('request');
 var passport = require('./utils/fbPassportHelper');
 var session = require('express-session');
 var dbUtils = require('./db/dbUtils');
-var Cookies = require('universal-cookie'); 
+var Cookies = require('universal-cookie');
+var _ = require('./utils/lodash.min.js');
 
 var app = express();
 
