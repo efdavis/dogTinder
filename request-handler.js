@@ -43,15 +43,16 @@ app.get('/auth/facebook/callback',
 
   const cookies = new Cookies(req.headers.cookie);
   var userAnimalList = cookies.get('animalList');
+  console.log(userAnimalList);
 
   //ADD ANIMALS FROM COOKIE LIST TO DATABASE
   if (userAnimalList) {
     let animalObjArr = userAnimalList.map((id) => {
-      if (id) {
+      if (id.length > 5) {
+        console.log('hello!')
         return {petFinderid: id.toString()}
       } else {
-        // this is a dogTinder dog
-          // functionality not built out
+        return {id: id.toString()}     
       }
     });
 
