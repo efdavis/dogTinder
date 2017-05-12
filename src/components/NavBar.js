@@ -25,6 +25,7 @@ class NavBar extends React.Component {
       value = '';
     }
     this.setState({[name]: value}, () => {
+
       console.log(this.state);
       this.props.submitQuery(this.state);
     });
@@ -50,6 +51,13 @@ class NavBar extends React.Component {
 
 
   render() {
+    let spinner = null;
+    if(this.props.spinning) {
+      spinner = <span>
+          <i className="fa fa-circle-o-notch fa-spin fa-fw"></i>
+          <span className="sr-only">Loading...</span>
+        </span>
+    }
     return (
       <div className="NavBar">
         <form onSubmit={this.handleSelect}>
@@ -80,7 +88,9 @@ class NavBar extends React.Component {
               <option defaultValue="breed">Breed</option>
               {breeds.map(dog =>  <option key={dog.$t} value={dog.$t} >{dog.$t}</option> )}
             </select>
+            {spinner}
           </label>
+
         </form>
       </div>
       
