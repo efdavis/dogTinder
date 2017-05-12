@@ -138,11 +138,11 @@ app.post('/dog-tinder-api/list', (req, res) => {
   if (req.user) {
     // make animalObjArr
     let animalObjArr = req.body.map((id) => {
-      console.log(id);
+      id = parseInt(id);
       if (id > 100000) {
         return {petFinderid: id.toString()}
       } else {
-        return {id: id.toString()}
+        return {id: id}
       }
     });
 
