@@ -777,7 +777,7 @@ let breeds = {
 
 let startString = 'INSERT INTO breeds (breed, "updatedAt", "createdAt") VALUES '
 let midString = "('"
-let finalString = "', 'now', 'now')"
+let finalString = "', 'now', 'now');"
 
 const createQueryString = (breeds) => {
   return breeds.petfinder.breeds.breed.map(breed => startString + midString + breed["$t"] + finalString)
