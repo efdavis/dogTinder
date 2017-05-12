@@ -112,7 +112,6 @@ app.get('/dog-tinder-api/list', (req, res) => {
         if (dogId > 100000) {
           petFinderDogs.push(dogId);
         } else {
-          console.log('you are adding a dogTinderDog!')
           dogTinderDogs.push({id: dogId});
         }
       }); 

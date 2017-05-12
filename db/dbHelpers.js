@@ -252,6 +252,10 @@ exports.formatAnimalList = (animalArr, callback) => {
       let animal = animalArr.pop();
       exports.getAnimalBreeds(animal.id, (breeds) => {
         breeds = breeds.map(breed => {return {$t: breed.breed}});
+
+        if (breeds.length = 1) {
+          breeds = breeds[0];
+        }
       
         animal = animal.dataValues;
 
@@ -280,7 +284,6 @@ exports.formatAnimalList = (animalArr, callback) => {
           },
           mix: { $t: animal.mix},
           name: { $t: animal.name},
-          option: { $t: null},
           sex: { $t: animal.sex},
           size: { $t: animal.size},
           status: { $t: null}
