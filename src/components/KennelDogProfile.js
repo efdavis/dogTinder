@@ -16,6 +16,13 @@ class KennelDogProfile extends React.Component {
     this.setState({contactClicked: !this.state.clicked})
   }
 
+  prettyPrintOptions(optionString) {
+    return optionString.replace(/([A-Z])/g, ' $1')
+    .replace(/^./, function(str){ 
+      return str.toUpperCase();
+    });
+  }
+
   render() {
     const dog = this.props.dog;
 
@@ -32,7 +39,7 @@ class KennelDogProfile extends React.Component {
           <img src={dog.media.photos.photo[0]} style={{width: '50%', height: '40%' }}/>
           
           <ul className="options fa-ul">
-            {dog.options && Array.isArray(dog.options.option) ? dog.options.option.map(info => <li key={info.$t}><i className="fa-li fa fa-check-square"></i>{info.$t}</li>) : <div></div>}
+            {dog.options && Array.isArray(dog.options.option) ? dog.options.option.map(info => <li key={info.$t}><i className="fa-li fa fa-check-square"></i>{this.prettyPrintOptions(info.$t)}</li>) : <div></div>}
           </ul>
           
         </div>
