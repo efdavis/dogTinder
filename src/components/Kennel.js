@@ -30,8 +30,8 @@ class Kennel extends React.Component {
     return (
       <div>
         {this.props.animalList.length === 0 ? <div></div> : <h2 className="page-header">My Kennel</h2> }
-        <div style={{display: 'flex'}}>
-          <ul className="media-list col-md-6">{this.props.animalList.reverse().map((dog) => {
+        <div style={{display: 'flex', flexWrap: 'nowrap'}}>
+          <ul className="media-list col-md-6" style={{flexWrap: 'nowrap'}}>{this.props.animalList.reverse().map((dog) => {
             return <li className="media dog-box" key={dog.id.$t} style={{display: 'flex', justifyContent: 'flex-start'}}>
                       <div className="media-left">
                         <img className="media-object img-rounded" src={dog.media.photos.photo[0]} width="50px" height="50px" />

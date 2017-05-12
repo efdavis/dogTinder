@@ -70,20 +70,22 @@ label {
 
 .doggyProfile {
   width: 400px;
+  color: black;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-self: auto;
   border-style: solid;
-  border-radius: 3px;
-  border: 2px solid #337ab7;
+  border-radius: 15px;
+  border: 1px solid;
   padding: 20px;
-  background-color: #484848;
-  color: #f1f0f0;
+  background-color: rgba(18, 123, 118, 0.35);
+  font-weight: 210;
+  color: black;
 
 }
 
-/*flexDirection: 'column',}}*/
+
 
 #close-profile {
   display: flex;
@@ -93,12 +95,12 @@ label {
 
 .dog-name {
   margin-top: -30px;
+  font-size: 20px;
+  font-weight: normal;
+  padding-bottom: 10px;
 }
 
-.contact-shelter {
-  /*border-radius: 25px;
-  border: 2px solid #337ab7;*/
-}
+
 
 .dog-form {
   width: 60%;
@@ -244,6 +246,8 @@ textarea {
 .dogInfoTitle {
   color: black;
   font-size: 20px;
+  font-weight: 500;
+  padding-bottom: 10px;
 }
 
 .carousel-dog-info {
