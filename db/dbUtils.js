@@ -65,7 +65,7 @@ exports.doesUserHaveList = (FacebookID, callback) => {
   })
 };
 
-exports.removeAnimalFromUsersList = (FacebookID, petFinderId, callback) => {
+exports.removePetFinderAnimalFromUsersList = (FacebookID, petFinderId, callback) => {
   let listId;
   let animalId;
 
@@ -81,10 +81,20 @@ exports.removeAnimalFromUsersList = (FacebookID, petFinderId, callback) => {
   })
 }; 
 
+exports.removeDogTinderAnimalFromUsersList = (FacebookID, id, callback) => {
+  helper.checkForUserList(FacebookID, (result) => {
+    listId = result[0].id;
+    helper.removeDogFromUserList(listId, id, () => {
+      callback();
+    })
+  })
+};
+
 exports.addDogToDatabase = (dogObj, callback) => {
   let breed = dogObj.breed;
   delete dogObj.breed;
   helper.addDogToDatabase(dogObj, (dog) => {
+    console.log('dogTinder dog saved as: ', dogObj);
     helper.findBreedId(breed, (id) => {
       helper.addBreedsToAnimal({id: dog.id}, [id], () => {
         callback();

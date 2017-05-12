@@ -85,7 +85,7 @@ Animal.belongsTo(Shelter);
 Animal.belongsToMany(Breed, {through: 'Animal_Breeds'});
 Breed.belongsToMany(Animal, {through: 'Animal_Breeds'});
 
-// sequelize.sync({force: true});
+// sequelize.sync();
   
 
 exports.sequelize = sequelize;

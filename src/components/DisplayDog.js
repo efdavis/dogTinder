@@ -16,7 +16,6 @@ class DisplayDog extends React.Component {
      );
    }
    else {
-       console.log('dog: ', this.props.dog);
      return (
       <div className="carousel">
         <div id="featuredDog"className="carousel slide" style={{display: 'flex', justifyContent: 'center', overflow: 'visible'}}>
