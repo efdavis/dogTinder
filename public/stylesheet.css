@@ -8,13 +8,16 @@
 }
 
 .media-left {
-  padding-top: 13px;
+  padding-top: 11px;
 }
 
 #remove-dog {
   color: #ef4a2d;
 }
 
+.doglist-removebutton {
+  flex-wrap: nowrap;
+}
 
 .dog-form-container {
   /*font-size: 50px;*/
@@ -50,17 +53,37 @@ label {
   display: flex;
 }
 
-.doggyProfile {
-    display: flex;
-    flex-direction: row;
-    align-self: auto;
-    border-style: solid;
-    border-radius: 3px;
-    border: 2px solid #337ab7;
-    padding: 20px;
-    background-color: #484848;
-    color: #f1f0f0;
+.kennelList {
+  position: relative;
+  /*flex-wrap: nowrap;*/
 }
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10;
+}
+
+.doggyProfile {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-self: auto;
+  border-style: solid;
+  border-radius: 3px;
+  border: 2px solid #337ab7;
+  padding: 20px;
+  background-color: #484848;
+  color: #f1f0f0;
+
+}
+
+/*flexDirection: 'column',}}*/
 
 #close-profile {
   display: flex;
@@ -174,6 +197,7 @@ textarea {
   order: 1;
   font-weight: 400;
   height: 32px; 
+  text-indent: 10px;
   background-color: white;
   border-color: #ccc;
   border-style: solid;
@@ -229,10 +253,13 @@ textarea {
 }
 
 .bullet {
-  background-image: url('./images/pawOutline2.svg') ;
+  background-image: url('./images/dog-paw.svg') ;
   background-repeat: no-repeat;
-  background-size: 20px;
-  padding-left: 25px;
+  background-size: 13px;
+  background-position-y: 50%;
+  /*background-origin: content-box;*/
+  padding-left: 20px;
+  /*padding-bottom: 20px;*/
   /*line-height: 20px;*/
 }
 

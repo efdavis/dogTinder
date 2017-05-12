@@ -53,8 +53,8 @@ class NavBar extends React.Component {
     return (
       <div className="NavBar">
         <form onSubmit={this.handleSelect}>
-          <label className="zipcode">
-            <input placeholder="07470" onChange={this.handleZipChange} />                
+          <label>
+            <input className="zipcode" placeholder="Zipcode" onChange={this.handleZipChange} />              
           </label>
 
           <label>
