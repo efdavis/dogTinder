@@ -182,8 +182,8 @@ class App extends React.Component {
     return (
       <div className="homepage">
         <div className="title-logo">
-          <h1 className="title">Dog Tinder</h1>
-          <img className="dogPaw" src="images/dogPaw.svg"/>
+          <div className="title">Dog Tinder</div>
+          <img className="dogPaw" src="images/cuteDog.svg"/>
           <div className="facebook-login">{loginPrompt}</div>
         </div>
   

@@ -81,7 +81,7 @@ label {
   padding: 20px;
   background-color: rgba(18, 123, 118, 0.35);
   font-weight: 210;
-  color: black;
+  border-color: white;
 
 }
 
@@ -165,7 +165,8 @@ textarea {
 }
 
 .title {
-  font-size: 50px;
+  font-size: 45px;
+  font-weight: 450;
   color: black;
   padding-right: 20px;
 }
@@ -173,7 +174,7 @@ textarea {
 .dogPaw {
   position: relative;
   float: right;
-  width: 40px;
+  width: 45px;
 }
 
 .facebook-login {
