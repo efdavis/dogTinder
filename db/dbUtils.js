@@ -85,7 +85,6 @@ exports.addDogToDatabase = (dogObj, callback) => {
   let breed = dogObj.breed;
   delete dogObj.breed;
   helper.addDogToDatabase(dogObj, (dog) => {
-    console.log(dog.id)
     helper.findBreedId(breed, (id) => {
       helper.addBreedsToAnimal({id: dog.id}, [id], () => {
         callback();
@@ -110,7 +109,6 @@ exports.findDogsFromDatabase = (searchQuery, callback) => {
 };
 
 exports.fetchDogsFromDatabase = (dogIdArr, callback) => {
-  console.log(dogIdArr)
   helper.fetchDogs(dogIdArr, (dogs) => {
     helper.formatAnimalList(dogs, (reformattedDogs) => {
       callback(reformattedDogs);
