@@ -24,8 +24,8 @@ class App extends React.Component {
       allDogs: '',
       animalList: [],
       dogNotFound: false,
-      shelterContactInfo: ''
-
+      shelterContactInfo: '',
+      spinning: false
     }
     this.nextDog = this.nextDog.bind(this);
     this.previousDog = this.previousDog.bind(this);
@@ -57,7 +57,8 @@ class App extends React.Component {
         console.error('Error on componentWillMount', error)
       });
   }
-  
+
+
   nextDog() {
     let next = this.state.index + 1; 
     if(next > this.state.allDogs.length - 1) {
@@ -117,6 +118,7 @@ class App extends React.Component {
 
 
   handleSearchQuery(theState) { 
+    this.setState({spinning: true});
     let data = {}; 
     data.location = theState.zipcode;
     if (theState.breed !== '') { data.breed = theState.breed; }
@@ -127,8 +129,9 @@ class App extends React.Component {
       params: data
     })
     .then(response => {
-      console.log('handle search query response data:', response.data)
-      let data = response.data
+      console.log('handle search query response data:', response.data);
+      let data = response.data;
+      this.setState({spinning: false})
       if(response.data.length === 0) {
         this.setState({dogNotFound: true });
       } else {
@@ -216,7 +219,7 @@ class App extends React.Component {
           <div className="facebook-login">{loginPrompt}</div>
         </div>
   
-        {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs}/>}
+        {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs} spinning={this.state.spinning}/>}
         {this.state.featuredDog !== '' ? 
         <DisplayDog 
           dog={this.state.featuredDog} 
