@@ -1,6 +1,6 @@
 # dogTinder
 
-> Pithy project description
+> DogTinder helps find homes for rescue animals.
 
 ## Team
 
@@ -24,11 +24,8 @@
 
 ## Requirements
 
-- Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Node 7.8
+- Postgresql
 
 ## Development
 
@@ -37,9 +34,9 @@
 From within the root directory:
 
 ```sh
-npm install -g bower
 npm install
-bower install
+webpack -w
+npm start
 ```
 
 ### Roadmap
