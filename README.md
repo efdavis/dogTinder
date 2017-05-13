@@ -4,7 +4,7 @@
 
 ## Team
 
-  - Scott Morschella
+  - Scott Moschella
   - Yujin Chung
   - Joshua Stagner
 
