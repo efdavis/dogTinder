@@ -200,7 +200,6 @@ exports.addDogToDatabase = (dogObj, callback) => {
 }
 
 exports.findDogTinderDogs = (query, callback) => {
-  console.log(typeof query, query);
   db.Animal.findAll({where: query})
            .then((results) => {
              callback(results);
@@ -233,7 +232,6 @@ exports.filterForMatchBreeds = (queryBreed, animalArr, callback) => {
       })
 
     } else {
-      // console.log('matches: ', matches);
       exports.formatAnimalList(matches, (reformatted) => {
         callback(reformatted);
       });
