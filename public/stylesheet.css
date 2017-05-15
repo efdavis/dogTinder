@@ -147,6 +147,12 @@ textarea {
   list-style-position: inside;
 }
 
+.page-header-kennel {
+  font-size: 30px;
+  padding-top: 40px;
+  padding-bottom: 15px;
+}
+
 
 .homepage {
   padding-top: 30px;
@@ -277,6 +283,3 @@ textarea {
   margin: 50px;
 }
 
-.dogName:hover {
-  text-decoration: underline;
-}
