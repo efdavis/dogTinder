@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(process.env.DB_DATABASENAME , process.env.DB_USERNAME, process.env.DB_PASSWORD, {host: process.env.DB_HOST, dialect: 'postgres', underscored: true});
+const breeds = require('../utils/All_Breeds.js');
 
 const User = sequelize.define('user', {
   id: {
@@ -85,14 +86,40 @@ Animal.belongsTo(Shelter);
 Animal.belongsToMany(Breed, {through: 'Animal_Breeds'});
 Breed.belongsToMany(Animal, {through: 'Animal_Breeds'});
 
-// sequelize.sync();
-
 exports.sequelize = sequelize;
 exports.User = User;
 exports.AnimalList = AnimalList;
 exports.Animal = Animal;
 exports.Shelter = Shelter;
 exports.Breed = Breed;
+
+// Code below is for database setup. Can be left uncommented or can be commented out once database is set
+// builds tables if not built.
+sequelize.sync().then(() => {
+  // this adds all breeds to database if not already there.
+  sequelize.query('SELECT * FROM breeds;').spread((results) => {
+
+    if (results.length < 1) {
+      let startString = 'INSERT INTO breeds (breed, "updatedAt", "createdAt") VALUES '
+      let midString = "('"
+      let finalString = "', 'now', 'now');"
+
+      const createQueryString = (breeds) => {
+        return breeds.map(breed => startString + midString + breed["$t"] + finalString)
+      }
+
+      let breedStrings = createQueryString(breeds)
+
+      const addToDatabase = (arr) => {
+        arr.forEach((breed) => {
+          sequelize.query(breed);
+        });
+      }
+
+      addToDatabase(breedStrings);
+    }
+  });
+}) 
 
 
 
