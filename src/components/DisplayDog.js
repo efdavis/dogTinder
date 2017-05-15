@@ -23,7 +23,6 @@ class DisplayDog extends React.Component {
           <div className="carousel-inner" style={{overflow: 'visible'}} >
             <div className="item active" id="dog">
               <div>
-                {/*{if (this.props.dog.media.photos.photo[0])}*/}
                 <img className="img-fluid"  src={this.props.dog.media.photos.photo[0]}/>
                 <div className="carousel-caption">
                 <SaveDog currentDog={this.props.dog} saveDog={this.props.saveDoggy} style={{zIndex: 5}}/>
