@@ -51,6 +51,10 @@ label {
   display: flex;
 }
 
+.img-fluid profile {
+  max-width: 100%;
+}
+
 .carousel {
   display: flex;
 }
@@ -86,16 +90,30 @@ label {
   border-color: white;
 }
 
+.profile-description {
+  /*display: flex;*/
+  padding: 8px 8px 8px 0;
+  line-height: 1.2em;
+  letter-spacing: .02em;
+  /*max-width: 100%;*/
+  /*flex-wrap: wrap;*/
+
+}
+
 #close-profile {
   display: flex;
   align-self: flex-start;
   background-color: transparent;
 }
 
+.profile-glyphicons {
+  background-color: rgba(18, 123, 118, 0.35);
+}
+
 .dog-name {
   margin-top: -30px;
   font-size: 20px;
-  font-weight: normal;
+  font-weight: 500;
   padding-bottom: 10px;
 }
 
@@ -140,11 +158,7 @@ textarea {
   text-decoration: none;
 }
 
-.profile-description {
-  padding: 8px 8px 8px 0;
-  line-height: 1.2em;
-  letter-spacing: .02em;
-}
+
 
 .options {
   list-style-position: inside;
@@ -178,10 +192,11 @@ textarea {
   padding-right: 20px;
 }
 
-.dogPaw {
+.dog-logo {
   position: relative;
   float: right;
-  width: 45px;
+  width: 55px;
+  
 }
 
 .facebook-login {
@@ -264,6 +279,14 @@ textarea {
   list-style-type: none;
   padding: 15px;
   margin: 0;
+}
+
+.carousel-control left {
+  background-color: black;
+}
+
+.carousel-control right {
+  background-color: rgba(18, 123, 118, 0.35);
 }
 
 .bullet {

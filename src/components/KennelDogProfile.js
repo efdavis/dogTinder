@@ -8,13 +8,15 @@ class KennelDogProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      contactClicked: false
+      contactClicked: false,
+      dog: this.props.dog,
+      index: 0,
+      featuredImage: this.props.dog.media.photos.photo[0]
     };
+    this.nextPhoto = this.nextPhoto.bind(this);
+    this.previousPhoto = this.previousPhoto.bind(this);
   }
 
-  showContactInfo() {
-    this.setState({contactClicked: !this.state.clicked})
-  }
 
   prettyPrintOptions(optionString) {
     return optionString.replace(/([A-Z])/g, ' $1')
@@ -23,30 +25,74 @@ class KennelDogProfile extends React.Component {
     });
   }
 
+  nextPhoto() {
+    let next = this.state.index + 1;
+    if (next > this.state.dog.media.photos.photo.length - 1) {
+      next = 0;
+    }
+    this.setState({
+      featuredImage: this.state.dog.media.photos.photo[next],
+      index: next
+    })
+  }
+
+  previousPhoto() {
+    let previous = this.state.index - 1;
+    if (previous < 0) {
+      previous = this.state.dog.media.photos.photo.length - 1;
+    }
+    this.setState({
+      featuredImage: this.state.dog.media.photos.photo[previous],
+      index: previous
+    });
+  }
+
   render() {
-    const dog = this.props.dog;
+
+    const dog = this.state.dog;
 
     return (
     <div className="kennelList">
       <div className="doggyProfile" >
-          <div>
-            <button type="button" className="btn btn default btn-sm pull-right" id="close-profile" onClick={() => this.props.clickName()}>
-              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
-          </div>
+
+        <div>
+          <button type="button" className="btn btn default btn-sm pull-right" id="close-profile" onClick={() => this.props.clickName()}>
+            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
+        </div>
+
         <div className="dog-name">{dog.name.$t}</div>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          <img src={dog.media.photos.photo[0]} style={{width: '50%', height: '40%' }}/>
-          
+
+      
+        <div className="carousel-dog-profile" style={{display: 'flex', flexDirection: 'row'}}>
+          <div className="carousel slide" style={{justifyContent: 'center', overflow: 'visible'}} >
+            <div className="carousel-inner">
+              <div className="item active" style={{backgroundColor: 'black'}}>  
+                <img className="img-fluid profile" 
+                     src={this.state.featuredImage} />
+              </div>
+            
+              <a className="carousel-control left"  onClick={() => this.previousPhoto()}>
+                <span className="glyphicon glyphicon-chevron-left"></span>
+                <span className="sr-only">Previous</span>
+              </a>
+
+              <a className="carousel-control right"  onClick={() => this.nextPhoto()}>
+                <span className="glyphicon glyphicon-chevron-right"></span>
+                <span className="sr-only">Next</span>
+              </a>
+             
+            </div>
+          </div>
+
           <ul className="options fa-ul">
             {dog.options && Array.isArray(dog.options.option) ? dog.options.option.map(info => <li key={info.$t}><i className="fa-li fa fa-check-square"></i>{this.prettyPrintOptions(info.$t)}</li>) : <div></div>}
           </ul>
           
         </div>
-          <div className="profile-description"><p>{entities.decode(dog.description.$t)}</p></div>
-          {/*<div onClick={() => {this.props.removeDog(this.props.dog)}}>REMOVE DOG</div>*/}
+          <div className="profile-description"><p >{entities.decode(dog.description.$t)}</p></div>
 
-          <button className="btn btn-primary contact-shelter" style={{color: 'black', borderColor: '#22807a', backgroundColor: '#22807a'}} onClick={() => this.showContactInfo()}>
+          <button className="btn btn-primary contact-shelter" style={{color: 'black', borderColor: '#22807a', backgroundColor: '#22807a'}} onClick={() => this.setState({contactClicked: !this.state.contactClicked})}>
             Contact Shelter
           </button>
 
