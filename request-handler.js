@@ -103,7 +103,7 @@ app.get('/dog-tinder-api/list', (req, res) => {
   } else {
     const cookies = new Cookies(req.headers.cookie);
     var userAnimalList = cookies.get('animalList');
-    res.clearCookie('loggedIn');
+    // res.clearCookie('loggedIn');
 
     if (userAnimalList) {
       let petFinderDogs = [];
