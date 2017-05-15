@@ -31,11 +31,9 @@ app.use(passport.session());
 
 app.get('/', (request, response) => {
   if(request.session.user) {
-    console.log('THE SESSION WAS FOUND')
     response.cookie('loggedIn', true);
     console.log(request.session.user.displayName + ' is logged in with FB ID: ' + request.session.user.id)
   }
-  console.log("===========NO SESSION=============");
   response.sendFile(path.resolve(__dirname, "./public/_index.html"));
 });
 
@@ -62,7 +60,6 @@ app.get('/auth/facebook/callback',
       if (id > 100000) {
         return {petFinderid: id.toString()}
       } else {
-        console.log('You are adding a dogTinder Dog!')
         return {id: id}     
       }
     });
@@ -153,7 +150,6 @@ app.post('/dog-tinder-api/list', (req, res) => {
       if (id > 100000) {
         return {petFinderid: id.toString()}
       } else {
-        console.log('you are adding a dogTinder dog!')
         return {id: id}
       }
     });
@@ -191,7 +187,6 @@ app.get('/dog-tinder-api', (req, res) => {
 
     dbUtils.findDogsFromDatabase(query, (results) => {
       let combinedResults = animals.concat(results);
-      console.log(combinedResults.count, combinedResults[0])
       res.send(combinedResults);
     })
   })
@@ -200,15 +195,12 @@ app.get('/dog-tinder-api', (req, res) => {
 app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
   let facebookID = req.user.id;
   let dogId = req.body.id['$t'];
-  console.log('removing dog. ID =====> :', typeof dogId);
   
   if (typeof dogId === 'string') {
     dbUtils.removePetFinderAnimalFromUsersList(facebookID, dogId, () => {
-      console.log('removed from users list');
     })
   } else {
     dbUtils.removeDogTinderAnimalFromUsersList(facebookID, dogId, () => {
-      console.log()
     })
   }
 });
