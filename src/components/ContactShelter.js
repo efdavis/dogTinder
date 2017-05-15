@@ -10,7 +10,6 @@ class ContactShelter extends React.Component {
   }
  
   render() {
-    console.log('phone:', this.props.contact)
     const contactInfo = this.props.contact;
     return (
         <div className="contact-shelter">

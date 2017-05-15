@@ -1,7 +1,7 @@
 import React from 'react';
 
 class SaveDog extends React.Component {
-  constructor(props) {  //this.props.saveDog 
+  constructor(props) { 
     super(props);
     this.state = {
     };

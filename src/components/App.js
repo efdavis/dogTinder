@@ -225,7 +225,7 @@ class App extends React.Component {
       <div className="homepage">
         <div className="title-logo">
           <div className="title">Dog Tinder</div>
-          <img className="dogPaw" src="images/cuteDog.svg"/>
+          <img className="dog-logo" src="images/cuteDog.svg"/>
           <div className="facebook-login">{loginPrompt}</div>
         </div>
         {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs} spinning={this.state.spinning}/>}
