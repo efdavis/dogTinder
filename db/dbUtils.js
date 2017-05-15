@@ -70,7 +70,6 @@ exports.removePetFinderAnimalFromUsersList = (FacebookID, petFinderId, callback)
   let animalId;
 
   helper.checkForUserList(FacebookID, (result) => {
-    console.log(result[0].id)
     listId = result[0].id;
     helper.findAnimalIds([{petFinderid: petFinderId}], (result) => {
       animalId = result[0];
@@ -94,7 +93,6 @@ exports.addDogToDatabase = (dogObj, callback) => {
   let breed = dogObj.breed;
   delete dogObj.breed;
   helper.addDogToDatabase(dogObj, (dog) => {
-    console.log('dogTinder dog saved as: ', dogObj);
     helper.findBreedId(breed, (id) => {
       helper.addBreedsToAnimal({id: dog.id}, [id], () => {
         callback();
@@ -112,19 +110,13 @@ exports.findDogsFromDatabase = (searchQuery, callback) => {
   }
   let queryBreed = searchQuery.breed;
   delete searchQuery.breed;
-  console.log("1")
   helper.findDogTinderDogs(searchQuery, (results) => {
-    console.log("2")
     if (queryBreed) {
-      console.log("3")
       helper.filterForMatchBreeds(queryBreed, results, (formattedAnimal) => {
-        console.log("3.5")
         callback(formattedAnimal);
       });
     } else {
-      console.log("4")
       helper.formatAnimalList(results, (reformatted) => {
-        console.log("5")
         callback(reformatted);
       });
     }
