@@ -93,8 +93,7 @@ exports.Animal = Animal;
 exports.Shelter = Shelter;
 exports.Breed = Breed;
 
-// Code below is for database setup. Can be left uncommented or can be commented out once database is set
-// builds tables if not built.
+
 sequelize.sync().then(() => {
   // this adds all breeds to database if not already there.
   sequelize.query('SELECT * FROM breeds;').spread((results) => {
