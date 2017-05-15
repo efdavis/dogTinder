@@ -20,7 +20,7 @@
 
 ## Usage
 
-> Some usage instructions
+> Visit http://dogtinder.herokuapp.com
 
 ## Requirements
 
