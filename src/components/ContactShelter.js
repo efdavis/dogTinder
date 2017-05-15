@@ -9,15 +9,13 @@ class ContactShelter extends React.Component {
     };
   }
  
-
   render() {
     const contactInfo = this.props.contact;
-    console.log('CONTACT SHELTER THIS.PROPS', typeof this.props.contact.email.$t)
     return (
-      <div className="contact-shelter">
-        {typeof contactInfo.email.$t === 'string' ? <span><b>Email: </b>{contactInfo.email.$t}</span> : <span><b>Email: </b>Not provided</span>}<br/>
-        <b>Phone: </b>{contactInfo.phone.$t}
-      </div>
+        <div className="contact-shelter">
+          {typeof contactInfo.email.$t === 'string' ? <span><b>Email: </b>{contactInfo.email.$t}</span> : <span><b>Email: </b>Not provided</span>}<br/>
+          <b>Phone: </b>{contactInfo.phone.$t}
+        </div>
     );
   }
 }

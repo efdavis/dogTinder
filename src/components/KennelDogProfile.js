@@ -17,9 +17,6 @@ class KennelDogProfile extends React.Component {
     this.previousPhoto = this.previousPhoto.bind(this);
   }
 
-  showContactInfo() {
-    this.setState({contactClicked: !this.state.clicked})
-  }
 
   prettyPrintOptions(optionString) {
     return optionString.replace(/([A-Z])/g, ' $1')
@@ -53,10 +50,9 @@ class KennelDogProfile extends React.Component {
   }
 
   render() {
+
     const dog = this.state.dog;
-    console.log('dog photos', dog.media.photos.photo)
-    console.log('featuredImage:', this.state.featuredImage)
-    
+
     return (
     <div className="kennelList">
       <div className="doggyProfile" >
@@ -73,21 +69,23 @@ class KennelDogProfile extends React.Component {
         <div className="carousel-dog-profile" style={{display: 'flex', flexDirection: 'row'}}>
           <div className="carousel slide" style={{display: 'flex', justifyContent: 'center', overflow: 'visible'}} >
             <div className="carousel-inner" style={{overflow: 'visible'}}>
-              <div className="item active">  
+              <div className="item active" style={{backgroundColor: 'black'}}>  
                 <img className="img-fluid" 
                      src={this.state.featuredImage} style={{width: '50%', height: '40%'}}/>
                  {/*<img src={dog.media.photos.photo[0]} style={{width: '50%', height: '40%' }}/>*/}   
               </div>
 
-              <a className="carousel-control left" role="button" onClick={() => this.previousPhoto()}>
+            
+              <a className="carousel-control left"  onClick={() => this.previousPhoto()}>
                 <span className="glyphicon glyphicon-chevron-left"></span>
                 <span className="sr-only">Previous</span>
               </a>
 
-              <a className="carousel-control right" role="button" onClick={() => this.nextPhoto()}>
+              <a className="carousel-control right"  onClick={() => this.nextPhoto()}>
                 <span className="glyphicon glyphicon-chevron-right"></span>
                 <span className="sr-only">Next</span>
               </a>
+             
 
               </div>
           </div>
@@ -97,9 +95,9 @@ class KennelDogProfile extends React.Component {
           </ul>
           
         </div>
-          <div className="profile-description"><p style={{maxWidth: '100%'}}>{entities.decode(dog.description.$t)}</p></div>
+          <div className="profile-description"><p >{entities.decode(dog.description.$t)}</p></div>
 
-          <button className="btn btn-primary contact-shelter" style={{color: 'black', borderColor: '#22807a', backgroundColor: '#22807a'}} onClick={() => this.showContactInfo()}>
+          <button className="btn btn-primary contact-shelter" style={{color: 'black', borderColor: '#22807a', backgroundColor: '#22807a'}} onClick={() => this.setState({contactClicked: !this.state.contactClicked})}>
             Contact Shelter
           </button>
 
