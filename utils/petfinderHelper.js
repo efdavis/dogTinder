@@ -2,7 +2,7 @@ const request = require('request');
 var qs = require('querystring');
 var _ = require('./lodash.min.js');
 
-const querystring = {
+let querystring = {
   key: process.env.PET_API_KEY,
   format: 'json',
   animal: 'dog'
@@ -15,7 +15,6 @@ function removeSmallPicsFromOneDog(dog) {
   } else {
     dog = dog.petfinder.pet
   }
-  console.log(JSON.stringify(dog));
 
   var modifyPhotos = function(photoArray){
     var newPhotos = [];
@@ -66,6 +65,12 @@ function removeSmallPics(resultArray) {
 
 exports.fetchAnimals = (params, callback) => {
 
+  let querystring = {
+    key: process.env.PET_API_KEY,
+    format: 'json',
+    animal: 'dog'
+  }
+
   for(var key in params){
     querystring[key] = params[key]
   }
@@ -92,7 +97,6 @@ exports.fetchAnimals = (params, callback) => {
 }
 
 exports.getList = (list, callback) => {
-  console.log('fetch list ============>', list);
 
   function getRecursive(listSoFar, results) {
     if(listSoFar.length === 0) {
@@ -101,7 +105,6 @@ exports.getList = (list, callback) => {
       return;
     }
     querystring.id = listSoFar[0];
-    console.log("THE ID IN THE LIST: ", typeof listSoFar[0])
     if (querystring.id.length < 7) {
       listSoFar.shift();
       return getRecursive(listSoFar, results);
