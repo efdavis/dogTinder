@@ -37,7 +37,9 @@ class App extends React.Component {
 
   componentWillMount() {
     this.setState({kennelSpinning: true});
-    axios.get('/dog-tinder-api/list')
+    axios.get('/dog-tinder-api/list', {
+      withCredentials: true
+    })
     .then(response => {
       this.setState({kennelSpinning: false});
       this.setState({animalList: response.data});
