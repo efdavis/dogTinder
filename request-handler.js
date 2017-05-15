@@ -21,9 +21,11 @@ app.use(passport.session());
 
 app.get('/', (request, response) => {
   if(request.session.user) {
+    console.log('THE SESSION WAS FOUND')
     response.cookie('loggedIn', true);
     console.log(request.session.user.displayName + ' is logged in with FB ID: ' + request.session.user.id)
   }
+  console.log("===========NO SESSION=============");
   response.sendFile(path.resolve(__dirname, "./public/_index.html"));
 });
 
