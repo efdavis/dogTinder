@@ -8,4 +8,4 @@ DB_HOST=localhost
 DB_USERNAME=Josh
 DB_PASSWORD=blank
 DB_DATABASENAME=dogTinder
-REDIS_URL=redis://xxxxxxxxxxxxxxxxxxxxxxx
+REDIS_URL=(do ** heroku config:get REDISCLOUD_URL ** to get this url)
