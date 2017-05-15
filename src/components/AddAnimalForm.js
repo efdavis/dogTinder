@@ -60,6 +60,7 @@ class AddAnimalForm extends React.Component {
         <div className="form-group dog-form">
           <label className="form-group">Dog's Breed</label>
           <select className="form-control" name="breed" onChange={this.handleChange}>
+            <option defautlValue="breed" selected disabled>Breed</option>
             {allBreeds.map(breed => <option value={breed.$t} key={breed.$t} onChange={this.handleChange}>{breed.$t}</option>)}
           </select>
         </div>
@@ -73,22 +74,22 @@ class AddAnimalForm extends React.Component {
           <input className="form-control" name="photo" type="text" onChange={this.handleChange}/>
         </div>
         <div className="form-group dog-form-x-short">
-          <label className="form-group">Mixed?</label>
           <select className="form-control" name="mix" onChange={this.handleChange}>
+            <option defaultValue="mixed" selected disabled>Mixed Breed?</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </select>
         </div>
         <div className="form-group dog-form-x-short">
-          <label className="form-group">Dog's Sex</label>
           <select className="form-control" name="sex" onChange={this.handleChange}>
+            <option defaultValue="mixed" selected disabled>Sex</option>
             <option value="F">Female</option>
             <option value="M">Male</option>
           </select>
         </div>
         <div className="form-group dog-form-x-short">
-          <label className="form-group">Dog's Age</label>
           <select className="form-control" name="age" onChange={this.handleChange}>
+            <option defaultValue="age" selected disabled>Age</option>
             <option value="Baby">Baby</option>
             <option value="Young">Young</option>
             <option value="Adult">Adult</option>
@@ -96,8 +97,8 @@ class AddAnimalForm extends React.Component {
           </select>
         </div>
         <div className="form-group dog-form-x-short">
-          <label className="form-group">Dog's Size</label>
           <select className="form-control" name="size" onChange={this.handleChange}>
+            <option defaultValue="size" selected disabled>Size</option>
             <option value="S">Small</option>
             <option value="M">Medium</option>
             <option value="L">Large</option>
@@ -117,8 +118,8 @@ class AddAnimalForm extends React.Component {
           <input className="form-control" name="city" type="text" onChange={this.handleChange}/>
         </div>
         <div className="form-group dog-form-x-short">
-          <label className="form-group">State</label>
           <select className="form-control" name="state" onChange={this.handleChange}>
+            <option defaultValue="state" selected disabled>State</option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
             <option value="AZ">Arizona</option>
