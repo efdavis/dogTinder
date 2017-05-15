@@ -10,6 +10,7 @@ class DisplayDog extends React.Component {
   }
 
   render() {
+    console.log('this.props.dog.breeds.breed', this.props.dog.breeds.breed)
    if (this.props.dogNotFound) {
      return (
        <DogNotFound />
@@ -43,7 +44,7 @@ class DisplayDog extends React.Component {
        <div className="dogInfo">
          <ul className="carousel-dog-info">
            <div className="dogInfoTitle">Meet {this.props.dog.name.$t}!</div>
-           {Array.isArray(this.props.dog.breeds.breed) ? <li className="bullet"><b>Breed: </b>Mixed Breed</li> : <li className="bullet"><b>Breed: </b>{this.props.dog.breeds.breed.$t}</li>}
+           {Array.isArray(this.props.dog.breeds.breed) ? <li className="bullet"><b>Breeds: </b>{this.props.dog.breeds.breed[0].$t}, {this.props.dog.breeds.breed[1].$t}</li> : <li className="bullet"><b>Breed: </b>{this.props.dog.breeds.breed.$t}</li>}
            <li className="bullet"><b>Age: </b>{this.props.dog.age.$t}</li>
            <li className="bullet"><b>Sex: </b>{this.props.dog.sex.$t}</li>
          </ul>
