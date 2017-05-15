@@ -25,20 +25,8 @@ class NavBar extends React.Component {
       value = '';
     }
     this.setState({[name]: value}, () => {
-
-      console.log(this.state);
       this.props.submitQuery(this.state);
     });
-    
-    // this.props.submitQuery(this.state);
-  }
-
-  validate(zipcode){
-    if(this.state.zipcode.length === 5 && Number.isInteger(parseInt(this.state.zipcode))) {
-      console.log('hey its a zipcode!')
-    }else{
-      console.log('hey its not a zipcode!')
-    }
   }
 
   handleZipChange(e){
