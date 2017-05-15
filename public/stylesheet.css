@@ -38,6 +38,7 @@ body {
 
 #dog img {
   height: 300px;
+  max-width: 95%;
 }
 
 label {
@@ -46,6 +47,8 @@ label {
 
 .img-fluid {
   margin: auto;
+  height: 250px;
+  display: flex;
 }
 
 .carousel {
