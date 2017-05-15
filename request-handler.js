@@ -94,7 +94,7 @@ app.get('/dog-tinder-api/list', (req, res) => {
         let petfinderDogs = pfDogs
         dbUtils.fetchDogsFromDatabase(dogs, (databaseResults) => {
           let dogs = petfinderDogs.concat(databaseResults);
-          res.send(dogs.reverse())
+          res.send(dogs)
         })
       })
     })
@@ -121,7 +121,7 @@ app.get('/dog-tinder-api/list', (req, res) => {
         petFinderDogs = results;
         dbUtils.fetchDogsFromDatabase(dogTinderDogs, (databaseResults) => {
           let userDogs = petFinderDogs.concat(databaseResults);
-          res.send(userDogs.reverse());
+          res.send(userDogs);
         })
       });
     } else {
