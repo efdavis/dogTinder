@@ -168,9 +168,9 @@ app.post('/dog-tinder-api/list', (req, res) => {
 app.get('/dog-tinder-api', (req, res) => {
   // connect to API and get matching dogs
   if(req.query.location.length !== 5) {
-    req.query.location = 10012
+    req.query.location = 07470;
   }
-  console.log(req.query);
+
   petFinderFetch.fetchAnimals(req.query, function(animals){
     let zip = req.query.location;
     let query = req.query;
@@ -179,6 +179,7 @@ app.get('/dog-tinder-api', (req, res) => {
 
     dbUtils.findDogsFromDatabase(query, (results) => {
       let combinedResults = animals.concat(results);
+      console.log(combinedResults.count, combinedResults[0])
       res.send(combinedResults);
     })
   })
