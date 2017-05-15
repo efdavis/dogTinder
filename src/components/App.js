@@ -188,7 +188,6 @@ class App extends React.Component {
       }
     })
     .then(response => {
-      console.log('get request for shelter contact info:', response);
       let data = response.data;
       this.setState({
         shelterContactInfo: data
