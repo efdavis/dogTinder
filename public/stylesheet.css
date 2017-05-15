@@ -38,6 +38,7 @@ body {
 
 #dog img {
   height: 300px;
+  max-width: 95%;
 }
 
 label {
@@ -46,6 +47,8 @@ label {
 
 .img-fluid {
   margin: auto;
+  height: 250px;
+  display: flex;
 }
 
 .carousel {
@@ -145,6 +148,12 @@ textarea {
 
 .options {
   list-style-position: inside;
+}
+
+.page-header-kennel {
+  font-size: 30px;
+  padding-top: 40px;
+  padding-bottom: 15px;
 }
 
 
@@ -277,6 +286,3 @@ textarea {
   margin: 50px;
 }
 
-.dogName:hover {
-  text-decoration: underline;
-}
