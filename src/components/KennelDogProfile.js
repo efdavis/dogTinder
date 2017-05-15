@@ -27,7 +27,6 @@ class KennelDogProfile extends React.Component {
 
   nextPhoto() {
     let next = this.state.index + 1;
-    console.log('next from profile image:', next)
     if (next > this.state.dog.media.photos.photo.length - 1) {
       next = 0;
     }
@@ -39,7 +38,6 @@ class KennelDogProfile extends React.Component {
 
   previousPhoto() {
     let previous = this.state.index - 1;
-    console.log('previous from profile image:', previous)
     if (previous < 0) {
       previous = this.state.dog.media.photos.photo.length - 1;
     }
@@ -67,14 +65,12 @@ class KennelDogProfile extends React.Component {
 
       
         <div className="carousel-dog-profile" style={{display: 'flex', flexDirection: 'row'}}>
-          <div className="carousel slide" style={{display: 'flex', justifyContent: 'center', overflow: 'visible'}} >
-            <div className="carousel-inner" style={{overflow: 'visible'}}>
+          <div className="carousel slide" style={{justifyContent: 'center', overflow: 'visible'}} >
+            <div className="carousel-inner">
               <div className="item active" style={{backgroundColor: 'black'}}>  
                 <img className="img-fluid profile" 
                      src={this.state.featuredImage} />
-         
               </div>
-
             
               <a className="carousel-control left"  onClick={() => this.previousPhoto()}>
                 <span className="glyphicon glyphicon-chevron-left"></span>
@@ -86,7 +82,7 @@ class KennelDogProfile extends React.Component {
                 <span className="sr-only">Next</span>
               </a>
              
-              </div>
+            </div>
           </div>
 
           <ul className="options fa-ul">
