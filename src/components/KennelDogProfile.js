@@ -70,9 +70,9 @@ class KennelDogProfile extends React.Component {
           <div className="carousel slide" style={{display: 'flex', justifyContent: 'center', overflow: 'visible'}} >
             <div className="carousel-inner" style={{overflow: 'visible'}}>
               <div className="item active" style={{backgroundColor: 'black'}}>  
-                <img className="img-fluid" 
-                     src={this.state.featuredImage} style={{width: '50%', height: '40%'}}/>
-                 {/*<img src={dog.media.photos.photo[0]} style={{width: '50%', height: '40%' }}/>*/}   
+                <img className="img-fluid profile" 
+                     src={this.state.featuredImage} />
+         
               </div>
 
             
@@ -86,7 +86,6 @@ class KennelDogProfile extends React.Component {
                 <span className="sr-only">Next</span>
               </a>
              
-
               </div>
           </div>
 

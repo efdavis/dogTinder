@@ -51,6 +51,10 @@ label {
   display: flex;
 }
 
+.img-fluid profile {
+  max-width: 100%;
+}
+
 .carousel {
   display: flex;
 }
