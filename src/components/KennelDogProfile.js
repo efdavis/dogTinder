@@ -13,8 +13,6 @@ class KennelDogProfile extends React.Component {
       index: 0,
       featuredImage: this.props.dog.media.photos.photo[0]
     };
-    this.nextPhoto = this.nextPhoto.bind(this);
-    this.previousPhoto = this.previousPhoto.bind(this);
   }
 
 
