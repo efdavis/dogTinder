@@ -21,9 +21,11 @@ app.use(passport.session());
 
 app.get('/', (request, response) => {
   if(request.session.user) {
+    console.log('THE SESSION WAS FOUND')
     response.cookie('loggedIn', true);
     console.log(request.session.user.displayName + ' is logged in with FB ID: ' + request.session.user.id)
   }
+  console.log("===========NO SESSION=============");
   response.sendFile(path.resolve(__dirname, "./public/_index.html"));
 });
 
@@ -94,14 +96,14 @@ app.get('/dog-tinder-api/list', (req, res) => {
         let petfinderDogs = pfDogs
         dbUtils.fetchDogsFromDatabase(dogs, (databaseResults) => {
           let dogs = petfinderDogs.concat(databaseResults);
-          res.send(dogs.reverse())
+          res.send(dogs)
         })
       })
     })
   } else {
     const cookies = new Cookies(req.headers.cookie);
     var userAnimalList = cookies.get('animalList');
-    res.clearCookie('loggedIn');
+    // res.clearCookie('loggedIn');
 
     if (userAnimalList) {
       let petFinderDogs = [];
@@ -121,7 +123,7 @@ app.get('/dog-tinder-api/list', (req, res) => {
         petFinderDogs = results;
         dbUtils.fetchDogsFromDatabase(dogTinderDogs, (databaseResults) => {
           let userDogs = petFinderDogs.concat(databaseResults);
-          res.send(userDogs.reverse());
+          res.send(userDogs);
         })
       });
     } else {

@@ -1,5 +1,8 @@
 var breeds = [
         {
+          "$t": "Mixed Breed"
+        },
+        {
           "$t": "Affenpinscher"
         },
         {
@@ -463,9 +466,6 @@ var breeds = [
         },
         {
           "$t": "Miniature Schnauzer"
-        },
-        {
-          "$t": "Mixed Breed"
         },
         {
           "$t": "Mountain Cur"

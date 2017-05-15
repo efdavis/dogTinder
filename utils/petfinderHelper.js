@@ -5,7 +5,8 @@ var _ = require('./lodash.min.js');
 let querystring = {
   key: process.env.PET_API_KEY,
   format: 'json',
-  animal: 'dog'
+  animal: 'dog',
+  count: 50
 }
 
 function removeSmallPicsFromOneDog(dog) {
@@ -68,7 +69,8 @@ exports.fetchAnimals = (params, callback) => {
   let querystring = {
     key: process.env.PET_API_KEY,
     format: 'json',
-    animal: 'dog'
+    animal: 'dog',
+    count: 50
   }
 
   for(var key in params){
