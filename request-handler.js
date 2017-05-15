@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var petFinderFetch = require('./utils/petfinderHelper');
 var request = require('request');
 var passport = require('./utils/fbPassportHelper');
@@ -8,13 +9,22 @@ var session = require('express-session');
 var dbUtils = require('./db/dbUtils');
 var Cookies = require('universal-cookie');
 var _ = require('./utils/lodash.min.js');
+var RedisStore = require('connect-redis')(session);
 
 var app = express();
 
 app.use(express.static('./public'));
 app.use(bodyParser.json());
+app.use(cookieParser(process.env.SESSION_SECRET))
 
-app.use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: true, resave: true, name: 'dogbiscuit' }));
+var store = new RedisStore({ url: process.env.REDIS_URL });
+
+app.use(session({ 
+  store: store,
+  secret: process.env.SESSION_SECRET, 
+  saveUninitialized: true, 
+  resave: true, 
+  name: 'dogbiscuit' }));
 // set up passport for FB Auth on Express
 app.use(passport.initialize());
 app.use(passport.session());
