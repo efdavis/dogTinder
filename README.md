@@ -62,7 +62,7 @@ REDIS_URL=(do ** heroku config:get REDISCLOUD_URL ** to get this url)
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [here](roadmap.md)
 
 
 ## Contributing
