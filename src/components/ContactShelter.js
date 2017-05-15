@@ -10,11 +10,12 @@ class ContactShelter extends React.Component {
   }
  
   render() {
+    console.log('phone:', this.props.contact)
     const contactInfo = this.props.contact;
     return (
         <div className="contact-shelter">
           {typeof contactInfo.email.$t === 'string' ? <span><b>Email: </b>{contactInfo.email.$t}</span> : <span><b>Email: </b>Not provided</span>}<br/>
-          <b>Phone: </b>{contactInfo.phone.$t}
+          {contactInfo.phone.$t === undefined ? <span><b>Phone: </b>Not provided</span> : <span><b>Phone: </b>{contactInfo.phone.$t}</span>}
         </div>
     );
   }
