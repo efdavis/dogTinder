@@ -31,7 +31,7 @@ app.use(passport.session());
 
 app.get('/', (request, response) => {
   if(request.session.user) {
-    response.cookie('loggedIn', true);
+    response.cookie('loggedIn', true, { path: '/' });
     console.log(request.session.user.displayName + ' is logged in with FB ID: ' + request.session.user.id)
   }
   response.sendFile(path.resolve(__dirname, "./public/_index.html"));
