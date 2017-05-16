@@ -9,22 +9,29 @@ var session = require('express-session');
 var dbUtils = require('./db/dbUtils');
 var Cookies = require('universal-cookie');
 var _ = require('./utils/lodash.min.js');
-var RedisStore = require('connect-redis')(session);
+// var RedisStore = require('connect-redis')(session);
 
 var app = express();
 
 app.use(express.static('./public'));
 app.use(bodyParser.json());
-app.use(cookieParser(process.env.SESSION_SECRET))
+// app.use(cookieParser(process.env.SESSION_SECRET))
 
-var store = new RedisStore({ url: process.env.REDIS_URL });
+// var store = new RedisStore({ url: process.env.REDIS_URL });
 
-app.use(session({ 
-  store: store,
-  secret: process.env.SESSION_SECRET, 
-  saveUninitialized: true, 
-  resave: true, 
-  name: 'dogbiscuit' }));
+// app.use(session({
+//   store: store,
+//   secret: process.env.SESSION_SECRET,
+//   saveUninitialized: true,
+//   resave: true,
+//   name: 'dogbiscuit' }));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  saveUninitialized: true,
+  resave: true,
+  name: 'dogbiscuit'
+}));
+
 // set up passport for FB Auth on Express
 app.use(passport.initialize());
 app.use(passport.session());
@@ -60,7 +67,7 @@ app.get('/auth/facebook/callback',
       if (id > 100000) {
         return {petFinderid: id.toString()}
       } else {
-        return {id: id}     
+        return {id: id}
       }
     });
 
@@ -89,7 +96,7 @@ app.get('/dog-tinder-api/list', (req, res) => {
     dbUtils.fetchUserAnimals({facebookID: facebookID}, (results) => {
       let dogIds = [];
       let dogs = [];
-      
+
       results.forEach((dog) => {
         if (dog.petFinderid) {
           dogIds.push(dog.petFinderid)
@@ -117,15 +124,15 @@ app.get('/dog-tinder-api/list', (req, res) => {
       let dogTinderDogs = [];
 
       userAnimalList.forEach((dogId) => {
-  
+
         if (dogId > 100000) {
           petFinderDogs.push(dogId);
         } else {
           dogTinderDogs.push({id: dogId});
         }
-      }); 
-      
-      
+      });
+
+
       petFinderFetch.getList(petFinderDogs, function(results) {
         petFinderDogs = results;
         dbUtils.fetchDogsFromDatabase(dogTinderDogs, (databaseResults) => {
@@ -195,7 +202,7 @@ app.get('/dog-tinder-api', (req, res) => {
 app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
   let facebookID = req.user.id;
   let dogId = req.body.id['$t'];
-  
+
   if (typeof dogId === 'string') {
     dbUtils.removePetFinderAnimalFromUsersList(facebookID, dogId, () => {
     })
