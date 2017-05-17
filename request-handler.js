@@ -17,14 +17,6 @@ app.use(express.static('./public'));
 app.use(bodyParser.json());
 // app.use(cookieParser(process.env.SESSION_SECRET))
 
-// var store = new RedisStore({ url: process.env.REDIS_URL });
-
-// app.use(session({
-//   store: store,
-//   secret: process.env.SESSION_SECRET,
-//   saveUninitialized: true,
-//   resave: true,
-//   name: 'dogbiscuit' }));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   saveUninitialized: true,
@@ -33,6 +25,8 @@ app.use(session({
 }));
 
 // set up passport for FB Auth on Express
+
+app.use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: true, resave: true, name: 'dogbiscuit' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
