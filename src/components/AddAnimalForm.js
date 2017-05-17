@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import allBreeds from '../../utils/All_Breeds.js'
+import Dropzone from 'react-dropzone';
+import request from 'superagent';
+
 
 class AddAnimalForm extends React.Component {
   constructor(props){
@@ -23,10 +26,12 @@ class AddAnimalForm extends React.Component {
       name: '',
       sex: '',
       size: '',
-      zipError: false, 
+      zipError: false,
       phoneError: false,
       emailError: false,
-      overallError: false
+      overallError: false,
+      uploadedFile: null,
+      uploadedFileCloudinaryUrl: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -47,11 +52,11 @@ class AddAnimalForm extends React.Component {
     if(this.state.zip.length < 5)  {
       event.preventDefault();
       this.setState({zipError: true})
-    } 
+    }
     if(this.state.phone.length !== 12) {
       event.preventDefault();
       this.setState({phoneError: true})
-    } 
+    }
     if(emailCheck !== 1) {
       event.preventDefault();
       this.setState({emailError: true})
@@ -71,6 +76,31 @@ class AddAnimalForm extends React.Component {
     });
   }
 
+  onImageDrop(files) {
+    this.setState({
+      uploadedFile: files[0]
+    })
+    this.handleImageUpload(files[0]);
+  }
+
+  handleImageUpload(file) {
+    let upload = request.post(process.env.CLOUDINARY_UPLOAD_URL)
+                        .field('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET)
+                        .field('file', file);
+
+    upload.end((err, response) => {
+      if (err) {
+        console.error(err);
+      }
+      if (response.body.secure_url !== '') {
+        this.setState({
+          uploadedFileCloudinaryUrl: response.body.secure_url,
+          photo: response.body.secure_url
+        });
+      }
+    });
+  }
+
   render() {
     return (
       <div className="dog-form-container"><h1>Dog Tinder</h1>
@@ -85,7 +115,7 @@ class AddAnimalForm extends React.Component {
         <div className="form-group dog-form">
           <label className="form-group">Dog's Breed</label>
           <select className="form-control" name="breed" onChange={this.handleChange}>
-            <option defautlValue="breed" selected disabled>Breed</option>
+            <option defaultValue="breed" selected disabled>Breed</option>
             {allBreeds.map(breed => <option value={breed.$t} key={breed.$t} onChange={this.handleChange}>{breed.$t}</option>)}
           </select>
         </div>
@@ -97,6 +127,22 @@ class AddAnimalForm extends React.Component {
         <div className="form-group dog-form-short">
           <label className="form-group">Paste a Photo URL Here</label>
           <input className="form-control" name="photo" type="text" onChange={this.handleChange}/>
+
+          <div className="FileUpload">
+            <Dropzone
+              onDrop={this.onImageDrop.bind(this)}
+              multiple={false}
+              accept="image/*">
+              <div>Drop an image or click to select a file to upload.</div>
+            </Dropzone>
+          </div>
+
+          <div>
+            {this.state.uploadedFileCloudinaryUrl === '' ? null :
+            <div>
+              <img src={this.state.uploadedFileCloudinaryUrl} />
+            </div>}
+          </div>
         </div>
         <div className="form-group dog-form-x-short">
           <select className="form-control" name="mix" onChange={this.handleChange}>
@@ -196,7 +242,7 @@ class AddAnimalForm extends React.Component {
             <option value="WV">West Virginia</option>
             <option value="WI">Wisconsin</option>
             <option value="WY">Wyoming</option>
-          </select>	
+          </select>
         </div>
         <div className="form-group dog-form-short">
           <label className="form-group">Zip Code</label>
