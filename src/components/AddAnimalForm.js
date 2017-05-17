@@ -22,7 +22,11 @@ class AddAnimalForm extends React.Component {
       mix: '',
       name: '',
       sex: '',
-      size: ''
+      size: '',
+      zipError: false, 
+      phoneError: false,
+      emailError: false,
+      overallError: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -33,10 +37,31 @@ class AddAnimalForm extends React.Component {
   }
 
   handleSubmit(event) {
-    axios.post('/dog-tinder-api/dog', {
-      data: this.state
-    })
-    .catch(()=> console.log("There was an error submitting this form."));
+    this.setState({zipError: false, phoneError: false, emailError: false});
+    var emailCheck = 0;
+    for(var i = 0;i < this.state.email.length;i++) {
+      if(this.state.email[i] === '@') {
+        emailCheck = 1
+      }
+    }
+    if(this.state.zip.length < 5)  {
+      event.preventDefault();
+      this.setState({zipError: true})
+    } 
+    if(this.state.phone.length !== 12) {
+      event.preventDefault();
+      this.setState({phoneError: true})
+    } 
+    if(emailCheck !== 1) {
+      event.preventDefault();
+      this.setState({emailError: true})
+    }
+    else {
+      axios.post('/dog-tinder-api/dog', {
+        data: this.state
+      })
+      .catch(()=> console.log("There was an error submitting this form."));
+    }
   }
 
   handleChange(event) {
@@ -182,11 +207,15 @@ class AddAnimalForm extends React.Component {
           <input className="form-control" name="email" type="text" onChange={this.handleChange}/>
         </div>
         <div className="form-group dog-form-short">
-          <label className="form-group">Phone</label>
+          <label className="form-group">Phone (xxx-xxx-xxxx)</label>
           <input className="form-control" name="phone" type="text" onChange={this.handleChange}/>
         </div>
         <input type="submit" value="Submit"/>
-      </form></div>
+      </form>
+      {this.state.zipError ? (<div >The zipcode field is not correct, please review</div>) : null}
+      {this.state.phoneError ? (<div >The phone field is not correct, please review</div>) : null}
+      {this.state.emailError ? (<div >The email field is not correct, please review</div>) : null}
+      </div>
     );
   }
 
