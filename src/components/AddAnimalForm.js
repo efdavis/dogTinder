@@ -45,6 +45,7 @@ class AddAnimalForm extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.recognizeImage = this.recognizeImage.bind(this);
   }
 
   componentDidMount () {
@@ -52,7 +53,9 @@ class AddAnimalForm extends React.Component {
   }
 
   handleSubmit(event) {
+
     this.setState({zipError: false, phoneError: false, emailError: false, sexError: false, sizeError: false, nameError: false, mixError: false, descriptionError: false, photoError: false, stateError: false, cityError: false, address1Error: false, breedError: false, ageError: false});
+
     var emailCheck = 0;
     var shouldPost = 0;
     for(var i = 0;i < this.state.email.length;i++) {
@@ -68,12 +71,12 @@ class AddAnimalForm extends React.Component {
       event.preventDefault();
       this.setState({emailError: true})
       shouldPost++
-    } 
+    }
     if(this.state.phone.length !== 12) {
       event.preventDefault();
       this.setState({phoneError: true})
       shouldPost++
-    } 
+    }
     if(this.state.city.length === 0) {
       event.preventDefault();
       this.setState({cityError: true})
@@ -167,6 +170,21 @@ class AddAnimalForm extends React.Component {
         });
       }
     });
+  }
+
+  recognizeImage(fileName) {
+    console.log("reecognizeimagecalled");
+    axios.get('/gCloudVision', {
+      params: {
+        imageURL: fileName
+      }
+    })
+    .then((result) => {
+        console.log("gCloudVision result", result);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   render() {

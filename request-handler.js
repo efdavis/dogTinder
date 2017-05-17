@@ -9,10 +9,19 @@ var session = require('express-session');
 var dbUtils = require('./db/dbUtils');
 var Cookies = require('universal-cookie');
 var _ = require('./utils/lodash.min.js');
-var imageRecognition = require('./utils/googleCloudVisionHelper');
+// todo: fix gCloudAPI so it works in external file instead of in request-handler
+// var imageRecognition = require('./utils/googleCloudVisionHelper');
+
+// gCloudVisionAPI
+const Vision = require('@google-cloud/vision');
+const projectId = process.env.GOOGLE_CLOUD_VISION_PROJECT_ID;
+
+const visionClient = Vision({
+  projectId: projectId
+});
+
 
 // var RedisStore = require('connect-redis')(session);
-
 var app = express();
 
 app.use(express.static('./public'));
@@ -207,6 +216,25 @@ app.delete('/dog-tinder-api/removeAnimal', (req, res) => {
     })
   }
 });
+
+app.get('/gCloudVision', (req,res) => {
+  var matches = [];
+  visionClient.detectLabels(req.query.imageURL)
+    .then((results) => {
+      const labels = results[0];
+
+      console.log('Labels:');
+      labels.forEach(label => {
+        console.log(label);
+        matches.push(label);
+      });
+      console.log('matches', matches);
+      res.send(matches);
+    })
+    .catch((err) => {
+      console.error('Error posting to Google Cloud Vision:', err);
+    });
+})
 
 app.get('/logout', (req, res) => {
   req.session.destroy(function (err) {
