@@ -9,6 +9,8 @@ var session = require('express-session');
 var dbUtils = require('./db/dbUtils');
 var Cookies = require('universal-cookie');
 var _ = require('./utils/lodash.min.js');
+var imageRecognition = require('./utils/googleCloudVisionHelper');
+
 // var RedisStore = require('connect-redis')(session);
 
 var app = express();
