@@ -29,9 +29,19 @@ class AddAnimalForm extends React.Component {
       zipError: false,
       phoneError: false,
       emailError: false,
-      overallError: false,
       uploadedFile: null,
-      uploadedFileCloudinaryUrl: ''
+      uploadedFileCloudinaryUrl: '',
+      sexError: false,
+      sizeError: false,
+      nameError: false,
+      mixError: false,
+      descriptionError: false,
+      photoError: false,
+      stateError: false,
+      cityError: false,
+      address1Error: false,
+      breedError: false,
+      ageError: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -42,8 +52,9 @@ class AddAnimalForm extends React.Component {
   }
 
   handleSubmit(event) {
-    this.setState({zipError: false, phoneError: false, emailError: false});
+    this.setState({zipError: false, phoneError: false, emailError: false, sexError: false, sizeError: false, nameError: false, mixError: false, descriptionError: false, photoError: false, stateError: false, cityError: false, address1Error: false, breedError: false, ageError: false});
     var emailCheck = 0;
+    var shouldPost = 0;
     for(var i = 0;i < this.state.email.length;i++) {
       if(this.state.email[i] === '@') {
         emailCheck = 1
@@ -53,15 +64,72 @@ class AddAnimalForm extends React.Component {
       event.preventDefault();
       this.setState({zipError: true})
     }
+    if(emailCheck !== 1)  {
+      event.preventDefault();
+      this.setState({emailError: true})
+      shouldPost++
+    } 
     if(this.state.phone.length !== 12) {
       event.preventDefault();
       this.setState({phoneError: true})
-    }
-    if(emailCheck !== 1) {
+      shouldPost++
+    } 
+    if(this.state.city.length === 0) {
       event.preventDefault();
-      this.setState({emailError: true})
+      this.setState({cityError: true})
+      shouldPost++
     }
-    else {
+    if(this.state.breed.length === 0) {
+      event.preventDefault();
+      this.setState({breedError: true})
+      shouldPost++
+    }
+    if(this.state.age.length === 0) {
+      event.preventDefault();
+      this.setState({ageError: true})
+      shouldPost++
+    }
+    if(this.state.mix.length === 0) {
+      event.preventDefault();
+      this.setState({mixError: true})
+      shouldPost++
+    }
+    if(this.state.address1.length === 0) {
+      event.preventDefault();
+      this.setState({address1Error: true})
+      shouldPost++
+    }
+    if(this.state.state.length === 0) {
+      event.preventDefault();
+      this.setState({stateError: true})
+      shouldPost++
+    }
+    if(this.state.description.length === 0) {
+      event.preventDefault();
+      this.setState({descriptionError: true})
+      shouldPost++
+    }
+    if(this.state.name.length === 0) {
+      event.preventDefault();
+      this.setState({nameError: true})
+      shouldPost++
+    }
+    if(this.state.sex.length === 0) {
+      event.preventDefault();
+      this.setState({sexError: true})
+      shouldPost++
+    }
+    if(this.state.size.length === 0) {
+      event.preventDefault();
+      this.setState({sizeError: true})
+      shouldPost++
+    }
+    if(this.state.photo.length === 0) {
+      event.preventDefault();
+      this.setState({photoError: true})
+      shouldPost++
+    }
+    if(shouldPost === 0) {
       axios.post('/dog-tinder-api/dog', {
         data: this.state
       })
@@ -261,6 +329,17 @@ class AddAnimalForm extends React.Component {
       {this.state.zipError ? (<div >The zipcode field is not correct, please review</div>) : null}
       {this.state.phoneError ? (<div >The phone field is not correct, please review</div>) : null}
       {this.state.emailError ? (<div >The email field is not correct, please review</div>) : null}
+      {this.state.sexError ? (<div >The sex field is not correct, please review</div>) : null}
+      {this.state.sizeError ? (<div >The size field is not correct, please review</div>) : null}
+      {this.state.nameError ? (<div >The name field is not correct, please review</div>) : null}
+      {this.state.mixError ? (<div >The mix field is not correct, please review</div>) : null}
+      {this.state.descriptionError ? (<div >The description field is not correct, please review</div>) : null}
+      {this.state.photoError ? (<div >The photo field is not correct, please review</div>) : null}
+      {this.state.stateError ? (<div >The state field is not correct, please review</div>) : null}
+      {this.state.cityError ? (<div >The city field is not correct, please review</div>) : null}
+      {this.state.address1Error ? (<div >The address1 field is not correct, please review</div>) : null}
+      {this.state.breedError ? (<div >The breed field is not correct, please review</div>) : null}
+      {this.state.ageError ? (<div >The city field is not correct, please review</div>) : null}
       </div>
     );
   }
