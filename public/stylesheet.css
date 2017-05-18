@@ -194,7 +194,7 @@ textarea {
   position: relative;
   float: right;
   width: 55px;
-  
+
 }
 
 .facebook-login {
@@ -210,7 +210,7 @@ textarea {
   align-items: center;
   justify-content: flex-start;
   font-weight: 400;
-  height: 32px; 
+  height: 32px;
   border-color: #ccc;
   margin-right: 17px;
   padding-top: 30px;
@@ -220,20 +220,20 @@ textarea {
 .zipcode {
   order: 1;
   font-weight: 400;
-  height: 32px; 
+  height: 32px;
   text-indent: 10px;
   background-color: white;
   border-color: #ccc;
   border-style: solid;
   border-width: thin;
   border-radius: 4px;
-  margin-right: 17px;  
+  margin-right: 17px;
 }
 
 .gender {
   order: 2;
   font-weight: 400;
-  height: 32px; 
+  height: 32px;
   border-color: #ccc;
   background-color: white;
   margin-right: 17px;
@@ -243,7 +243,7 @@ textarea {
 .breed {
   order: 3;
   font-weight: 400;
-  height: 32px; 
+  height: 32px;
   border-color: #ccc;
   margin-right: 17px;
 }
@@ -251,7 +251,7 @@ textarea {
 .age {
   order: 4;
   font-weight: 400;
-  height: 32px; 
+  height: 32px;
   border-color: #ccc;
   margin-right: 17px;
 }
@@ -301,3 +301,21 @@ textarea {
   margin: 50px;
 }
 
+.FileUpload{
+  height: 186px;
+  width: 186px;
+  margin: 20px 0 40px 0;
+  background-image: url('./images/image_upload_icon.png');
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+#uploadedPic img {
+  max-width: 400px;
+  max-height: 300px;
+  margin-bottom: 20px;
+}
+
+#uploadedPic button {
+  margin-bottom: 30px;
+}
