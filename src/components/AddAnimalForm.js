@@ -29,8 +29,6 @@ class AddAnimalForm extends React.Component {
       zipError: false,
       phoneError: false,
       emailError: false,
-      uploadedFile: null,
-      uploadedFileCloudinaryUrl: '',
       sexError: false,
       sizeError: false,
       nameError: false,
@@ -42,6 +40,11 @@ class AddAnimalForm extends React.Component {
       address1Error: false,
       breedError: false,
       ageError: false
+      showImageUploader: true,
+      uploadedFile: null,
+      uploadedFileCloudinaryUrl: '',
+      uploadingImageSpinner: false,
+      imageRecogMatch: []
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -149,7 +152,8 @@ class AddAnimalForm extends React.Component {
 
   onImageDrop(files) {
     this.setState({
-      uploadedFile: files[0]
+      uploadedFile: files[0],
+      uploadingImageSpinner: true
     })
     this.handleImageUpload(files[0]);
   }
@@ -166,7 +170,9 @@ class AddAnimalForm extends React.Component {
       if (response.body.secure_url !== '') {
         this.setState({
           uploadedFileCloudinaryUrl: response.body.secure_url,
-          photo: response.body.secure_url
+          photo: response.body.secure_url,
+          showImageUploader: false,
+          uploadingImageSpinner: false
         });
       }
     });
@@ -180,7 +186,11 @@ class AddAnimalForm extends React.Component {
       }
     })
     .then((result) => {
+        this.setstate({
+          imageRecogMatch: result.data
+        })
         console.log("gCloudVision result", result);
+        console.log("imageRecogMatch", this.state.imageRecogMatch)
       })
       .catch((error) => {
         console.log(error)
@@ -211,24 +221,28 @@ class AddAnimalForm extends React.Component {
           <textarea className="form-control" name="description" rows="5" onChange={this.handleChange}></textarea>
         </div>
         <div className="form-group dog-form-short">
-          <label className="form-group">Paste a Photo URL Here</label>
+          <label className="form-group">Add a photo URL</label>
           <input className="form-control" name="photo" type="text" onChange={this.handleChange}/>
-
-          <div className="FileUpload">
+          <p>or</p>
+          {this.state.showImageUploader && <div className="FileUpload">
             <Dropzone
               onDrop={this.onImageDrop.bind(this)}
               multiple={false}
               accept="image/*">
-              <div>Drop an image or click to select a file to upload.</div>
+              <div id="image_uploader"></div>
             </Dropzone>
-          </div>
+          </div>}
 
-          <div>
-            {this.state.uploadedFileCloudinaryUrl === '' ? null :
-            <div>
-              <img src={this.state.uploadedFileCloudinaryUrl} />
-            </div>}
-          </div>
+          {this.state.uploadingImageSpinner ? (
+            <div><i className="kennel-spin fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
+          ) : (
+            <div id="uploadedPic">
+              {this.state.uploadedFileCloudinaryUrl === '' ? null :
+              <div>
+                <img src={this.state.uploadedFileCloudinaryUrl} />
+              </div>}
+            </div>
+          )}
         </div>
         <div className="form-group dog-form-x-short">
           <select className="form-control" name="mix" onChange={this.handleChange}>

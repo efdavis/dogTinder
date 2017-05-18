@@ -44,9 +44,9 @@ class App extends React.Component {
       this.setState({kennelSpinning: false});
       this.setState({animalList: response.data});
     });
-    axios.get('/dog-tinder-api?location=07470') 
+    axios.get('/dog-tinder-api?location=07470')
       .then(response => {
-        console.log('componentwillmount response.data', response.data)
+        // console.log('componentwillmount response.data', response.data)
         return response.data;
       })
       .then(data => {
@@ -62,7 +62,7 @@ class App extends React.Component {
 
 
   nextDog() {
-    let next = this.state.index + 1; 
+    let next = this.state.index + 1;
     if(next > this.state.allDogs.length - 1) {
       next = 0;
     }
@@ -78,7 +78,7 @@ class App extends React.Component {
     if (previous < 0) {
       previous = this.state.allDogs.length - 1;
     }
-    
+
     this.setState({
       featuredDog: this.state.allDogs[previous],
       index: previous
@@ -94,14 +94,14 @@ class App extends React.Component {
     let tempArray = this.state.animalList.slice();
     tempArray.unshift(dog);
     tempArray = uniqBy(tempArray, 'id.$t');
-    
+
     let idArray = uniq(tempArray.map(function(item){return parseInt(item.id.$t)}));
 
     console.log('idArray: ', idArray)
     if(cookies.get('loggedIn') === "true") {
       axios({
         method: 'post',
-        url: '/dog-tinder-api/list', 
+        url: '/dog-tinder-api/list',
         data: idArray
       }).then(() => {
         this.setState({animalList: tempArray});
@@ -121,15 +121,15 @@ class App extends React.Component {
   }
 
 
-  handleSearchQuery(theState) { 
+  handleSearchQuery(theState) {
     this.setState({spinning: true});
-    let data = {}; 
+    let data = {};
     data.location = theState.zipcode;
     if (theState.breed !== '') { data.breed = theState.breed; }
     if (theState.age !== '') { data.age = theState.age; }
     if (theState.sex !== '') { data.sex = theState.sex; }
 
-    axios.get('/dog-tinder-api', { 
+    axios.get('/dog-tinder-api', {
       params: data
     })
     .then(response => {
@@ -144,9 +144,9 @@ class App extends React.Component {
           allDogs: data,
           dogNotFound: false,
           index: 0
-        }) 
+        })
       }
-    }) 
+    })
     .catch(error => {
       this.setState({dogNotFound: true });
     });
@@ -157,10 +157,10 @@ class App extends React.Component {
 
     tempArray.splice(tempArray.indexOf(dog), 1);
     this.setState({animalList: tempArray});
-    
+
     let currentList = cookies.get('animalList');
     let dogId = parseInt(dog.id.$t);
-    
+
     if (currentList) {
       let indexToDelete = currentList.indexOf(dogId);
       currentList.splice(indexToDelete,1);
@@ -179,10 +179,10 @@ class App extends React.Component {
       })
     }
   };
-  
+
   //Passes in shelter id from ContactShelter component
   getShelter(shelterID) {
-    axios.get('/dog-tinder-api/shelter', { 
+    axios.get('/dog-tinder-api/shelter', {
       params: {
         ID: shelterID
       }
@@ -214,9 +214,9 @@ class App extends React.Component {
       kennelComponent = <div><i className="kennel-spin fa fa-spinner fa-pulse fa-3x fa-fw"></i>
                         <span className="sr-only">Loading...</span></div>
     } else {
-      kennelComponent = <Kennel 
-          animalList={this.state.animalList} 
-          shelterContact={this.state.shelterContactInfo} 
+      kennelComponent = <Kennel
+          animalList={this.state.animalList}
+          shelterContact={this.state.shelterContactInfo}
           removeDog={this.removeDogFromKennel}
           spinning={this.state.kennelSpinning}
         />
@@ -230,16 +230,16 @@ class App extends React.Component {
           <div className="facebook-login">{loginPrompt}</div>
         </div>
         {this.state.allDogs != '' && <NavBar submitQuery={this.handleSearchQuery} dogs={this.state.allDogs} spinning={this.state.spinning}/>}
-        {this.state.featuredDog !== '' ? 
-          <DisplayDog 
-            dog={this.state.featuredDog} 
-            dogs={this.state.allDogs} 
-            nextDog={this.nextDog} 
-            previousDog={this.previousDog} 
-            saveDoggy={this.saveDoggy} 
-            dogNotFound={this.state.dogNotFound} 
-          /> 
-          : 
+        {this.state.featuredDog !== '' ?
+          <DisplayDog
+            dog={this.state.featuredDog}
+            dogs={this.state.allDogs}
+            nextDog={this.nextDog}
+            previousDog={this.previousDog}
+            saveDoggy={this.saveDoggy}
+            dogNotFound={this.state.dogNotFound}
+          />
+          :
           <div></div>
         }
         {addDogs}

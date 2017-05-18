@@ -229,7 +229,7 @@ app.get('/gCloudVision', (req,res) => {
         matches.push(label);
       });
       console.log('matches', matches);
-      res.send(matches);
+      res.send("*********teststsdds");
     })
     .catch((err) => {
       console.error('Error posting to Google Cloud Vision:', err);
