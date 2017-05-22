@@ -34,9 +34,11 @@ class App extends React.Component {
     this.saveDoggy = this.saveDoggy.bind(this);
     this.handleSearchQuery = this.handleSearchQuery.bind(this);
     this.removeDogFromKennel = this.removeDogFromKennel.bind(this);
+    this.getShelter = this.getShelter.bind(this);
   }
 
   componentWillMount() {
+    // this.getShelter();
     this.setState({kennelSpinning: true});
     axios.get('/dog-tinder-api/list', {
       withCredentials: true
@@ -47,7 +49,7 @@ class App extends React.Component {
     });
     axios.get('/dog-tinder-api?location=07470')
       .then(response => {
-        // console.log('componentwillmount response.data', response.data)
+        console.log('componentwillmount response.data', response.data);
         return response.data;
       })
       .then(data => {
@@ -134,7 +136,7 @@ class App extends React.Component {
       params: data
     })
     .then(response => {
-      console.log('handle search query response data:', response.data);
+      // console.log('handle search query response data:', response.data);
       let data = response.data;
       this.setState({spinning: false});
       if (response.data.length === 0) {
@@ -190,6 +192,7 @@ class App extends React.Component {
     })
     .then(response => {
       let data = response.data;
+      console.log(data);
       this.setState({
         shelterContactInfo: data
       });
@@ -200,6 +203,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.animalList);
     var loginPrompt;
     var addDogs;
     if (cookies.get('loggedIn') === 'true') {
@@ -227,8 +231,7 @@ class App extends React.Component {
       
       <div className="homepage">
 
-        <MapContainer />
-
+        {/*<MapContainer />*/}
         <div className="title-logo">
           <div className="title">Dog Tinder</div>
           <img className="dog-logo" src="images/cuteDog.svg"/>

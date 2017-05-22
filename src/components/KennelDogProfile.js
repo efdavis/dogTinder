@@ -1,5 +1,6 @@
 import React from 'react';
 import ContactShelter from './ContactShelter';
+import MapContainer from './MapContainer.js';
 const Entities = require('html-entities').XmlEntities;
  
 const entities = new Entities();
@@ -18,7 +19,7 @@ class KennelDogProfile extends React.Component {
 
   prettyPrintOptions(optionString) {
     return optionString.replace(/([A-Z])/g, ' $1')
-    .replace(/^./, function(str){ 
+    .replace(/^./, function(str) { 
       return str.toUpperCase();
     });
   }
@@ -31,7 +32,7 @@ class KennelDogProfile extends React.Component {
     this.setState({
       featuredImage: this.state.dog.media.photos.photo[next],
       index: next
-    })
+    });
   }
 
   previousPhoto() {
@@ -47,10 +48,12 @@ class KennelDogProfile extends React.Component {
 
   render() {
 
-  const dog = this.state.dog;
+    const dog = this.state.dog;
+    console.log('doggg', dog);
+    console.log('doggo location', dog.contact.address1.$t, dog.contact.zip.$t);
 
-  if (dog.media.photos.photo.length === 1) {
-    return (
+    if (dog.media.photos.photo.length === 1) {
+      return (
       <div className="kennelList">
         <div className="doggyProfile" >
           <div>
@@ -82,14 +85,15 @@ class KennelDogProfile extends React.Component {
               Contact Shelter
             </button>
 
-            {this.state.contactClicked ? <ContactShelter contact={dog.contact} /> : <div></div>}
+            {/*<MapContainer dog={this.state.dog}/>*/}
+
+            {this.state.contactClicked ? <ContactShelter contact={dog.contact} dog={this.state.dog} /> : <div></div>}
 
           </div>
         </div>
-    )
-  } 
-  else {
-    return (
+      );
+    } else {
+      return (
     <div className="kennelList">
       <div className="doggyProfile" >
 
@@ -110,12 +114,12 @@ class KennelDogProfile extends React.Component {
                      src={this.state.featuredImage} />
               </div>
             
-              <a className="carousel-control left"  onClick={() => this.previousPhoto()}>
+              <a className="carousel-control left" onClick={() => this.previousPhoto()}>
                 <span className="glyphicon glyphicon-chevron-left"></span>
                 <span className="sr-only">Previous</span>
               </a>
 
-              <a className="carousel-control right"  onClick={() => this.nextPhoto()}>
+              <a className="carousel-control right" onClick={() => this.nextPhoto()}>
                 <span className="glyphicon glyphicon-chevron-right"></span>
                 <span className="sr-only">Next</span>
               </a>
@@ -134,12 +138,14 @@ class KennelDogProfile extends React.Component {
             Contact Shelter
           </button>
 
-          {this.state.contactClicked ? <ContactShelter contact={dog.contact} /> : <div></div>}
+          {/*<MapContainer dog={this.state.dog}/>*/}
+
+          {this.state.contactClicked ? <ContactShelter contact={dog.contact} dog={this.state.dog} /> : <div></div>}
 
       </div>
     </div>
-    );
-  }
+      );
+    }
   }
 }
 

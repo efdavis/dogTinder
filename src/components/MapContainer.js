@@ -5,13 +5,19 @@ import Map from './Map.js';
 
 export class MapContainer extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+
+    
     if (!this.props.loaded) {
       return <div>Loading...</div>;
     }
     return (
       <div>
-        <Map google={this.props.google} />
+        <Map google={this.props.google} dog={this.props.dog} />
         </div>
     );
   }
